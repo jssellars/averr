@@ -7,7 +7,7 @@
           <h2>{{section.settings.title}}</h2>
           <p>{{section.settings.desc}}</p>
           <div class="skin-btn">
-            <a href="{{section.settings.link}}" class="primary-btn dark-skin">take the quiz <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/new-arrow-right.png?v=1615891333"></a>
+            <a href="{{section.settings.link}}" class="primary-btn dark-skin">take the quiz {{ 'new-arrow-right.png' | asset_url | img_tag }}</a>
           </div>
         </div>
       </div>

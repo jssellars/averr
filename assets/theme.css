@@ -1834,45 +1834,7 @@
  #insta-feed.owl-carousel {
      display: block;
  }
- #footer-top .signup-arrow:after {
-     content: " ";
-     background: url("https://cdn.shopify.com/s/files/1/1212/4268/files/new-arrow-right.png?v=1615891333") no-repeat center center;
-     width: 35px;
-     height: 12px;
-     position: absolute;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     cursor: pointer;
-}
- #footer-top .action_button {
-     min-width: 95px;
-     width: 100%;
-     font-size: 0;
-     background-color: transparent;
-}
- #footer-top .footer-top-right-part .footer-attentive-sms-text p {
-     font-family: 'Gotham-Book';
-     font-style: normal;
-     font-weight: normal;
-     font-size: 12px;
-     line-height: 19px;
-     max-width: 500px;
-     padding-left: 0;
-     letter-spacing: -0.03em;
-     color: rgba(0, 0, 0, 0.7);
-}
-#footer-top .left-part .footer-attentive-sms-text p {
-    font-family: 'Gotham-Book';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 19px;
-    max-width: 500px;
-    padding-left: 0;
-    letter-spacing: -0.03em;
-    color: rgba(0, 0, 0, 0.7);
-}
+
  .iti__country-list::-webkit-scrollbar {
      width: 12px;
 }
