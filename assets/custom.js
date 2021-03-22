@@ -249,9 +249,9 @@ var instaFeedInterval = setInterval(function (){
   }
 }, 200);
 
-// $(window).load(function() {
+$(window).load(function() {
 
-//   $('html').removeAttr('style');
+  $('html').removeAttr('style');
 
-// });
+});
 
