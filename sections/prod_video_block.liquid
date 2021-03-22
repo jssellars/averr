@@ -1,0 +1,101 @@
+	<div class="third">
+        <div class="third-top">
+            <div class="container">
+                <div class="third-top-title">
+                    <h2>{{ section.settings.video_headline_text }}</h2>
+                    <h3 class="how_to_use">{{ section.settings.video_subheadline_text }}</h3>  
+                </div>
+
+                <div class="third-top-video">
+                        <video id='media-video' controls poster="{{ section.settings.video_preview_image | img_url: '2500x' }}">
+                            <source src="{{ section.settings.how_to_video }}" type='video/mp4'>
+                        </video>
+                        <div id='media-controls'>
+                            <div id='play-pause-button' class='play' onclick='togglePlayPause();'></div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="third-bottom">
+            <div class="container cont_2">
+                <div class="third-bottom-wrap">
+                    <div class="third-bottom-title">
+                        <h3>{{ section.settings.under_video_title }}</h3>
+
+                        <div class="sub-line"></div>
+                    </div>
+                    <div class="third-bottom-image">
+                        <img src="{{ section.settings.under_video_image | img_url: '1366x'}}" alt="sleeping woman">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+        document.addEventListener("DOMContentLoaded", function() { initialiseMediaPlayer(); }, false);
+		var mediaPlayer;
+		function initialiseMediaPlayer() {
+   			mediaPlayer = document.getElementById('media-video');
+   			mediaPlayer.controls = false;
+		}
+		function togglePlayPause() {
+   		var btn = document.getElementById('play-pause-button');
+   		if (mediaPlayer.paused || mediaPlayer.ended) {
+      		btn.title = 'pause';
+      		btn.className = 'pause';
+     		 mediaPlayer.play();
+   		}
+   		else {
+      		btn.title = 'play';
+      		btn.className = 'play';
+      		mediaPlayer.pause();
+   		}
+}
+</script>
+{% schema %}
+  {
+    "name": "Video Headline",
+    "settings": [
+		{
+			"id": "video_headline_text",
+			"type": "text",
+			"label": "Paste Video Headline",
+			"default": "Default text"
+		},
+		{
+			"id": "video_subheadline_text",
+			"type": "text",
+			"label": "Paste Video Subheadline",
+			"default": "Default text"
+		},
+		{
+			"id": "video_preview_image",
+			"type": "image_picker",
+			"label": "Choose video preview image"
+		},
+		{
+			"id": "how_to_video",
+			"type": "url",
+ 			"label": "Paste video url"
+		},
+		{
+			"id": "under_video_title",
+			"type": "textarea",
+			"label": "Paste title text uder the video",
+			"default": "Default text"
+		},
+		{
+			"id": "under_video_image",
+			"type": "image_picker",
+			"label": "Choose image under the video"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

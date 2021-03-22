@@ -1,0 +1,354 @@
+<div class="container main content main-wrapper section-product-page {% if product.handle contains 'kit' %}section-product-kit-page{% endif %}">
+    {% comment %}Check to see if sidebar should be enabled{% endcomment %}
+    {% if section.blocks.size > 0 %}
+        {% assign sidebar = true %}
+    {% else %}
+        {% assign sidebar = false %}
+    {% endif %}
+
+    {% if sidebar %}
+        {% include 'sidebar' %}
+    {% endif %}
+
+    <div class=" {% if sidebar %}twelve{% else %}sixteen{% endif %} columns">
+        <div class="product-{{ product.id }}">
+            <!--Added customa class-->
+            <div class="section product_section clearfix {% if product.images.size > 1 %} thumbnail_position--{{ settings.thumbnail_position }} {% endif %} product_slideshow_animation--{{ settings.product_slideshow_animation }} b-snippet"
+                 data-thumbnail="{{ settings.thumbnail_position }}"
+                 data-slideshow-animation="{{ settings.product_slideshow_animation }}"
+                 data-slideshow-speed="{{ settings.slideshow_speed }}"
+                 itemscope itemtype="http://schema.org/Product">
+
+                <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} {% if section.settings.product_images_position == 'right' %}mobile_only{% endif %}">
+                    {% include 'product-images' %}
+                    <!--<img class="sale_badge"
+                         src="https://cdn.shopify.com/s/files/1/1212/4268/files/10off.png?11057">-->
+
+                    <!-- Added code -->
+                    <div class="product-short-info-image">
+                        <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/iepure.svg?14621">
+                    </div>
+                    <!-- Added code -->
+                </div>
+                {% comment %}
+                    <div class="mobile_prod_block">
+                    {% unless collection_handles contains 'coming-soon' %}
+                        <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="{{ shop.currency }}"/>
+                            <meta itemprop="seller" content="{{ shop.name | escape }}"/>
+                            <link itemprop="availability"
+                                  href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+                            <meta itemprop="itemCondition" content="New"/>
+
+                            <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                            <span itemprop="price" content="{{ variant.price | money_without_currency }}"
+                                  class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+                                            <span class="current_price {% if product.available == false %}hidden{% endif %}">
+                                                <span class="money">$149.99</span>
+                                            </span>
+                                        </span>
+                            <span class="was_price">
+                                            <span class="money">$158.99</span>
+                                        </span>
+                        </p>
+                        {% if settings.notify_me_form %}
+                            {% include 'product-notify-me' %}
+                        {% endif %}
+                    {% endunless %}
+
+                    {% if section.settings.product_description_position == "top" %}
+                        {% if product.description != blank %}
+
+                        {% endif %}
+                    {% endif %}
+
+                    {% unless collection_handles contains 'coming-soon' %}
+                        {% include 'main-product-form' with 'product' %}
+                    {% endunless %}
+
+                    <a href="https://averraglow.com/products/clear-skin-kit2" class="sub_btn_text">(Or Complete the bundle & Save)</a>
+
+                    <h4 class="text-free-ship">Free Shipping On US Orders Over $79</h4>
+
+                    {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+                        <div id="shopify-product-reviews"
+                             data-id="5450349254">{{ product.metafields.spr.reviews }}
+                        </div>
+                    {% endif %}
+
+
+                    {% if section.settings.display_collections or section.settings.display_tags or
+                        section.settings.display_type %}
+                        <hr/>
+                    {% endif %}
+
+                    <div class="meta">
+                        {% if section.settings.display_social_buttons %}
+                            <share-button></share-button>
+                        {% endif %}
+
+                        {% if section.settings.display_collections %}
+                            <p>
+                                <span class="label">{{ 'products.product.collections' | t }}:</span>
+                                <span>
+                                               {% for col in product.collections %}
+                                                   <a href="{{ col.url }}"
+                                                      title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %}
+                                               {% endfor %}
+                 </span>
+                            </p>
+                        {% endif %}
+
+                        {% if section.settings.display_tags %}
+                            <p>
+                                {% for tag in product.tags %}
+                                    {% if forloop.first %}
+                                        <span class="label">{{ 'products.product.tags' | t }}:</span>
+                                    {% endif %}
+
+                                    {% unless tag contains 'meta-' %}
+                                        <span>
+                         <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}"
+                            title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                       </span>
+                                    {% endunless %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                        {% if section.settings.display_type %}
+                            <p>
+                                <span class="label">{{ 'products.product.product_types' | t }}:</span>
+                                <span>{{ product.type | link_to_type }}</span>
+                            </p>
+                        {% endif %}
+                        {% if settings.enable_shopify_product_badges %}
+                            <span class="shopify-product-reviews-badge" data-id="5450349254"></span>
+                        {% endif %}
+                    </div>
+                    </div>
+                {% endcomment %}
+                <div class="{% if sidebar %}five{% else %}seven{% endif %} columns {% if section.settings.product_images_position == 'left' %}omega{% else %}alpha{% endif %}">
+
+                    {% assign collection_handles = product.collections | map: 'handle' %}
+                    {% assign variant = product.selected_or_first_available_variant %}
+
+                    {% if product.metafields.product-expression.product-expression %}
+                        <h3 class="product_expresion">{{ product.metafields.product-expression.product-expression }}</h3>
+                    {% endif %}
+
+                    <h1 class="product_name" itemprop="name">{{ product.title }}</h1>
+
+                    <!-- Added code-->
+                    <div class="b-product-price b-product-price-mobile" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <meta itemprop="priceCurrency" content="{{ shop.currency }}"/>
+                        <meta itemprop="seller" content="{{ shop.name | escape }}"/>
+                        <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+                        <meta itemprop="itemCondition" content="New"/>
+
+                        <div class="b-actual-price">
+                            <div itemprop="price" id="current-price-preview" class="current_price  {% if variant.compare_at_price > variant.price %}sale{% endif %}">
+                                {{ variant.price | money }}
+                            </div>
+                            <div class="compare-price-preview"
+                                 style="text-decoration: line-through">{{ variant.compare_at_price | money }}</div>
+
+                            <div class="compare-price-discount">
+                                {% if variant.compare_at_price != blank and variant.price != blank %}
+                                    {% assign calculateDiscount =  variant.price | times:100 | divided_by:variant.compare_at_price | floor %}
+                                    {% assign totalDiscount =  100 | minus:calculateDiscount  | append: '%' %}
+                                    {{ totalDiscount }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
+
+                    <!-- Added code-->
+                    <div class="b-card-form-mobile">
+                        {% unless collection_handles contains 'coming-soon' %}
+                            {% include 'main-product-form' with 'product' %}
+                        {% endunless %}
+                    </div>
+                    <!---->
+                    <h4 class="text-free-ship-mobile">Free Shipping On US Orders Over $79</h4>
+                    <a href="https://averraglow.com/products/clear-skin-kit2" class="sub_btn_text-mobile">(Or Complete the bundle & Save)</a>
+
+                    <div class="short-reviews-mobile">
+                        {% if section.settings.display_social_buttons %}
+                            <share-button></share-button>
+                        {% endif %}
+
+                        {% if settings.enable_shopify_product_badges %}
+                            <span class="shopify-product-reviews-badge" data-id="5450349254"></span>
+                        {% endif %}
+                    </div>
+
+                    <div class="description mobile_prod_block" itemprop="description">
+                            <!---- block product description ----->
+                            <div class="b-product-tabs">
+                                <ul class="tabs-descriptions">
+                                    <li class="tab tab-active" data-tab="1">Description</li>
+                                    <li class="tab" data-tab="2">List of products</li>
+                                    <li class="tab" data-tab="3">Ingredients</li>
+                                </ul>
+                                <div class="b-tabs-content">
+                                    <div class="tab-content tab-active"
+                                         data-tab="1">{{ product.description | strip_html | truncatewords: 80 }}</div>
+                                    <div class="tab-content"
+                                         data-tab="2">{{ section.settings.contentTabProductList | truncatewords: 80 }}</div>
+                                    <div class="tab-content"
+                                         data-tab="3">{{ section.settings.contentTabIngredients | truncatewords: 80 }}</div>
+                                </div>
+                            </div>
+                        <!---- block product description ----->
+                        <!-- Added code -->
+                        <div class="product-short-info-image product-short-info-image-mobile">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/iepure.svg?14621">
+                        </div>
+                        <!-- Added code -->
+                    </div>
+
+                    {% if section.settings.display_vendor %}
+                        <p class="vendor">
+                            <span itemprop="brand">{{ product.vendor | link_to_vendor }}</span>
+                        </p>
+                    {% endif %}
+
+                    {% if variant.sku != blank and section.settings.display_sku %}
+                        <p class="sku">
+                            <span itemprop="sku">{{ variant.sku }}</span>
+                        </p>
+                    {% endif %}
+
+
+                    <div class="desktop_prod_block">
+                        {% unless collection_handles contains 'coming-soon' %}
+                            <p>
+                                <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                            </p>
+
+                            {% if settings.notify_me_form %}
+                                {% include 'product-notify-me' %}
+                            {% endif %}
+                        {% endunless %}
+
+                            <!---- block product description ----->
+                            <div class="b-product-tabs">
+                                <ul class="tabs-descriptions">
+                                    <li class="tab tab-active" data-tab="1">Description</li>
+                                    <li class="tab" data-tab="2">List of products</li>
+                                    <li class="tab" data-tab="3">Ingredients</li>
+                                </ul>
+                                <div class="b-tabs-content">
+                                    <div class="tab-content tab-active"
+                                         data-tab="1">{{ product.description | strip_html | truncatewords: 80 }}</div>
+                                    <div class="tab-content"
+                                         data-tab="2">{{ section.settings.contentTabProductList | truncatewords: 80 }}</div>
+                                    <div class="tab-content"
+                                         data-tab="3">{{ section.settings.contentTabIngredients | truncatewords: 80 }}</div>
+                                </div>
+                            </div>
+
+                        <!-- Added code-->
+                        <div class="b-product-price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="{{ shop.currency }}"/>
+                            <meta itemprop="seller" content="{{ shop.name | escape }}"/>
+                            <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+                            <meta itemprop="itemCondition" content="New"/>
+
+                            <div class="b-actual-price">
+                                <div itemprop="price" id="current-price-preview" class="current_price  {% if variant.compare_at_price > variant.price %}sale{% endif %}">
+                                    {{ variant.price | money }}
+                                </div>
+                                <div class="compare-price-preview"
+                                     style="text-decoration: line-through">{{ variant.compare_at_price | money }}</div>
+                                <div class="compare-price-discount">
+                                    {% if variant.compare_at_price != blank and variant.price != blank %}
+                                        {% assign calculateDiscount =  variant.price | times:100 | divided_by:variant.compare_at_price | floor %}
+                                        {% assign totalDiscount =  100 | minus:calculateDiscount  | append: '%' %}
+                                        {{ totalDiscount }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!---->
+                        <!-- Added code-->
+                        {% unless collection_handles contains 'coming-soon' %}
+                            {% include 'main-product-form' with 'product' %}
+                        {% endunless %}
+                        <!---->
+
+                        <a href="https://averraglow.com/products/clear-skin-kit2" class="sub_btn_text">(Or Complete the bundle & Save)</a>
+
+                        <h4 class="text-free-ship">Free Shipping On US Orders Over $79</h4>
+
+                        {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+                            <div id="shopify-product-reviews"
+                                 data-id="5450349254">{{ product.metafields.spr.reviews }}
+                            </div>
+                        {% endif %}
+
+                        {% if section.settings.display_collections or section.settings.display_tags or
+                            section.settings.display_type %}
+                            <hr/>
+                        {% endif %}
+
+                        <div class="meta">
+                            {% if section.settings.display_social_buttons %}
+                                <share-button></share-button>
+                            {% endif %}
+
+                            {% if section.settings.display_collections %}
+                                <p>
+                                    <span class="label">{{ 'products.product.collections' | t }}:</span>
+                                    <span>
+                                       {% for col in product.collections %}
+                                           <a href="{{ col.url }}" title="{{ col.title }}">{{ col.title }}</a>
+                                           {% unless forloop.last %},{% endunless %}
+                                       {% endfor %}
+                                    </span>
+                                </p>
+                            {% endif %}
+
+                            {% if section.settings.display_tags %}
+                                <p>
+                                    {% for tag in product.tags %}
+                                        {% if forloop.first %}
+                                            <span class="label">{{ 'products.product.tags' | t }}:</span>
+                                        {% endif %}
+
+                                        {% unless tag contains 'meta-' %}
+                                            <span>
+                                                 <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}"
+                                                    title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>
+                                                {% unless forloop.last %},{% endunless %}
+                                            </span>
+                                        {% endunless %}
+                                    {% endfor %}
+                                </p>
+                            {% endif %}
+
+                            {% if section.settings.display_type %}
+                                <p>
+                                    <span class="label">{{ 'products.product.product_types' | t }}:</span>
+                                    <span>{{ product.type | link_to_type }}</span>
+                                </p>
+                            {% endif %}
+                            {% if settings.enable_shopify_product_badges %}
+                                <span class="shopify-product-reviews-badge" data-id="5450349254"></span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {% if section.settings.product_images_position == 'right' %}
+                    <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} mobile_hidden">
+                        {% include 'product-images' %}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>

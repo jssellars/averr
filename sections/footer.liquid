@@ -1,0 +1,203 @@
+<div class="footer custom-footer">
+  {% if section.settings.show_footer_top_part %}
+  <div id="footer-top">
+    <div class="container">
+      <h4 class="footer-top-left-part">{{ section.settings.footer_top_top_text }}</h4>
+      <section class="left-part">
+        <h3 class="footer-toptop-part">{{ section.settings.footer_top_top_left_text }}</h3>
+        {% include 'footer-attentive-email-form' %}
+         <div class="footer-attentive-sms-text">{{ section.settings.footer_top_leftt_text }}</div> 
+      </section>
+      <div id='footer-part-separator' style="display: none"></div>
+      <section class="right-part">
+        <article class="footer-top-right-part">
+        <h3 class="footer-toptop-part">{{ section.settings.footer_top_top_right_text }}</h3>
+          {% include 'footer-attentive-sms-form' %}
+          <div class="footer-attentive-sms-text">{{ section.settings.footer_top_right_text }}</div> 
+        </article>
+      </section>      
+    </div>
+  </div>
+  {% endif %}    
+  <div id="footer-bottom">
+    <div class="container">
+      <div class="top-part">
+        <section class="top-left-part">
+          {% if section.settings.footer_linklist_1 != blank %}
+          <ul class="footer_menu">
+            {% for link in linklists[section.settings.footer_linklist_1].links %}
+              <li class="footer-submenu-parent-link accordion">
+                <a href="{{ link.url }}" class="accordion__intro">{{ link.title }}</a>
+                
+                {% if link.links != blank %}
+                  <ul class="child accordion__content">
+                    {% for child_link in link.links %}  
+                      <li><a href= "{{ child_link.url }}">{{ child_link.title }}</a></li>
+                    {% endfor %}
+                  </ul> 
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </section>
+        <section class="top-right-part">
+          {% if section.settings.footer_social_icons %}
+          <div class="js-social-icons">
+            {% include 'social-icons' %}
+          </div>
+          {% endif %}
+          {% if section.settings.footer_top_right_custom_richtext != blank %}
+          <span class="footer-top-right-custom-richtext">
+            {{ section.settings.footer_top_right_custom_richtext }}
+          </span>
+          {% endif %} 
+        </section>
+      </div>
+      <hr class="footer-divider">
+      <div class="bottom-part">
+        <section class="bottom-left-part">
+          <p class="credits">
+            &copy; {{ "now" | date: "%Y" }} {{ shop.name| link_to: '/' }}
+            {{ section.settings.copyright_text }}</p> 
+        </section>
+        <section class="bottom-middle-part">
+          {{ section.settings.footer_bottom_middle_text }}
+          <img class="lazyload transition-in" data-src="{{ section.settings.footer_bottom_middle_image | img_url: '300x', scale: 2 }}" alt="{{ section.settings.footer_bottom_middle_image.alt }}" />
+        </section>
+        <section class="bottom-right-part">
+          {% if section.settings.display_payment_methods %}
+          <div class="payment-methods">
+            <span class="payment-methods-images">{% for type in shop.enabled_payment_types %}
+              <img class="lazyload" data-src="{{ type | payment_type_img_url }}" alt="{{ type | replace: "_", " " | capitalize }}" />
+              {% endfor %}</span>
+          </div>
+          {% endif %}
+
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://a.opmnstr.com/app/js/api.min.js" data-account="64568" data-user="57269" async></script>
+<script>
+  $(document).ready(function(){
+    $("#footer-bottom .footer-submenu-parent-link > a").click(function(event){
+      event.preventDefault();
+    });
+    const accordions = document.querySelectorAll(".accordion");
+
+    const openAccordion = (accordion) => {
+      const content = accordion.querySelector(".accordion__content");
+      accordion.classList.add("accordion__active");
+      content.style.maxHeight = content.scrollHeight + "px";
+    };
+
+    const closeAccordion = (accordion) => {
+      const content = accordion.querySelector(".accordion__content");
+      accordion.classList.remove("accordion__active");
+      content.style.maxHeight = null;
+    };
+
+    accordions.forEach((accordion) => {
+      const intro = accordion.querySelector(".accordion__intro");
+      const content = accordion.querySelector(".accordion__content");
+
+      intro.onclick = () => {
+        if (content.style.maxHeight) {
+          closeAccordion(accordion);
+        } else {
+          accordions.forEach((accordion) => closeAccordion(accordion));
+          openAccordion(accordion);
+        }
+      };
+    });
+
+  })   
+</script>
+<style>
+  .klaviyo-form input[type="text"]{width:100%;}
+</style>
+{% schema %}
+{
+"name": "Footer",
+"class": "footer-template-section",
+"settings": [
+{
+"type": "header",
+"content": "Footer top part"
+},
+{
+"type": "checkbox",
+"id": "show_footer_top_part",
+"label": "Show Top footer part",
+"default": true
+},
+{
+"type": "html",
+"id": "footer_top_top_text",
+"label": "Enter top footer top part text",
+"default": "<p>Text area can be used for special announcements or general information.</p>"
+},
+{
+"type": "html",
+"id": "footer_top_top_left_text",
+"label": "Enter top footer top left part text",
+"default": "<p>Text area can be used for special announcements or general information.</p>"
+},
+{
+"type": "html",
+"id": "footer_top_top_right_text",
+"label": "Enter top footer top right part text",
+"default": "<p>Text area can be used for special announcements or general information.</p>"
+},
+{
+"type": "richtext",
+"id": "footer_top_leftt_text",
+"label": "Enter top footer bottom left part text",
+"default": "<p>Text area can be used for special announcements or general information.</p>"
+},
+{
+"type": "richtext",
+"id": "footer_top_right_text",
+"label": "Enter top footer bottom right part text",
+"default": "<p>Text area can be used for special announcements or general information.</p>"
+},
+{
+"type": "header",
+"content": "Footer bottom part"
+},
+{
+"type": "link_list",
+"id": "footer_linklist_1",
+"label": "Menu"
+},
+{
+"type": "checkbox",
+"id": "footer_social_icons",
+"label": "Show social media icons",
+"default": true
+},
+{
+"type": "richtext",
+"id": "footer_bottom_middle_text",
+"label": "Please enter text"
+},
+{
+"type": "image_picker",
+"id": "footer_bottom_middle_image",
+"label": "Please pick an image"
+},
+{
+"type": "header",
+"content": "Bottom right side"
+},
+{
+"type": "checkbox",
+"id": "display_payment_methods",
+"label": "Show payment method icons",
+"default": true
+}
+]
+}
+{% endschema %}

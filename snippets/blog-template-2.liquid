@@ -1,0 +1,43 @@
+
+
+{%-if shown < show_count-%}
+	{%- assign shown = shown | plus:1 -%}
+{%-endif-%}
+{%- assign article_count = article_count | plus:1 -%}
+{%- if col_count == 1-%}
+<div class="container clearfix top38{% if shown == show_count%} hidden{% endif %}">
+  <div class="sixteen columns r-margin-0 clearfix">
+    {%- endif -%}
+    <div class="five columns l-margin-0 border col3-white" data-id="{{ article_count }}">
+      <a href="{{ article.url }}" title="{{ article.title | escape }}">
+        <div>
+          {%- if article.image != nil -%}
+          <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+          </div>
+          {%- endif -%}
+          <h5 class="sub_title">{{ article.title | downcase }}</h5>
+        </div>
+      </a>
+    </div>
+    {%- if col_count == 3 or article_count == articles_count-%}
+  </div>
+</div>
+{%- assign col_count = 1 -%}
+{%- assign row_count = row_count | plus:1 -%}
+{%- else -%}
+{%- assign col_count = col_count | plus:1 -%}
+{%- endif -%}

@@ -1,0 +1,382 @@
+<div class="third">
+        <div class="third-top">
+            <div class="container">
+                <div class="third-top-title">
+                    <h2>{{ section.settings.video_headline_text }}</h2>
+                    <h3 class="how_to_use">{{ section.settings.video_subheadline_text }}</h3>  
+                </div>
+
+                <div class="third-top-video">
+                        <video id='media-video' controls poster="{{ section.settings.video_preview_image | img_url: '2500x' }}">
+                            <source src="{{ section.settings.how_to_video }}" type='video/mp4'>
+                        </video>
+                        <div id='media-controls'>
+                            <div id='play-pause-button' class='play' onclick='togglePlayPause();'></div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="third-bottom">
+            <div class="container cont_2">
+                <div class="third-bottom-wrap">
+                    <div class="third-bottom-title">
+                        <h3>{{ section.settings.under_video_title }}</h3>
+
+                        <div class="sub-line"></div>
+                    </div>
+                    <div class="third-bottom-image">
+                        <img src="{{ section.settings.under_video_image | img_url: '1366x'}}" alt="sleeping woman">
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="forth">
+        <div class="container cont_2">
+            <div class="forth-wrap">
+				{% for block in section.blocks %}
+                <div class="steps-item">
+                    <div class="steps-item-image">
+                        <img src="{{ block.settings.benefitImage | img_url: '2500x' }}" alt="benefit image">
+                    </div>
+                    <div class="steps-item-title">
+                        <h4>{{ block.settings.benefitHeadline }}</h4>
+                    </div>
+                    <div class="steps-item-text">
+                        <p>{{ block.settings.benefitText }}</p>
+                    </div>
+                </div>
+              	{% endfor %}
+            </div>
+        </div>
+    </div>
+<div class="fifth">
+  {% if settings.enable_shopify_review_comments and settings.review_position == "bottom" %}
+        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+  {% endif %}
+</div>
+<div class="sixth">
+ <div class="container">
+            <div class="sixth-title">
+                <h2>{{ section.settings.cont_headline}}</h2>
+            </div>
+            <div class="sixth-wrap">
+				{% for block in section.blocks %}
+              	{% if block.settings.image_side == 'left' %}
+                <div class="sixth-item">
+                    <div class="sixth-item-left">
+                        <div class="sixth-item-image">
+                            <img src="{{ block.settings.cont_prod_image | img_url: '2500x' }}" alt="product image">
+                        </div>
+                    </div>
+
+                    <div class="sixth-item-right">
+                        <div class="sixth-item-content">
+                            <div class="sixth-item-content-step">
+                                <img style="max-width: 50px" src="{{ block.settings.cont_number_image | img_url: '2500x' }}" alt="number">
+                            </div>
+                            <div class="sixth-item-content-logo">
+                                <img style="max-width: 150px" src="{{ block.settings.cont_logo_image | img_url: '2500x' }}" alt="logo">
+                            </div>
+                            <div class="sixth-item-content-title">
+                                <h3>{{ block.settings.cont_prod_headline }}</h3>
+                            </div>
+                            <div class="sixth-item-content-text">
+                                <p>
+                                    {{ block.settings.cont_prod_description }}
+                                </p>
+                                <h1 class="ingred_btn" onclick="openIngrid('{{ block.settings.ingridList }}');">full ingredients list</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              	{% elsif block.settings.image_side == 'right' %}
+              <div class="sixth-item-reverse">
+                    <div class="sixth-item-right">
+                        <div class="sixth-item-content">
+                            <div class="sixth-item-content-step">
+                                <img style="max-width: 50px" src="{{ block.settings.cont_number_image | img_url: '2500x' }}" alt="number">
+                            </div>
+                            <div class="sixth-item-content-logo">
+                                <img style="max-width: 150px" src="{{ block.settings.cont_logo_image | img_url: '2500x' }}" alt="logo">
+                            </div>
+                            <div class="sixth-item-content-title">
+                                <h3>{{ block.settings.cont_prod_headline }}</h3>
+                            </div>
+                            <div class="sixth-item-content-text">
+                                <p>
+                                    {{ block.settings.cont_prod_description }}
+                                </p>
+                                <h1 class="ingred_btn" onclick="openIngrid('{{ block.settings.ingridList }}');">full ingredients list</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sixth-item-left image_right">
+                        <div class="sixth-item-image">
+                            <img src="{{ block.settings.cont_prod_image | img_url: '2500x' }}" alt="">
+                        </div>
+                    </div>
+                </div>
+              	{% endif %}
+               {% endfor %}
+            </div>
+   </div>
+ </div>
+ <div class="pop_up_bg">
+      <div class="pop_up_block">
+        <div class="close_popup">
+        	<img onclick="closePopUp();" src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-delete_sign.svg?11166">
+        </div>
+        <p class="pop_up_text"></p>       
+      </div>
+  </div>
+<div class="seventh"
+         style="background: url('{{ section.settings.hero_image | img_url: '2500x'}}') no-repeat center center / cover">
+</div>
+<div class="accordeon_header_position">
+      <div class="accordeon_header">
+          <h1>{{ section.settings.faq_headline }}</h1>
+      </div>
+    </div>  
+    <div class="accordeon_block_position">
+    	<div class="accordeon_block">
+          <div class="first_accord">
+            {% for block in section.blocks %}
+            	{% if block.type == 'l_faq_column' %}
+          	<div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">{{ block.settings.questionText }}</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+					{{ block.settings.answerText}}
+                  </div>
+                </div>
+              </div><!-- end of accordion body -->
+            </div><!-- end of accordion item --> 
+            	{% endif %}
+            {% endfor %}
+          </div>
+          <div class="second_accord">
+            {% for block in section.blocks %}
+            	{% if block.type == 'r_faq_column' %}
+            <div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">{{ block.settings.questionText }}</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+					{{ block.settings.answerText}}
+                  </div>
+                </div>
+                </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+            	{% endif %}
+            {% endfor %}
+          </div>  
+      	</div>
+    </div>
+<script>
+  function closePopUp(){
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "none";
+        }
+  function openIngrid(x){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = x;    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+
+        document.addEventListener("DOMContentLoaded", function() { initialiseMediaPlayer(); }, false);
+		var mediaPlayer;
+		function initialiseMediaPlayer() {
+   			mediaPlayer = document.getElementById('media-video');
+   			mediaPlayer.controls = false;
+		}
+		function togglePlayPause() {
+   		var btn = document.getElementById('play-pause-button');
+   		if (mediaPlayer.paused || mediaPlayer.ended) {
+      		btn.title = 'pause';
+      		btn.className = 'pause';
+     		 mediaPlayer.play();
+   		}
+   		else {
+      		btn.title = 'play';
+      		btn.className = 'play';
+      		mediaPlayer.pause();
+   		}
+}
+</script>
+{% schema %}
+  {
+    "name": "Clear Skin Kit Content",
+	"max_blocks": 10,
+    "settings": [
+		{
+			"id": "video_headline_text",
+			"type": "text",
+			"label": "Paste Video Headline",
+			"default": "Default text"
+		},
+		{
+			"id": "video_subheadline_text",
+			"type": "text",
+			"label": "Paste Video Subheadline",
+			"default": "Default text"
+		},
+		{
+			"id": "video_preview_image",
+			"type": "image_picker",
+			"label": "Choose video preview image"
+		},
+		{
+			"id": "how_to_video",
+			"type": "url",
+ 			"label": "Paste video url"
+		},
+		{
+			"id": "under_video_title",
+			"type": "textarea",
+			"label": "Paste title text uder the video",
+			"default": "Default text"
+		},
+		{
+			"id": "under_video_image",
+			"type": "image_picker",
+			"label": "Choose image under the video"
+		},
+		{
+			"id": "cont_headline",
+			"type": "text",
+			"default": "Default text",
+			"label": "Type contains headline"
+		},
+		{
+			"type": "image_picker",
+			"id": "hero_image",
+			"label": "Choose hero image"
+		},
+		{
+			"type": "text",
+			"id": "faq_headline",
+			"default": "Default Text",
+			"label": "Enter FAQ block headline"
+		}
+	],
+	"blocks":[
+		{
+		  "type": "select",
+          "name": "Benefit item",
+          "settings": [
+            {
+              "id": "benefitImage",
+			  "type": "image_picker",
+			  "label": "Choose benefit image"
+            },
+			{
+			  "id": "benefitHeadline",
+			  "type": "text",
+			  "default": "Default text",
+			  "label": "Type benefit headline"
+			},
+			{
+			  "id": "benefitText",
+			  "type": "textarea",
+			  "label": "Write benefit description",
+			  "default": "Default text"
+			}
+		   ]
+		 },
+		 {
+		  "type": "contains",
+          "name": "Product image side",
+   		  "settings": [
+      			{
+                 "type": "radio",
+                 "id":   "image_side",
+                 "label": "Choose image side",
+				 "default":   "left",
+                 "options": [
+                   { "value": "left", "label": "Left" },
+                   { "value": "right", "label": "Right" }
+                 ]
+                },
+				{
+					"type": "image_picker",
+					"id": "cont_prod_image",
+					"label": "Choose contain product image"
+				},
+				{
+					"type": "image_picker",
+					"id": "cont_number_image",
+					"label": "Choose contain number image"
+				},
+				{
+					"type": "image_picker",
+					"id": "cont_logo_image",
+					"label": "Choose logo image"
+				},
+				{
+					"type": "text",
+					"id": "cont_prod_headline",
+					"label": "Write product headline",
+					"default": "Default text"
+				},
+				{
+					"type": "textarea",
+					"id": "cont_prod_description",
+					"label": "Write product description",
+					"default": "Default text"
+				},
+				{
+					"type": "textarea",
+					"id": "ingridList",
+					"label": "Paste ingredients list",
+					"default": "Default text"
+				}
+   			]
+   
+		},
+		{
+		  "type": "l_faq_column",
+          "name": "Left FAQ column",
+          "settings": [
+            {
+              "id": "questionText",
+			  "type": "text",
+			  "label": "Enter the question",
+			  "default": "Default text"
+            },
+			{
+			  "id": "answerText",
+			  "type": "textarea",
+			  "label": "Enter the answer",
+			  "default": "Default text"
+			}
+          ]
+        },
+		{
+		  "type": "r_faq_column",
+          "name": "Right FAQ column",
+          "settings": [
+            {
+              "id": "questionText",
+			  "type": "text",
+			  "label": "Enter the question",
+			  "default": "Default text"
+            },
+			{
+			  "id": "answerText",
+			  "type": "textarea",
+			  "label": "Enter the answer",
+			  "default": "Default text"
+			}
+          ]
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

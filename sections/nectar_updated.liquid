@@ -1,0 +1,1630 @@
+<div class="container main content main-wrapper">
+  
+
+  {% comment %}Check to see if sidebar should be enabled{% endcomment %}
+  {% if section.blocks.size > 0 %}
+    {% assign sidebar = true %}
+  {% else %}
+    {% assign sidebar = false %}
+  {% endif %}
+
+  {% if sidebar %}
+    {% include 'sidebar' %}
+    <div class="twelve columns">
+      <div class="product-{{ product.id }}">
+  {% else %}
+    <div class="sixteen columns">
+      <div class="product-{{ product.id }}">
+  {% endif %}
+    <div class="section product_section clearfix
+    {% if product.images.size > 1 %} thumbnail_position--{{settings.thumbnail_position}} {% endif %} product_slideshow_animation--{{settings.product_slideshow_animation}}"
+       data-thumbnail="{{settings.thumbnail_position}}"
+       data-slideshow-animation="{{settings.product_slideshow_animation}}"
+       data-slideshow-speed="{{settings.slideshow_speed}}"
+       itemscope itemtype="http://schema.org/Product">
+
+      <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} {% if section.settings.product_images_position == 'right' %}mobile_only{% endif %}">
+        {% include 'product-images' %}
+<!--       	<img class="sale_badge" src="https://cdn.shopify.com/s/files/1/1212/4268/files/10off.png?11057"> -->
+      </div>
+
+        {%-comment-%}DB Moved from lines 139-140{%-endcomment-%}
+        {% assign collection_handles = product.collections | map: 'handle' %}
+        {% assign variant = product.selected_or_first_available_variant %}
+      
+	<div class="mobile_prod_block">
+        {% unless collection_handles contains 'coming-soon' %}
+          <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+            <meta itemprop="seller" content="{{ shop.name | escape }}" />
+            <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+            <meta itemprop="itemCondition" content="New" />
+
+            <span itemprop="price" content="{{ variant.price | money_without_currency }}" class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+              <span class="current_price {% if product.available == false %}hidden{% endif %}">
+                  <span class="money">{{ variant.price }}</span>
+              </span>
+            </span>
+            <span class="was_price">
+              {% if variant.price < variant.compare_at_price%}
+                <span class="money">{{ variant.compare_at_price | money }}</span>
+              {% endif %}
+            </span>
+          </p>
+          {% if settings.notify_me_form %}
+            {% include 'product-notify-me' %}
+          {% endif %}
+        {% endunless %}
+
+        {% unless collection_handles contains 'coming-soon' %}
+          {% include 'new-product-form' with 'product' %}
+        
+        {% endunless %}
+
+        <h4 class="sub_btn_text">Free Shipping Over $79</h4>
+
+        {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+          <div id="stamped-main-widget" 
+               data-widget-style="standard"
+               data-product-id="{{ product.id }}" 
+               data-name="{{ product.title | escape }}" 
+               data-url="{{ shop.url }}{{ product.url }}" 
+               data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+               data-description="{{ product.description | escape }}" 
+               data-product-sku="{{product.handle}}"
+               data-product-type="{{product.type}}"> 
+            {{ product.metafields.stamped.reviews }} 
+          </div>  
+        {% endif %}
+		
+        
+        {% if section.settings.display_collections or section.settings.display_tags or section.settings.display_type %}
+         <hr />
+        {% endif %}
+
+        <div class="meta">
+          {% if section.settings.display_social_buttons %}
+            <share-button></share-button>
+          {% endif %}
+
+          {% if section.settings.display_collections %}
+            <p>
+              <span class="label">{{ 'products.product.collections' | t }}:</span>
+              <span>
+               {% for col in product.collections %}
+                 <a href="{{ col.url }}" title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %}
+               {% endfor %}
+             </span>
+           </p>
+          {% endif %}
+
+          {% if section.settings.display_tags %}
+             <p>
+               {% for tag in product.tags %}
+                 {% if forloop.first %}
+                   <span class="label">{{ 'products.product.tags' | t }}:</span>
+                 {% endif %}
+
+                 {% unless tag contains 'meta-' %}
+                   <span>
+                     <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}" title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                   </span>
+                 {% endunless %}
+               {% endfor %}
+             </p>
+          {% endif %}
+
+         {% if section.settings.display_type %}
+            <p>
+              <span class="label">{{ 'products.product.product_types' | t }}:</span>
+              <span>{{ product.type | link_to_type }}</span>
+            </p>
+         {% endif %}
+          {% if settings.enable_shopify_product_badges %}
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+        {% endif %}
+        </div>
+       </div>
+       <div class="{% if sidebar %}five{% else %}seven{% endif %} columns {% if section.settings.product_images_position == 'left' %}omega{% else %}alpha{% endif %}">
+
+        <h3 class="product_expresion">"This kit is changing my skin! I’ve been using it for two months and I’ve seen huge improvements in my skin!! My acne is clearing up, scars are fading, and my skin is so soft."<span class="lara_txt"> Tate W.</span></h3>
+        <h1 class="product_name" itemprop="name">{{ product.title }}</h1>
+
+
+
+         <div class="description mobile_prod_block" itemprop="description">
+             {{ product.description | split: '<!--split-->' | first }}
+         </div>
+
+
+        
+        {% if section.settings.display_vendor %}
+          <p class="vendor">
+            <span itemprop="brand">{{ product.vendor | link_to_vendor }}</span>
+          </p>
+        {% endif %}
+
+        {% if variant.sku != blank and section.settings.display_sku %}
+          <p class="sku">
+            <span itemprop="sku">{{ variant.sku }}</span>
+          </p>
+        {% endif %}
+
+        
+		<div class="desktop_prod_block">
+          {% if section.settings.product_description_position == "top" %}
+          {% if product.description != blank %}
+           <div class="description" itemprop="description">
+             {{ product.description | split: '<!--split-->' | first }}
+           </div>
+         {% endif %}
+        {% endif %}
+        {% unless collection_handles contains 'coming-soon' %}
+          <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+            <meta itemprop="seller" content="{{ shop.name | escape }}" />
+            <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+            <meta itemprop="itemCondition" content="New" />
+
+            <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+            <span itemprop="price" content="{{ variant.price | money_without_currency }}" class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+              <span class="current_price {% if product.available == false %}hidden{% endif %}">
+                {% if variant.price > 0 %}
+                  <span class="money">{{ variant.price | money }}</span>
+                {% else %}
+                  {{ settings.free_price_text }}
+                {% endif %}
+              </span>
+            </span>
+            <span class="was_price">
+              {% if variant.price < variant.compare_at_price and variant.available %}
+                <span class="money">{{ variant.compare_at_price | money }}</span>
+              {% endif %}
+            </span>
+          </p>
+          {% if settings.notify_me_form %}
+            {% include 'product-notify-me' %}
+          {% endif %}
+        {% endunless %}
+
+        
+
+        {% unless collection_handles contains 'coming-soon' %}
+          {% include 'new-product-form' with 'product' %}
+        
+        {% endunless %}
+
+        <h4 class="sub_btn_text">Free Shipping Over $79</h4>
+          <hr>
+          <div class="quantidte">
+            <p>Order now and get it between <span id="fromDate"></span> & <span id="toDate"></span>.</p>
+          </div>
+          <hr>
+        {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+          <div id="stamped-main-widget" 
+               data-widget-style="standard"
+               data-product-id="{{ product.id }}" 
+               data-name="{{ product.title | escape }}" 
+               data-url="{{ shop.url }}{{ product.url }}" 
+               data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+               data-description="{{ product.description | escape }}" 
+               data-product-sku="{{product.handle}}"
+               data-product-type="{{product.type}}"> 
+            {{ product.metafields.stamped.reviews }} 
+          </div>  
+        {% endif %}
+		
+        
+        {% if section.settings.display_collections or section.settings.display_tags or section.settings.display_type %}
+         <hr />
+        {% endif %}
+
+        <div class="meta">
+          {% if section.settings.display_social_buttons %}
+            <share-button></share-button>
+          {% endif %}
+
+          {% if section.settings.display_collections %}
+            <p>
+              <span class="label">{{ 'products.product.collections' | t }}:</span>
+              <span>
+               {% for col in product.collections %}
+                 <a href="{{ col.url }}" title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %}
+               {% endfor %}
+             </span>
+           </p>
+          {% endif %}
+
+          {% if section.settings.display_tags %}
+             <p>
+               {% for tag in product.tags %}
+                 {% if forloop.first %}
+                   <span class="label">{{ 'products.product.tags' | t }}:</span>
+                 {% endif %}
+
+                 {% unless tag contains 'meta-' %}
+                   <span>
+                     <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}" title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                   </span>
+                 {% endunless %}
+               {% endfor %}
+             </p>
+          {% endif %}
+
+         {% if section.settings.display_type %}
+            <p>
+              <span class="label">{{ 'products.product.product_types' | t }}:</span>
+              <span>{{ product.type | link_to_type }}</span>
+            </p>
+         {% endif %}
+          {% if settings.enable_shopify_product_badges %}
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+        {% endif %}
+        </div>
+       </div>
+      </div>
+		
+      {% if section.settings.product_images_position == 'right' %}
+        <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} mobile_hidden">
+          {% include 'product-images' %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if product.description contains "<!--split-->"  %}
+      <br class="clear" />
+      <div class="section clearfix">
+        <div class="description">
+          {{ product.description | split: '<!--split-->' | last }}
+        </div>
+      </div>
+    {% endif %}
+
+
+    </div>
+  </div>
+</div>
+<main>
+
+    <div class="second">
+        <div class="container">
+            <div class="second-partners">
+                <div class="partner-item partner-item-f">
+                    <h3>As Featured On</h3>
+                </div>
+
+                <div class="partner-item">
+                      <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/Glamour_Logo.svg?6962" alt="">
+                  	 
+                </div>
+
+                <div class="partner-item">
+                    <a href="https://www.buzzfeed.com/juliegerstein/just-8-really-good-products-that-work-great-for-thirty">                  
+                   	 <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/BuzzFeed_Logo.svg?6962" alt="">
+                    </a>
+                </div>
+
+                <div class="partner-item">
+                    <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/FoxNews_Logo.svg?6962" alt="">
+                </div>
+
+                <div class="partner-item">
+                  <a href="https://nylon.com/articles/indie-beauty-expo-2017-brands?utm_source=facebook&utm_medium=social&utm_campaign=nylon&fbclid=IwAR2CSCMZ2L-p-qw4WdMDHarfSosHwFE2rPJi-VqF64ERgFxyk7l96uBz908">
+                    <img style="width: 133px; height: 26px;" src="https://cdn.shopify.com/s/files/1/1212/4268/files/nylon-logo.jpg?6828" alt="">
+                  </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="third">
+        <div class="third-top">
+            <div class="container">
+                <div class="third-top-title">
+                    <h2>
+                        Over 40 Natural Plant & Mineral based Ingredients.
+                    </h2>
+                    <h3 class="how_to_use">Here Is How to Use #2 Radiant Cleansing Nectar </h3>  
+                </div>
+
+                <div class="third-top-video">
+                   
+                        <video id='media-video' controls poster="https://cdn.shopify.com/s/files/1/1212/4268/files/maxresdefault.jpg?12527">
+                            <source src="https://sugatan.io/videos/Radiant_12_09_2019.mp4" type='video/mp4'>
+                        </video>
+                        <div id='media-controls'>
+                            <div id='play-pause-button' class='play' onclick='togglePlayPause();'></div>
+                        </div>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="third-bottom">
+            <div class="container cont_2">
+                <div class="third-bottom-wrap">
+                    <div class="third-bottom-title">
+                        <h3>
+                            Helps to fight breakouts,<br>
+                            blackheads, and blemishes,<br>
+                            even if nothing else has<br>
+                            worked before
+                        </h3>
+
+                        <div class="sub-line"></div>
+                    </div>
+                    <div class="third-bottom-image">
+                        <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/girl.png?5889" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sixth">
+        <div class="container">
+            <div id = "clarify" class="sixth-title">
+                <h2>
+                    List of Ingredients
+                </h2>
+            </div>
+            <div class="sixth-wrap">
+              <div class="ingrid_descript_position">
+              	<p>
+					Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Deionized Water, Hamamelis Virginiana (Witch Hazel) Water, Matricaria Recutita Flower (Chamomile) Water, Crataegus Monogyna (Hawthorn) Fruit Extract, Helichrysum Italicum Distillate, Pyrus Malus (Apple) Seed Oil, Colloidal Silver, Alcohol, Leptospermum Scoparium (Manuka) Oil, Tocopherol Acetate (Vitamin E), Eclipta Prostrata Extract, Melia Azadirachta Leaf Extract, Moringa Oleifera Seed Oil.'
+                </p>
+              </div>
+            </div>
+        </div>
+      	<div class="ingrid_block_position">
+          <div class="ingrid_block">
+            <div class="ingrid">
+            	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/manuka.png?12891">
+            </div>
+            <div class="ingrid">
+            	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/hawthorn.png?12891">
+            </div>
+            <div class="ingrid">
+            	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/appleseed.png?12891">
+            </div>
+          </div>
+      	</div>
+    </div>
+<!-- 	<hr/>
+    <br class="clear" />
+  
+    <div class="check_icons_block">
+      <div class="check_block_position">
+        <div class="check_block">
+        	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/Capture_3.svg?11770">
+          	<h3>MADE IN <br> USA</h3>
+        </div>
+        <div class="check_block">
+        	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/Capture_3.svg?11770">
+          	<h3>Cruelty <br> Free</h3>
+        </div>
+        <div class="check_block">
+        	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/Capture_3.svg?11770">
+          	<h3>Gluten <br> Free</h3>
+        </div>
+        <div class="check_block">
+        	<img src="https://cdn.shopify.com/s/files/1/1212/4268/files/Capture_3.svg?11770">
+          	<h3>Paraben <br> Free</h3>
+        </div>
+      </div>
+  	</div>
+   <br class="clear" /> -->
+    <div class="fifth">
+    {% if settings.enable_shopify_review_comments and settings.review_position == "bottom" %}
+          <div id="stamped-main-widget" 
+               data-widget-style="standard"
+               data-product-id="{{ product.id }}" 
+               data-name="{{ product.title | escape }}" 
+               data-url="{{ shop.url }}{{ product.url }}" 
+               data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+               data-description="{{ product.description | escape }}" 
+               data-product-sku="{{product.handle}}"
+               data-product-type="{{product.type}}"> 
+            {{ product.metafields.stamped.reviews }} 
+          </div>  
+    {% endif %}
+    </div>
+
+    <div class="forth">
+        <div class="container cont_2">
+            <div class="forth-wrap">
+
+                <div class="steps-item">
+                    <div class="steps-item-image">
+                        <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icon1.svg?5889" alt="">
+                    </div>
+                    <div class="steps-item-title">
+                        <h4>Beauty</h4>
+                    </div>
+                    <div class="steps-item-text">
+                        <p>
+                            Reveal the true you and achieve
+                            stunning results of nourished skin
+                            for healthy complexion.
+                        </p>
+                    </div>
+                </div>
+                <div class="steps-item">
+                    <div class="steps-item-image">
+                        <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icon2.svg?5889" alt="">
+                    </div>
+                    <div class="steps-item-title">
+                        <h4>Confidence</h4>
+                    </div>
+                    <div class="steps-item-text">
+                        <p>
+                            Forget hiding behind layers of
+                            makeup, achieve the clear, smooth
+                            skin you never thought possible!
+                        </p>
+                    </div>
+                </div>
+                <div class="steps-item">
+                    <div class="steps-item-image">
+                        <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icon3.svg?5889" alt="">
+                    </div>
+                    <div class="steps-item-title">
+                        <h4>Glow</h4>
+                    </div>
+                    <div class="steps-item-text">
+                        <p>
+                            Achieve radiant skin with
+                            nourishing ingredients to help bring
+                            skin health to optimal level.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="seventh" style="background: url('https://cdn.shopify.com/s/files/1/1212/4268/files/maxresdefault.jpg?12527') no-repeat center center / cover">
+
+    </div>
+    <div class="accordeon_header_position">
+      <div class="accordeon_header">
+          <h1>Frequently Asked Questions</h1>
+      </div>
+    </div>  
+    <div class="accordeon_block_position">
+    	<div class="accordeon_block">
+          <div class="first_accord">
+          	<div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">How does this cleanse my face?</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+					First, spray your face with the Clarifying Hydration Dew, so the skin is pretty saturated. Next, shake the Radiant Cleansing Nectar a few times and then turn upside down and let it soak through to the bottom of the cotton pad. 
+					<br><br>
+					You will see one side oily and one side more watery looking. Apply 3-5 circles of the product on the pad. Take the more oily side and buff the skin and then repeat the process with the more watery side. There is no need to rinse this off. You will notice a grey/beige film. This is dead skin, bacteria, and oil being whisked away onto the cotton pad. :)
+				  </div>
+                </div>
+              </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+            <div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">Why do I not rinse this cleanser off?</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+                      This is an oil/extracts based cleanser. Once applied to the cotton pad and buffed on the face, it really works at gently exfoliating to remove dead skin, dirt, bacteria, and makeup. In the morning, it cleanses to remove the Elixir. Not only does it cleanse, but it deposits fighting nutrients, antioxidants, and essential fatty acids, which is why it is not rinsed off.
+                  </div>
+                </div>
+              </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+            <div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">Why is this better than more traditional ways of cleansing your skin?</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+                      Problematic skin needs a delicate balance between tough and gentle. The cleanser needs to remove dirt, makeup, and fight off bad bacteria while at the same time gentle and nourishing, so we have crafted that perfect blend for you. This formula is unique to anything you have tried. You do not rinse it off. You apply the cleanser to a cotton pad and buff skin. Doing so removes dirt, oil, and dead skin onto the cotton pad while depositing good, fighting nutrition to the skin. This cleanser is so good; you can wash your face with your old cleanser and then try this. You will be amazed at how much our Radiant Cleanser pulls off that your old cleanser left behind! 
+					  <br><br>
+ 					  Gently formulated for all skin types, even the most finicky. The experience of washing your face with the Radiant Cleansing Nectar will leave you feeling like it is more of a relaxing, pamper session than just a cleansing routine. Who wouldn’t mind a little extra pampering every day? Suitable for dry, oily or combo skin.
+				  </div>
+                  </div>
+              </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+          </div>
+          <div class="second_accord">
+            <div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">Since this is an all natural product, what should I know about it?</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+					There is jojoba in the cleanser, which is great to control sebum production on the skin because it is very similar to human sebum. However, jojoba is not an oil; it is considered a waxy ester, kind of in the wax family. Fluctuations in temperatures will cause the jojoba to create a "sticky" effect on the walls of the cleanser. It can also cause the jojoba in the cleanser to naturally become cloudy or wispy. The results of this fluctuation do not at all affect the effectiveness or quality of the Radiant Cleansing Nectar.
+					<br><br>
+					Also, please note colors in natural ingredients can be off a shade or two, only because of it being from a natural source and the plants used at the time of pressing. 
+                  </div>
+                </div>
+                </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+            <div class="accordion js-accordion">
+              <div class="accordion__item js-accordion-item">
+                <div class="accordion-header js-accordion-header">How long does this product last?</div> 
+              	<div class="accordion-body js-accordion-body">
+                  <div class="accordion-body__contents">
+					About 1.5 months
+                  </div>
+                  </div>
+              </div><!-- end of accordion body -->
+            </div><!-- end of accordion item -->
+          </div>  
+      	</div>
+    </div>
+    {%comment%}
+  	<div id = "clarify" class="sixth-title">
+        <h2>
+           Blog Posts
+        </h2>
+    </div>
+  	<div class="relative_posts_block">
+      <div class="blog_posts_position">
+      	{% for article in blogs.news.articles limit:3 %}
+			<div class="post">
+              	<a href="{{ article.url }}"><img src="{{ article.image.src | img_url: '345x167', crop: 'center' }}"></a>
+                <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>
+        	</div>
+        {% endfor %}
+      </div>
+  	</div>
+    {%endcomment%}
+  	<div id = "clarify" class="sixth-title">
+        <h2>
+           Frequently Bought Together
+        </h2>
+    </div>
+  	
+  
+ {% if section.settings.display_related_products %}
+      {% capture limit %}{{ section.settings.products_per_row | plus: 1 }}{% endcapture %}
+
+      {% if collection and collection.all_products_count > 1 %}
+        {% assign col = collection.handle %}
+      {% else %}
+        {% assign col = product.collections.last.handle %}
+      {% endif %}
+
+      {% for tag in product.tags %}
+        {% if tag contains 'meta-related-collection-' %}
+          {% assign related_collection_handle = tag | remove: 'meta-related-collection-' %}
+          {% if collections[related_collection_handle].all_products_count > 0 %}
+            {% assign col = related_collection_handle %}
+            {% assign collection = collections[col] %}
+            {% capture limit %}{{ collection.products_count | plus: 1 }}{% endcapture %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% if col and collections[col].all_products_count > 0 %}
+        {% if collections[col].all_products_count != 1 or collections[col].products.first.id != product.id %}
+          {% assign skip_product = product %}
+          {% assign products = collections[col].products %}
+          {% assign products_per_row = section.settings.products_per_row %}
+          {% include 'prod_loop_updated' with sidebar: sidebar %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  	<div class="container main content main-wrapper">
+  
+
+  {% comment %}Check to see if sidebar should be enabled{% endcomment %}
+  {% if section.blocks.size > 0 %}
+    {% assign sidebar = true %}
+  {% else %}
+    {% assign sidebar = false %}
+  {% endif %}
+
+  {% if sidebar %}
+    {% include 'sidebar' %}
+    <div class="twelve columns">
+      <div class="product-{{ product.id }}">
+  {% else %}
+    <div class="sixteen columns">
+      <div class="product-{{ product.id }}">
+  {% endif %}
+
+    <div class="section product_section clearfix
+    {% if product.images.size > 1 %} thumbnail_position--{{settings.thumbnail_position}} {% endif %} product_slideshow_animation--{{settings.product_slideshow_animation}}"
+       data-thumbnail="{{settings.thumbnail_position}}"
+       data-slideshow-animation="{{settings.product_slideshow_animation}}"
+       data-slideshow-speed="{{settings.slideshow_speed}}"
+       itemscope itemtype="http://schema.org/Product">
+
+      <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} {% if section.settings.product_images_position == 'right' %}mobile_only{% endif %}">
+        {% include 'product-images' %}
+<!--       	<img class="sale_badge" src="https://cdn.shopify.com/s/files/1/1212/4268/files/10off.png?11057"> -->
+      </div>
+      <div class="mobile_prod_block">
+            {% unless collection_handles contains 'coming-soon' %}
+                <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <meta itemprop="priceCurrency" content="{{ shop.currency }}"/>
+                    <meta itemprop="seller" content="{{ shop.name | escape }}"/>
+                    <link itemprop="availability"
+                          href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+                    <meta itemprop="itemCondition" content="New"/>
+
+                    <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                    <span itemprop="price" content="{{ variant.price | money_without_currency }}"
+                          class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+              <span class="current_price {% if product.available == false %}hidden{% endif %}">
+                  <span class="money">{{ variant.price }}</span>
+              </span>
+            </span>
+                    <span class="was_price">
+                      {% if variant.price < variant.compare_at_price %}
+                          <span class="money">{{ variant.compare_at_price | money }}</span>
+                      {% endif %}
+              </span>
+                </p>
+                {% if settings.notify_me_form %}
+                    {% include 'product-notify-me' %}
+                {% endif %}
+            {% endunless %}
+
+            {% unless collection_handles contains 'coming-soon' %}
+                {% include 'new-product-form' with 'product' %}
+
+            {% endunless %}
+
+            <h4 class="sub_btn_text">Free Shipping Over $79</h4>
+
+            {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+          <div id="stamped-main-widget" 
+               data-widget-style="standard"
+               data-product-id="{{ product.id }}" 
+               data-name="{{ product.title | escape }}" 
+               data-url="{{ shop.url }}{{ product.url }}" 
+               data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+               data-description="{{ product.description | escape }}" 
+               data-product-sku="{{product.handle}}"
+               data-product-type="{{product.type}}"> 
+            {{ product.metafields.stamped.reviews }} 
+          </div>  
+            {% endif %}
+
+            {% if section.settings.display_collections or section.settings.display_tags or section.settings.display_type %}
+                <hr/>
+            {% endif %}
+
+            <div class="meta">
+                {% if section.settings.display_social_buttons %}
+                    <share-button></share-button>
+                {% endif %}
+
+                {% if section.settings.display_collections %}
+                    <p>
+                        <span class="label">{{ 'products.product.collections' | t }}:</span>
+                        <span>
+               {% for col in product.collections %}
+                   <a href="{{ col.url }}"
+                      title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %}
+               {% endfor %}
+             </span>
+                    </p>
+                {% endif %}
+
+                {% if section.settings.display_tags %}
+                    <p>
+                        {% for tag in product.tags %}
+                            {% if forloop.first %}
+                                <span class="label">{{ 'products.product.tags' | t }}:</span>
+                            {% endif %}
+
+                            {% unless tag contains 'meta-' %}
+                                <span>
+                     <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}"
+                        title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                   </span>
+                            {% endunless %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+
+                {% if section.settings.display_type %}
+                    <p>
+                        <span class="label">{{ 'products.product.product_types' | t }}:</span>
+                        <span>{{ product.type | link_to_type }}</span>
+                    </p>
+                {% endif %}
+                {% if settings.enable_shopify_product_badges %}
+                    <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+                {% endif %}
+            </div>
+      </div>
+
+       <div class="{% if sidebar %}five{% else %}seven{% endif %} columns {% if section.settings.product_images_position == 'left' %}omega{% else %}alpha{% endif %}">
+
+        {% assign collection_handles = product.collections | map: 'handle' %}
+        {% assign variant = product.selected_or_first_available_variant %}
+        <h3 class="product_expresion">"This kit is changing my skin! I’ve been using it for two months and I’ve seen huge improvements in my skin!! My acne is clearing up, scars are fading, and my skin is so soft."<span class="lara_txt"> Tate W.</span></h3>
+        <h1 class="product_name" itemprop="name">{{ product.title }}</h1>
+
+        {% if section.settings.product_description_position == "top" %}
+            {% if product.description != blank %}
+                 <div class="description" itemprop="description">
+                    {{ product.description | split: '<!--split-->' | first }}
+                 </div>
+            {% endif %}
+        {% elsif section.settings.product_description_position == "bottom" %}
+
+        {% else %}
+             <div class="description" itemprop="description">
+                 {{ product.description | split: '<!--split-->' | first }}
+             </div>
+        {% endif %}
+
+         <!--<div class="description mobile_prod_block" itemprop="description">
+             {{ product.description | split: '<!--split-->' | first }}
+         </div>-->
+
+        {% if section.settings.display_vendor %}
+          <p class="vendor">
+            <span itemprop="brand">{{ product.vendor | link_to_vendor }}</span>
+          </p>
+        {% endif %}
+
+        {% if variant.sku != blank and section.settings.display_sku %}
+          <p class="sku">
+            <span itemprop="sku">{{ variant.sku }}</span>
+          </p>
+        {% endif %}
+
+		<div class="desktop_prod_block">
+        {% unless collection_handles contains 'coming-soon' %}
+          <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+            <meta itemprop="seller" content="{{ shop.name | escape }}" />
+            <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+            <meta itemprop="itemCondition" content="New" />
+
+            <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+            <span itemprop="price" content="{{ variant.price | money_without_currency }}" class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+              <span class="current_price {% if product.available == false %}hidden{% endif %}">
+                {% if variant.price > 0 %}
+                  <span class="money">{{ variant.price | money }}</span>
+                {% else %}
+                  {{ settings.free_price_text }}
+                {% endif %}
+              </span>
+            </span>
+            <span class="was_price">
+              {% if variant.price < variant.compare_at_price and variant.available %}
+                <span class="money">{{ variant.compare_at_price | money }}</span>
+              {% endif %}
+            </span>
+          </p>
+          {% if settings.notify_me_form %}
+            {% include 'product-notify-me' %}
+          {% endif %}
+        {% endunless %}
+
+
+
+        {% unless collection_handles contains 'coming-soon' %}
+          {% include 'new-product-form' with 'product' %}
+        
+        {% endunless %}
+
+        <h4 class="sub_btn_text">Free Shipping Over $79</h4>
+
+        {% if settings.enable_shopify_review_comments and settings.review_position == "top" %}
+          <div id="stamped-main-widget" 
+               data-widget-style="standard"
+               data-product-id="{{ product.id }}" 
+               data-name="{{ product.title | escape }}" 
+               data-url="{{ shop.url }}{{ product.url }}" 
+               data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+               data-description="{{ product.description | escape }}" 
+               data-product-sku="{{product.handle}}"
+               data-product-type="{{product.type}}"> 
+            {{ product.metafields.stamped.reviews }} 
+          </div>  
+        {% endif %}
+
+        {% if section.settings.display_collections or section.settings.display_tags or section.settings.display_type %}
+         <hr />
+        {% endif %}
+
+        <div class="meta">
+          {% if section.settings.display_social_buttons %}
+            <share-button></share-button>
+          {% endif %}
+
+          {% if section.settings.display_collections %}
+            <p>
+              <span class="label">{{ 'products.product.collections' | t }}:</span>
+              <span>
+               {% for col in product.collections %}
+                 <a href="{{ col.url }}" title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %}
+               {% endfor %}
+             </span>
+           </p>
+          {% endif %}
+
+          {% if section.settings.display_tags %}
+             <p>
+               {% for tag in product.tags %}
+                 {% if forloop.first %}
+                   <span class="label">{{ 'products.product.tags' | t }}:</span>
+                 {% endif %}
+
+                 {% unless tag contains 'meta-' %}
+                   <span>
+                     <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}" title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                   </span>
+                 {% endunless %}
+               {% endfor %}
+             </p>
+          {% endif %}
+
+         {% if section.settings.display_type %}
+            <p>
+              <span class="label">{{ 'products.product.product_types' | t }}:</span>
+              <span>{{ product.type | link_to_type }}</span>
+            </p>
+         {% endif %}
+          {% if settings.enable_shopify_product_badges %}
+          <span class="stamped-product-reviews-badge stamped-main-badge" data-id="{{ product.id }}" data-product-sku="{{ product.handle }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display: inline-block;">{{ product.metafields.stamped.badge }}</span>
+        {% endif %}
+        </div>
+       </div>
+      </div>
+		
+      {% if section.settings.product_images_position == 'right' %}
+        <div class="{% if sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if section.settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %} mobile_hidden">
+          {% include 'product-images' %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!--{% if product.description contains "<!--split-->"  %}
+      <br class="clear" />
+      <div class="section clearfix">
+        <div class="description">
+          {{ product.description | split: '<!--split-->' | last }}
+        </div>
+      </div>
+    {% endif %}-->
+    </div>
+  </div>
+</div>
+  	<div class="pop_up_bg">
+      <div class="pop_up_block">
+        <div class="close_popup">
+        	<img onclick="closePopUp();" src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-delete_sign.svg?11166">
+        </div>
+        
+          <p class="pop_up_text">
+            Deionized Water, Rosa Damascena (Rose) Flower Distillate, Calendula Officinalis Flower Extract, 
+            Cucumis Sativus (Cucumber) Fruit Extract, Serenoa Repens (Saw Palmetto) Fruit Extract, 
+            Chamomilla Recutita (Matricaria) Flower Extract, Sodium Levulinate, Sodium Anisate, Melia 
+            Azadirachta Leaf Extract, Melia Azadirachta Flower Extract, Amino Esters-1, Coccinia Indica Fruit 
+            Extract, Solanum Melongena (Eggplant) Fruit Extract, Aloe Barbadensis Flower Extract, Lawsonia 
+            Inermis (Henna) Extract, Ocimum Sanctum Leaf Extract, Curcuma Longa (Turmeric) Root Extract, 
+            and Pearl Powder.
+          </p>
+       
+      </div>
+  	</div>
+</main>
+      <style>
+        body{
+          overflow-x: hidden;
+        }
+        .products{
+        	display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0px 18%;
+            margin-bottom: 120px;
+        }
+        .one-third{
+        	display: flex;
+            flex-direction: column;
+            width: 25%;
+        }
+        .one-third .money{
+        	font-size: 18px;
+        }
+        .details_btn span{
+        	width: 90%;
+        }
+        .accordeon_header_position{
+        	display: flex;
+          	justify-content: center;
+          	width: 100%;
+          	margin: 80px 0;
+        }
+        .accordeon_header{
+          display: flex;
+          justify-content: flex-start;
+          width: 80%;
+        }
+        .accordeon_header h1{
+          font-family: FreightDispProBook-Regular;
+          font-size: 72px;
+          font-weight: 100;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #000000;
+          text-transform: none;
+        }
+        .accordeon_block_position{
+        	display: flex;
+          	flex-direction: row;
+          	justify-content: center;
+          	width:100%;
+          	margin-bottom: 80px;
+        } 
+        .accordeon_block{
+        	display: flex;
+          	flex-direction: row;
+          	justify-content: space-between;
+          	width: 80%;
+        }
+        .first_accord{
+        	width: 45%;
+        }
+        .second_accord{
+        	width: 45%;
+        }
+.accordion {
+  font-size: 1rem;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.accordion-header,
+.accordion-body {
+  background: white;
+}
+
+.accordion-header {
+  border-top: 1.5px solid #efefef;
+  padding: 1.5em 1.5em 1.5em 0;
+  cursor: pointer;
+  transition: all .3s;
+  font-family: Gotham;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.accordion-header:hover {
+  position: relative;
+  z-index: 5;
+}
+
+.accordion-body {
+  color: #3f3c3c;
+  display: none;
+}
+
+.accordion-body__contents {
+  padding: 0 1em 2em 1em;
+  font-family: Gotham;
+  font-size: 16px;
+  font-weight: 100;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #555555;
+}
+        
+.accordion__item.active:last-child .accordion-header {
+  border-radius: none;
+}
+
+.accordion:first-child > .accordion__item > .accordion-header {
+  border-bottom: 1px solid transparent;
+}
+
+.accordion__item > .accordion-header:after {
+  content: "\f3d0";
+  font-weight: 100;
+  font-family: IonIcons;
+  font-size: 1.2em;
+  float: right;
+  position: relative;
+  top: -2px;
+  transition: .3s all;
+  transform: rotate(0deg); 
+}
+
+.accordion__item.active > .accordion-header:after {
+  transform: rotate(-180deg);
+}
+
+.accordion__item.active .accordion-header {
+  
+}
+
+.accordion__item .accordion__item .accordion-header {
+  color: black;
+}
+
+@media screen and (max-width: 1000px) {
+  body {
+    padding: 1em;
+  }
+  
+  .accordion {
+    width: 100%;
+  }
+}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        .ingred_btn{
+        	cursor: pointer !important;
+        }
+        .pop_up_bg{
+        	display: none;
+          	flex-direction: row;
+          	justify-content: center;
+          	align-items: center;
+          	width: 100vw;
+          	height: 100vh;
+          	position: fixed;
+          	background-color: rgba(34, 34, 34, 0.72);
+            top: 0;
+          	left: 0;
+            z-index: 100;
+        }
+        .pop_up_block{
+        	width: 62%;
+          	background-color: #FFF;
+        }
+        .close_popup{
+        	width: 100%;
+          	display: flex;
+          	flex-direction: row;
+          	justify-content: flex-end;
+        }
+        .close_popup img{
+        	margin: 20px 20px 36px 0px;
+          	cursor: pointer !important;
+        }
+        .pop_up_text{
+        	font-family: Gotham;
+  			font-size: 16px;
+  			font-weight: 100;
+  			font-style: normal;
+  			font-stretch: normal;
+  			line-height: 1.5;
+  			letter-spacing: normal;
+  			color: #000000;
+          	padding: 0 80px 80px 80px;
+        }
+        @media screen and (max-width: 1024px){
+        	.pop_up_block{
+        		width: 75%;
+        	}	
+          .products{
+          	padding: 0 5%;
+          }
+        }
+        @media screen and (max-width: 768px){
+        	.pop_up_block{
+        		width: 85%;
+        	}
+          .accordeon_block{
+          		flex-direction: column;
+              	justify-content: flex-start;
+              	align-items: center;
+              	width: 90%;
+          	}
+            .first_accord, .second_accord {
+                width: 100%;
+            }
+          .accordion-header{
+          	font-size: 20px;
+          }
+          .accordeon_block_position{
+          	margin-bottom:0;
+          }
+        }
+        @media screen and (max-width: 500px){
+          .selector-wrapper:nth-child(2){
+          	display: none !important;
+          }
+          .selector-wrapper:nth-child(3){
+          	display: none !important;
+          }
+         .selector-wrapper:nth-child(4){
+          	display: none !important;
+          }
+          .blog_posts_position{
+            flex-direction: column;
+            align-items: center;
+            width: 95%;
+          }
+          .post{
+          	width: 90%;
+            margin-bottom: 7%;
+          }
+          .post:last-child{
+          	width: 90%;
+            margin-bottom: 15%;
+          }
+          .products{
+          	flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+          }
+          .one-third{
+          	width: 70%;
+            margin: 0 0 7% 0;
+          }
+          .one-third .price{
+          	text-align: center;
+          }
+        	.pop_up_block{
+        		width: 100%;
+        	}
+            .pop_up_text{
+              	font-family: Gotham;
+                font-size: 16px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: 1.5;
+                letter-spacing: normal;
+                color: #000000;
+              	padding: 0 40px 64px 40px;
+          	}
+          	.accordeon_header_position{
+              margin: 28px 0;
+            }
+            .accordeon_header h1{
+              font-size: 40px;
+            }
+          	.accordeon_block{
+          		flex-direction: column;
+              	justify-content: flex-start;
+              	align-items: center;
+              	width: 90%;
+          	}
+            .first_accord, .second_accord {
+                width: 100%;
+            }
+          .accordion-header{
+          	font-size: 16px;
+          }
+          .accordeon_block_position{
+          	margin-bottom:0;
+          }
+          .pop_up_text{
+        	font-family: Gotham;
+  			font-size: 14px;
+  			font-weight: 100;
+  			font-style: normal;
+  			font-stretch: normal;
+  			line-height: 1.5;
+  			letter-spacing: normal;
+  			color: #000000;
+          	padding: 0 20px 20px 20px;
+        }
+        }
+   		.forth {margin: 50px 0 80px 0;}
+    	.sixth {margin: 150px 0 50px 0;}
+  		.forth-wrap {margin: 0;}
+        @media screen and (max-width: 768px){
+          .sixth {margin: 50px 0;}
+        }
+
+      </style>
+      <script>
+        function closePopUp(){
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "none";
+        }
+        function openIngrid1(){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = "Deionized Water, Rosa Damascena (Rose) Flower Distillate, Calendula Officinalis Flower Extract, Cucumis Sativus (Cucumber) Fruit Extract, Serenoa Repens (Saw Palmetto) Fruit Extract, Chamomilla Recutita (Matricaria) Flower Extract, Sodium Levulinate, Sodium Anisate, Melia Azadirachta Leaf Extract, Melia Azadirachta Flower Extract, Amino Esters-1, Coccinia Indica Fruit Extract, Solanum Melongena (Eggplant) Fruit Extract, Aloe Barbadensis Flower Extract, Lawsonia Inermis (Henna) Extract, Ocimum Sanctum Leaf Extract, Curcuma Longa (Turmeric) Root Extract, Pearl Powder";    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+        function openIngrid2(){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = "Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Deionized Water, Hamamelis Virginiana (Witch Hazel) Water, Anthemis Nobilis Flower (Chamomile) Extract, Crataegus Monogyna (Hawthorn) Fruit Extract, Helichrysum Italicum Distillate, Pyrus Malus (Apple) Seed Oil, Carapa Guaianensis (Andiroba) Seed Oil, Colloidal Silver, Leptospermum Scoparium (Manuka) oil, Tocopherol Acetate (Vitamin E), Rosemarinus Officinalis (Rosemary) Leaf Extract, Melia Azadirachta Extract, Moringa Pterygosperma Seed Oil";    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+        function openIngrid3(){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = "Zinc Oxide (non-nano), Deionized Water, Hamamelis Virginiana (Witch Hazel) Water, French Pink Clay, Anthemis Nobilis (Roman Chamomile) Extract, CoralCrataegus Monogyna (Hawthorn) Fruit Extract, Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Citrus Grandis (Grapefruit) Peel Oil, Citrus Aurantium Bergamia (Bergamot) Fruit Oil, Rubus Idaeus (Raspberry) Seed Oil, Camellia Oleifera (Camellia) Seed Oil, Sodium Levulinate, Sodium Anisate, Glycerin, Melaleuca Alternifolia (Tea Tree) Leaf Oil, Tocopherol Acetate (Vitamin E), Oryza Sativa (Rice) Starch, Leptospermum Scoparium (Manuka) Oil";    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+        function openIngrid4(){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = "Butyrospermum Parkii (Shea) Butter, Simmondsia Chinensis (Jojoba) Seed Oil, Rosa Canina (Rose Hips) Fruit Oil, Vitis Vinifera (Grape) Seed Oil, Theobroma Grandiflorum (Cupuacu) Butter, Cucurbita Pepo (Pumpkin) Seed Oil, Persea Gratissima (Avocado) Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Astrocaryum Tucuma Seed Butter, Rubus Idaeus (Raspberry) Seed Oil, Camellia Oleifera (Camellia) Seed Oil, Citrus Grandis (Grapefruit) Peel Oil, Coral Powder, Tocopherol Acetate (Vitamin E), Oryza Sativa (Rice) Starch, Argania Spinosa (Argan) Kernel Oil, Rosmarinus Officinalis (Rosemary) Leaf Extract, Citrus Aurantium Bergamia (Bergamot) Fruit Oil, Melia Azadirachta Extract, Moringa Pterygosperma Seed Oil";    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+        function openIngrid5(){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = "Deionized Water, Melissa Officinalis Extract, Rosmarinus Officinalis (Rosemary) Leaf Extract, Symphytum Officinale (Comfrey) Leaf Extract, Centaurea Cyanus (Cornflower) Flower Extract, Coffea Arabica (Coffee) Seed Extract, Citrus Aurantium Amara Flower Extract, Citrus sinensis Fruit Water, Hamamelis Virginiana (Witch Hazel) Water, Terminalia Ferdinandiana Extract Fruit, Pseudoalteromonas Ferment Extract (derived from Arctic Mud), Glycerin, Sodium Levulinate, Sodium Anisate, Sea Salt, Black Clay, Citrus Sinensis (Orange) Peel Extract";    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+        
+        var accordion = (function(){
+  
+  var $accordion = $('.js-accordion');
+  var $accordion_header = $accordion.find('.js-accordion-header');
+  var $accordion_item = $('.js-accordion-item');
+ 
+  // default settings 
+  var settings = {
+    // animation speed
+    speed: 400,
+    
+    // close all other accordion items if true
+    oneOpen: false
+  };
+    
+  return {
+    // pass configurable object literal
+    init: function($settings) {
+      $accordion_header.on('click', function() {
+        accordion.toggle($(this));
+      });
+      
+      $.extend(settings, $settings); 
+      
+      // ensure only one accordion is active if oneOpen is true
+      if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
+        $('.js-accordion-item.active:not(:first)').removeClass('active');
+      }
+      
+      // reveal the active accordion bodies
+      $('.js-accordion-item.active').find('> .js-accordion-body').show();
+    },
+    toggle: function($this) {
+            
+      if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
+        $this.closest('.js-accordion')
+               .find('> .js-accordion-item') 
+               .removeClass('active')
+               .find('.js-accordion-body')
+               .slideUp()
+      }
+      
+      // show/hide the clicked accordion item
+      $this.closest('.js-accordion-item').toggleClass('active');
+      $this.next().stop().slideToggle(settings.speed);
+    }
+  }
+})();
+
+$(document).ready(function(){
+  accordion.init({ speed: 300, oneOpen: true });
+});
+      </script>
+    <script>
+ // собираем все якоря; устанавливаем время анимации и количество кадров
+const anchors = [].slice.call(document.querySelectorAll('a[href*="#"]')),
+      animationTime = 800,
+      framesCount = 20;
+
+anchors.forEach(function(item) {
+  // каждому якорю присваиваем обработчик события
+  item.addEventListener('click', function(e) {
+    // убираем стандартное поведение
+    e.preventDefault();
+    
+    // для каждого якоря берем соответствующий ему элемент и определяем его координату Y
+    let coordY = document.querySelector(item.getAttribute('href')).getBoundingClientRect().top;
+    
+    // запускаем интервал, в котором
+    let scroller = setInterval(function() {
+      // считаем на сколько скроллить за 1 такт
+      let scrollBy = coordY / framesCount;
+      
+      // если к-во пикселей для скролла за 1 такт больше расстояния до элемента
+      // и дно страницы не достигнуто
+      if(scrollBy > window.pageYOffset - coordY && window.innerHeight + window.pageYOffset < document.body.offsetHeight) {
+        // то скроллим на к-во пикселей, которое соответствует одному такту
+        window.scrollBy(0, scrollBy);
+      } else {
+        // иначе добираемся до элемента и выходим из интервала
+        window.scrollTo(0, coordY);
+        clearInterval(scroller);
+      }
+    // время интервала равняется частному от времени анимации и к-ва кадров
+    }, animationTime / framesCount);
+  });
+});
+</script>  
+      <script>
+        document.addEventListener("DOMContentLoaded", function() { initialiseMediaPlayer(); }, false);
+var mediaPlayer;
+function initialiseMediaPlayer() {
+   mediaPlayer = document.getElementById('media-video');
+   mediaPlayer.controls = false;
+}
+function togglePlayPause() {
+   var btn = document.getElementById('play-pause-button');
+   if (mediaPlayer.paused || mediaPlayer.ended) {
+      btn.title = 'pause';
+      btn.className = 'pause';
+      mediaPlayer.play();
+   }
+   else {
+      btn.title = 'play';
+      btn.className = 'play';
+      mediaPlayer.pause();
+   }
+}
+      </script>
+<style>
+  {% if section.settings.set_product_height %}
+  .product_slider .slides img { max-height: {{ section.settings.product_height }}px; }
+  {% endif %}
+</style>
+
+{% schema %}
+{
+  "name": "Product",
+  "class": "product-template-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "product_breadcrumb",
+      "label": "Show breadcrumb links"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_tags",
+      "label": "Show tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_type",
+      "label": "Show type"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_vendor",
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_sku",
+      "label": "Show SKU"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_social_buttons",
+      "label": "Show social media share icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collections",
+      "label": "Show collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_related_products",
+      "label": "Show related products ([?](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/115006909487-Related-Products))",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Related products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "radio",
+      "id": "product_description_position",
+      "label": "Description position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Above 'add to cart'"
+        },
+        {
+          "value": "bottom",
+          "label": "Below 'add to cart'"
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "product_images_position",
+      "label": "Images position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "set_product_height",
+      "label": "Set height of product images"
+    },
+    {
+      "type": "range",
+      "id": "product_height",
+      "label": "Product image height",
+      "min": 200,
+      "max": 800,
+      "step": 10,
+      "default": 500,
+      "unit": "px"        
+    },    
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create a sidebar by adding content blocks."
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle",
+      "label": "Toggle sidebar content"
+    },
+    {
+      "type": "paragraph",
+      "content": "Featured in Section below the product image"
+    },
+      {
+      "type": "checkbox",
+      "id": "show_featured",
+      "label": "Show/Hide Featured Section",
+      "default":true
+    },
+       {
+      "type": "text",
+      "id": "featured_heading",
+      "label": "Heading",
+      "default":"Featured in"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_img1",
+      "label": "Image 1"
+    }, 
+       {
+      "type": "image_picker",
+      "id": "featured_img2",
+      "label": "Image 2"
+    },
+       {
+      "type": "image_picker",
+      "id": "featured_img3",
+      "label": "Image 3"
+    },
+       {
+      "type": "image_picker",
+      "id": "featured_img4",
+      "label": "Image 4"
+    },
+       {
+      "type": "image_picker",
+      "id": "featured_img5",
+      "label": "Image 5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_by_tag",
+      "name": "Tag list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_collection",
+      "name": "Collection list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_type",
+      "name": "Type list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_vendor",
+      "name": "Vendor list",
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "custom_menu_linklist",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text area can be used for special announcements or general information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "content_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>

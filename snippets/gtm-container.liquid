@@ -1,0 +1,93 @@
+<script>
+// Initialise data layer object
+var user = {};
+{% if customer %}
+  user = {
+    user_id: '{{ customer.id }}',
+    email: '{{customer.email}}',
+    name: '{{customer.name}}',
+    total_spent: ({{ customer.total_spent }} / 100),
+    order_count: {{ customer.orders_count }}
+  }
+  {% if customer.last_order %}
+    user.last_order = {
+    total: ({{ customer.last_order.total_price }} / 100),
+    created_at: '{{ customer.last_order.created_at }}'
+  }
+  {% endif %}
+
+{% endif %}
+
+var dataLayer = [{
+  page: {
+    type: '{{ template }}',
+    title: '{{ page_title }}'
+  },
+  user: user
+}];
+
+{% if template contains 'product' %}
+//=======================================================
+// Product pages
+//=======================================================
+
+dataLayer[0].product = {{ product | json }},
+dataLayer[0].ecommerce = {
+    'detail': {
+      'actionField': {},
+      'products': [{
+        'name': '{{ product.title }}',
+        'id': '{{ product.id }}',
+        'price': ({{ product.price }} / 100).toString(),
+        'brand': '{{ product.vendor }}',
+        'category': '{{ product.type }}'
+       }]
+     }
+   };
+  
+{% elsif template contains 'cart' %}
+//=======================================================
+// Cart page
+//=======================================================
+
+dataLayer[0].line_items = {{ cart.items | json }};
+
+{% elsif template contains 'collections' %}
+//=======================================================
+// Collection pages
+//=======================================================
+
+// Loop through all the products in the collection and
+// build an array.
+var products = [];
+{% for product in collection.products %}
+  products.push({
+    'name': '{{ product.title }}',
+    'id': '{{ product.id }}',
+    'price': ({{ product.price }} / 100).toString(),
+    'brand': '{{ product.vendor }}',
+    'category': '{{ product.type }}',
+    'list': '{{ page_title }}',
+    'position': {{ forloop.index }}
+  });
+{% endfor %}
+
+dataLayer[0].page.breadcrumb = ['{{ collection.title }}'];
+dataLayer[0].ecommerce = {
+    'currencyCode': '{{ shop.currency }}',
+    'impressions': products
+  };
+  
+{% elsif template contains 'article' %}
+//=======================================================
+// Blog article pages
+//=======================================================
+
+dataLayer[0].page.author = '{{ article.author }}';
+
+{% endif %}
+
+//=======================================================
+// GTM container tag
+//=======================================================
+</script>

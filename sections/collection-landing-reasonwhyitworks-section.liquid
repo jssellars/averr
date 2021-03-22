@@ -1,0 +1,106 @@
+<section class="whyitworks product-pros-wrap {{ section.settings.productContentDirection }}">
+    <div class="pp product-pros-banner">
+      <img class="lazyload" data-src="{{ section.settings.banner | img_url: 'large' }}" alt="">
+      <div class="pp-banner-text">
+        <p class="small-title">{{section.settings.subtitle}}</p>
+        <h2 class="main-title">{{section.settings.title}}</h2>
+      </div>
+    </div>
+    <div class="pp product-pros">
+      <div class="main-pros-wrap">
+        <span class="icons-section-title">Active ingredients</span>
+        <ul class="main-pros">
+          {% for block in section.blocks %}
+          <li>
+            <a href="{{block.settings.ingredients_link}}">
+            <div class="main-pros-image"><img src="{{ block.settings.ingrediantImg | img_url: ''}}"></div>
+            <p>{{block.settings.ingredientTitle}}</p>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <a href="https://averraglow.com/blogs/news/tagged/ingredients" class="action_button primary-btn">
+        Ingredients {{ 'new-arrow-right.png' | asset_url | img_tag }}
+      </a>
+    </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Reasons Why It Works",
+  "settings": [
+    {
+        "type": "select",
+        "id": "productContentDirection",
+        "options": [
+            { "value": "text-then-img", "label": "Text Then Image"},
+            { "value": "img-then-text", "label": "Image Then Text"}
+        ],
+        "label": "Content Direction"
+    },
+	{
+        "type": "image_picker",
+        "id": "banner",
+        "label": "Background Image"
+    },
+    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subtitle"
+    },
+    {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Ingredient Image",
+      "settings": [
+        {
+        "id": "ingredientTitle",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+        },
+		{ 
+        "id": "ingrediantImg",
+        "type": "image_picker",
+        "label": "simple image"
+    	},
+		{
+         "id": "ingredients_link",
+         "type": "url",
+         "label": "Ingredients Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+
+$('body').on('click', '.cp-accordian ul li button', function() {
+    $(".cp-accordian ul li button").removeClass("active");
+    $(".cp-accordian ul li .panel").hide();
+    $(this).addClass("active");
+    $(this).siblings(".panel").show();
+});
+
+$('body').on('click', '.cp-accordian ul li button.active', function() {
+    $(this).removeClass("active");
+    $(this).siblings(".panel").hide();
+});
+
+{% endjavascript %}
+

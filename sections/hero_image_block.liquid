@@ -1,0 +1,27 @@
+<div class="seventh"
+         style="background: url('{{ section.settings.hero_image | img_url: '2500x'}}') no-repeat center center / cover">
+</div>
+{% schema %}
+  {
+    "name": "Hero Image Block",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "hero_image",
+			"label": "Choose hero image"
+		}
+	],
+	"presets": [
+		{
+			"name": "Hero Image Block",
+			"category": "Product Blocks"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

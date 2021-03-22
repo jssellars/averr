@@ -1,0 +1,144 @@
+
+{%-if shown < show_count-%}
+	{%- assign shown = shown | plus:1 -%}
+{%-endif-%}
+{%- assign article_count = article_count | plus:1 -%}
+{%-if swap == 0-%}
+  {%-if col_count == 1-%}
+  <div class="container clearfix top38{% if shown == show_count %} hidden{% endif %}">
+    <div class="sixteen columns clearfix">
+      <div class="five columns margin-0 border template-3" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div class="item-wrapper">
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+            </div>
+            {%- endif -%}
+            <h5 class="sub_title">{{ article.title | downcase }}</h5>
+            <div class="author">Written by <strong>{{ article.author }}</strong></div>
+
+          </div>
+        </a>
+      </div>
+      {%- assign col_count = col_count | plus:1 -%}
+  {%-elsif col_count == 2-%}
+      <div class="eleven columns border large-article template-3" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div>
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+            </div>
+            {%- endif -%}
+            <div class="nine columns title-wrapper border">
+              <h5 class="sub_title">{{ article.title | downcase }}</h5>
+              <div class="author">Written by <strong>{{ article.author }}</strong></div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+    {%- assign col_count = 1 -%}
+    {%- assign row_count = row_count | plus:1 -%}
+    {%- assign swap = 1 -%}
+  {%- endif -%}
+{%-else-%}
+  {%-if col_count == 1-%}
+  <div class="container clearfix top38{% if shown == show_count %} hidden{% endif %}">
+    <div class="sixteen columns clearfix">
+      <div class="eleven columns border large-article template-3 swap l-margin-0" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div>
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+            </div>
+            {%- endif -%}
+            <div class="nine columns title-wrapper border">
+              <h5 class="sub_title">{{ article.title | downcase }}</h5>
+              <div class="author">Written by <strong>{{ article.author }}</strong></div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {%- if articles_count == article_count -%}
+      	<div class="five columns margin-0 template-3 swap last"></div>
+      {%- else -%}
+      	{%- assign col_count = col_count | plus:1 -%}
+      {%- endif -%}
+  {%-elsif col_count == 2-%}
+      <div class="five columns margin-0 border template-3 swap" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div class="item-wrapper">
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+            </div>
+            {%- endif -%}
+            <h5 class="sub_title">{{ article.title | downcase }}</h5>
+            <div class="author">Written by <strong>{{ article.author }}</strong></div>
+
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+    {%- assign col_count = 1 -%}
+    {%- assign row_count = row_count | plus:1 -%}
+    {%- assign swap = 0 -%}
+  {%- endif -%}
+{%-endif-%}

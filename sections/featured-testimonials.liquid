@@ -1,0 +1,166 @@
+<div class="content">
+  <section class="customer-section featured-testemonials-section">
+    <div class="container">
+      <div class="customer-header">
+        <span>{{section.settings.subtitle}}</span>
+        <h5>{{section.settings.title}}</h5>
+      </div>
+      <div class="customer-inner owl-carousel">
+        {% for block in section.blocks %}
+        {% assign shortDescription = block.settings.subheading | truncate: 575, '...' %}
+        {% assign shortDescriptionMobile = block.settings.subheading | truncate: 217, '...' %}
+        {% assign fullDescription = block.settings.subheading %}
+        {% assign showButton = nil %}
+        {% if block.settings.subheading.size > 575 %}
+          {% assign showButton = true %}
+        {% endif %}
+        {% assign showButtonMobile = nil %}
+        {% if block.settings.subheading.size > 217 %}
+          {% assign showButtonMobile = true %}
+        {% endif %}
+        <div class="customer-slide">
+          <div class="slide-content slider-wrapper">
+            <div class="slide-img">
+              <div class="slide-img_wrapper">
+                <div class="left">
+                  <img class="lazyload" data-src="{{block.settings.image_left | img_url: ''}}"  alt="Image before">
+                </div>
+                <div class="right">
+                  <img class="lazyload" data-src="{{block.settings.image_right | img_url: ''}}"  alt="Image after">
+                </div>
+              </div>
+              <div class="bf-wrapper">
+                <span>{{block.settings.before}}</span><span>{{block.settings.after}}</span>
+              </div>
+            </div>
+            <div class="slide-text">
+              <div class="customer-top">
+                <h6>{{block.settings.heading}}</h6>
+                <span>{{block.settings.midheading}}</span>
+              </div>
+
+              <div class="desktop">
+                <div class="short-description"><p>{{shortDescription}}</p></div>
+                <div class="full-description hidden"><p>{{fullDescription}}</p></div>
+                {% if showButton != nil %}
+                  <div class="more-button">Show More</div>
+                {% endif %}
+              </div>
+
+              <div class="mobile">
+                <div class="short-description"><p>{{shortDescriptionMobile}}</p></div>
+                <div class="full-description hidden"><p>{{fullDescription}}</p></div>
+                {% if showButtonMobile != nil %}
+                  <div class="more-button mobile">Show More</div> 
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="btn-wrap text-center">
+        <a href="{{section.settings.link}}" class="primary-btn dark-skin">more success stories {{ 'new-arrow-right.png' | asset_url | img_tag }} </a>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.more-button').on('click', function(e){
+      let wrapper = $(e.target).closest('.slider-wrapper')
+      let shortDescription = $(wrapper).find('.short-description')
+      let fullDescription = $(wrapper).find('.full-description')
+      let button = $(e.target)
+      let buttonMoreText = "Show More"
+      let buttonLessText = "Show Less"
+
+      $(shortDescription).toggleClass('hidden')
+      $(fullDescription).toggleClass('hidden')
+
+      if(button.text() == buttonMoreText){
+        button.html(buttonLessText)
+      } else {
+        button.html(buttonMoreText)
+      }
+    })
+  })
+</script>
+
+{% schema %}
+{
+"name": "Reviews",
+"settings": [
+{
+"type": "text",
+"id": "subtitle",
+"label": "Sub Title",
+"default": "REVIEWS"
+},
+{
+"type": "richtext",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Button"
+}
+],
+"blocks":[
+{
+"type":"quote",
+"name":"Reviews",
+"settings":[
+{
+"type": "image_picker",
+"id": "image_left",
+"label": "Upload Image Left"
+},
+{
+"type": "image_picker",
+"id": "image_right",
+"label": "Upload Image Right"
+},
+{
+"type": "text",
+"id": "before",
+"label": "Pretext",
+"default": "Before"
+},
+{
+"type": "text",
+"id": "after",
+"label": "Posttext",
+"default": "After"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Heading",
+"default": "Felicia"
+},
+{
+"type": "text",
+"id": "midheading",
+"label": "Customer",
+"default": "St. John MI"
+},
+{
+"type": "richtext",
+"id": "subheading",
+"label": "Sub Heading",
+"default": "<p>I have had acne since my teens, everything I had tried never really worked. Over the last few years I have had cystic and hormonal acne and had a hard time getting it under control. So, I decided to start using Rodan and Fields. I did 2 rounds of their unblemish regimen and it didn’t help at all. Then, I came across AverrAglow and decided to give it a try. I’m so glad I did. It has cleared up all my acne and I haven’t had any major breakouts like I had been having.</p>"
+}
+]
+}
+],
+"presets":[
+{
+"name":"Reviews",
+"category":"Text"
+}
+]
+}
+{% endschema %}

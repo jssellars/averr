@@ -1,0 +1,82 @@
+<section class="think-wrapper">
+        <div class="think-content">
+            <label>{{section.settings.pretitle}}</label>
+            <h4>{{section.settings.title}}</h4>
+        </div>
+        <div class="think-body">
+            <div class="container">
+                <div class="row">
+                    <div class="left-side col-12 col-lg-8">
+                        <p class="left-side1">{{section.settings.leftside1}}</p>
+                        <p class="left-side2">{{section.settings.leftside2}}</p>
+                    </div> 
+                    <div class="right-side col-12 col-lg-4">
+                        <div class="think-block">
+                            <h5>{{section.settings.block-title}}</h5>
+                            <div class="tick"><img src="https://i.postimg.cc/SK6kkkTJ/tick.png" alt=""></div>
+                            <p>{{section.settings.block-text}}</p>
+                        </div>
+                    </div>
+                    <h9 class="think-body__description">{{section.settings.description}}</h9>
+                </div>
+            </div>
+        </div>
+        <div class="think-bottom__text">
+            <p>{{section.settings.bottom-text}}</p>
+        </div>
+</section>
+{% schema %}
+{
+"name": "About Think",
+"settings": [
+{
+"type":"text",
+"id":"pretitle",
+"label":"Pretitle",
+"default":"You Think About"
+},
+{
+"type":"html",
+"id":"title",
+"label":"Title",
+"default":"Title"
+},
+{
+"type":"html",
+"id":"leftside1",
+"label":"left side one"
+},
+{
+"type":"html",
+"id":"leftside2",
+"label":"left side two"
+},
+{
+"type":"html",
+"id":"block-title",
+"label":"right block title"
+},
+{
+"type":"html",
+"id":"block-text",
+"label":"right block text"
+},
+{
+"type":"html",
+"id":"description",
+"label":"Description"
+},
+{
+"type":"html",
+"id":"bottom-text",
+"label":"bottom text"
+}
+],
+"presets":[
+{
+"name":"About Think",
+"category":"About Page"
+}
+]
+}
+{% endschema %}

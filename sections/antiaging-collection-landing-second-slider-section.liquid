@@ -1,0 +1,113 @@
+{% if section.blocks.size > 0 %}
+<section id="second_slider-{{section.id}}" class="secondary-slider parallax-banner flexslider homepage_slider animation--fade {% if section.settings.image_stretch == false %}sixteen columns{% endif %} parallax_effect--{{ section.settings.parallax_effect }} slider-loading">
+  
+  		<div class="results row no-gutters bgd-pink align-items-center">
+            <div class="col-lg-6">
+                <div class="results-slider">
+                  {% for block in section.blocks %}
+                    <div class="rs-image">
+                        <img src="{{ block.settings.image | img_url: 'large' }}" alt="">
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+          
+            <div class="col-lg-6">
+              
+                <div class="results-text kp-slider">
+                  {% for block in section.blocks %}
+                    
+                    <div class="">
+                      	<h5 class="small-text">{{ block.settings.title | escape }}</h5>
+                        <span class="keypoint">{{ block.settings.subtitle }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              
+            </div>
+        </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+"name": "Second Slider",
+"class": "slideshow-section second-section",
+"max_blocks": 12,
+"blocks": [
+{
+"type": "image",
+"name": "Image",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image",
+"info": "495px x 640px recommended"
+},
+{
+"type": "image_picker",
+"id": "mimage",
+"label": "Mobile Image",
+"info": "450 x 350px recommended"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"default": "Your headline here"
+},
+{
+"type": "richtext",
+"id": "subtitle",
+"label": "Subheading",
+"default": "<p>This is a short subheading for your slideshow image</p>"
+}
+]
+}
+],
+"presets": [{
+"name": "Second Slideshow",
+"category": "Image"
+}]
+}
+{% endschema %}
+
+<style>img.mobilex.lazyload--fade-in.hsContainer__image.lazyloaded{display: none;}#linker{cursor:hand;}@media(max-width:767px){img.mobilex.lazyload--fade-in.hsContainer__image.lazyloaded{display: block;}img.dextop.lazyload--fade-in.hsContainer__image.lazyloaded{display: none;}}
+{% if section.settings.parallax_effect %}
+  #homepage_slider-{{ section.id }} .hsContainer {
+    height: {{ section.settings.parallax_image_height }}px;
+  }
+  {% endif %}
+  @media (max-width: 767px) {
+    {% if settings.slideshow_images_crop %}
+    #homepage_slider-{{ section.id }} .hsContainer {
+      height: {{ section.settings.parallax_image_height | divided_by: 2 }}px;
+    }
+    {% else %}
+    #homepage_slider-{{ section.id }} .hsContainer {
+      height: auto;
+    }
+    .flexslider.parallax_effect--true img { display: block; }
+    {% endif %}
+  }
+</style>
+
+
+<script src="{{ 'slick.min.js' | asset_url }}" defer></script>
+{% javascript %}
+  $(document).ready(function() { 
+  	$('.results-slider').slick({
+        centerMode: false,
+        slidesToShow: 1,
+        arrows: false,
+		rtl: false
+      });
+      $('.kp-slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        asNavFor: '.results-slider',
+      });
+  });
+  
+{% endjavascript %}

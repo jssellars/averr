@@ -1,0 +1,90 @@
+
+<section class="products-listing product-pros-wrap">
+  <div itemtype="http://schema.org/ItemList" class="products">
+  
+{% if collections.acne-collection.products.size > 0 %}
+    
+    {% for product in collections.acne-collection.products %}
+
+
+      {% if product.title=="No.1 Clarifying Hydration Dew" or product.title=="No.2 Radiant Cleansing Nectar" or product.title=="No.3 Clear Skin Elixir" or product.title=="No.4 Flawless Nourishment Cream" %}
+
+      <a href="{{ product.url | within: collections }}" itemprop="url">
+        <div class="one-fourth column alpha thumbnail even">
+          <div class="relative product_image">
+            <div class="product_container">
+              <div class="image__container">
+                <img  src="{{ product.featured_image | product_img_url: '100x' }}"
+                        alt="{{ product.title | escape  }}"
+                        class=""
+                        style="{{ align_height_value }} max-width: {{- product.featured_image.width -}}px;"
+                        data-sizes="auto"
+                        data-src="{{ product.featured_image | product_img_url: '2048x' }}"
+                        data-srcset=" {{ product.featured_image | product_img_url: '2048x' }} 2048w,
+                                  {{ product.featured_image | product_img_url: '1600x' }} 1600w,
+                                  {{ product.featured_image | product_img_url: '1200x' }} 1200w,
+                                  {{ product.featured_image | product_img_url: '1000x' }} 1000w,
+                                  {{ product.featured_image | product_img_url: '800x' }} 800w,
+                                  {{ product.featured_image | product_img_url: '600x' }} 600w,
+                                  {{ product.featured_image | product_img_url: '400x' }} 400w"
+                  />
+              </div>
+            </div>
+          </div>
+
+          <div class="info">
+            {%-comment-%}Product reviews section. {%-endcomment-%}
+            {% if settings.enable_shopify_collection_badges %}
+                <span class=" stamped-product-reviews-badge" data-product-sku="{{ product.handle }}" data-id="{{ product.id }}" data-product-type="{{product.type}}" data-product-title="{{product.title}}"  style="display:block;">{{ product.metafields.stamped.badge }}</span>
+            {% endif %}
+            <span class="title" itemprop="name">{{ product.title }}</span>
+            {%-comment-%}Product price section. {%-endcomment-%}
+            {% unless collection_handles contains 'coming-soon' %}
+                <span class="price {% if product.compare_at_price_max > product.price %}sale{% endif %}" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+              <meta itemprop="price" content="{{ product.price_min | money_without_currency }}" />
+              <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+              <meta itemprop="seller" content="{{ shop.name | escape }}" />
+              <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+              <meta itemprop="itemCondition" content="New" />
+
+              {% if product.available %}
+                {% if product.price_varies and product.price_min > 0 %}
+    <!--               <small><em>{{ 'products.general.from' | t }}</em></small> -->
+                {% endif %}
+                {% if product.price_min > 0 %}
+                <span class="money">{{ product.price_min | money }}</span>
+              {% else %}
+                {{ settings.free_price_text }}
+              {% endif %}
+                {% if product.compare_at_price_max > product.price %}
+                <span class="was_price">
+                    <span class="money">{{ product.compare_at_price_max | money }}</span>
+                  </span>
+              {% endif %}
+              {% else %}
+                <span class="sold_out">{{ 'products.product.sold_out' | t }}</span>
+              {% endif %}
+            </span>
+
+            {% endunless %}
+
+            {%-comment-%}Product Add To Cart section. {%-endcomment-%}
+            {% include 'cart-form' %}
+
+          </div>
+        </div>
+        </a>
+
+      {% endif %}
+
+
+
+    {% endfor %}
+    
+    <a href="/collections/acne-collection" class="action_button primary-btn">
+        All Acne Skincare {{ 'new-arrow-right.png' | asset_url | img_tag }}
+      </a>
+
+{% endif %}
+  </div>
+</section>

@@ -1,0 +1,817 @@
+<div id="slide-blog" class="container clearfix parallax-banner parallax_effect--false desktop">
+  <div class="sixteen columns blog-title-wrapper">  
+    <div class="four columns l-margin-0">
+      <p class="blog-title">
+        <a href="/blogs/news">
+          <svg width="187" height="40" viewBox="0 0 187 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 6.40094V33.0009H5.282V6.40094H0Z" fill="black"/>
+            <path d="M9.46734 6.40094V33.0009H14.7113V18.9789L21.7033 33.0009H26.3393V6.40094H21.0953V20.4609L14.1413 6.40094H9.46734Z" fill="black"/>
+            <path d="M38.043 6.40094V11.7589H42.945V33.0009H48.227V11.7589H53.129V6.40094H38.043Z" fill="black"/>
+            <path d="M56.5591 6.40094V33.0009H61.8411V23.6909H66.7051V33.0009H71.9871V6.40094H66.7051V18.3709H61.8411V6.40094H56.5591Z" fill="black"/>
+            <path d="M76.1529 6.40094V33.0009H89.7189V27.6429H81.4349V22.6649H88.1609V17.3069H81.4349V11.7589H89.4909V6.40094H76.1529Z" fill="black"/>
+            <path d="M110.898 19.0169V23.1969H113.634V24.1849C113.634 26.6169 112.342 27.8329 110.594 27.8329C107.402 27.8329 107.022 24.6029 107.022 19.7009C107.022 14.7989 107.402 11.5689 110.594 11.5689C112.076 11.5689 113.368 12.1389 113.368 13.8489V15.2549H118.574V13.8489C118.574 8.49094 114.888 6.21094 110.594 6.21094C102.766 6.21094 101.778 12.3289 101.778 19.7009C101.778 27.0729 102.766 33.1909 110.594 33.1909C114.698 33.1909 118.916 31.2149 118.916 24.1849V19.0169H110.898Z" fill="black"/>
+            <path d="M122.345 6.40094V33.0009H135.455V27.5289H127.589V6.40094H122.345Z" fill="black"/>
+            <path d="M137.829 19.7009C137.829 27.1109 138.779 33.1909 146.645 33.1909C154.549 33.1909 155.613 27.1109 155.613 19.7009C155.613 12.2909 154.549 6.21094 146.645 6.21094C138.779 6.21094 137.829 12.2909 137.829 19.7009ZM143.073 19.7009C143.073 14.7989 143.415 11.5689 146.645 11.5689C149.951 11.5689 150.331 14.7989 150.331 19.7009C150.331 24.6409 149.951 27.8329 146.645 27.8329C143.415 27.8329 143.073 24.6409 143.073 19.7009Z" fill="black"/>
+            <path d="M166.541 21.0689L163.425 6.40094H158.105L163.957 33.0009H169.125L172.241 18.4469L175.395 33.0009H180.601L186.453 6.40094H181.171L177.979 20.9549L174.825 6.40094H169.695L166.541 21.0689Z" fill="black"/>
+          </svg>
+        </a>
+      </p>
+    </div>
+    <div class="nine columns nav">
+      <ul class="menu blog-cat-menu">
+        {% for link in linklists['blog-menu'].links %}
+        {% if linklists[link.handle] == empty %}
+        <li><a href="{{ link.url }}" class="top-link {% if link.active %}active{% endif %}">{{ link.title }}</a></li>
+        {% else %}
+        {% assign count = 0 %}
+        {% for link in linklists[link.handle].links %}
+        {% capture count %}{{ count }}*{% endcapture %}
+        {% if linklists[link.handle] != empty %}
+        {% for link in linklists[link.handle].links %}
+        {% capture count %}{{ count }}*{% endcapture %}
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+        {% assign column_threshold = section.settings.dropdown_column_links %}
+
+        <li>
+          <a href="{{ link.url }}" class="sub-menu {% if link.active %}active{% endif %} {% for link in linklists[link.handle].links %}{% for l in linklists[link.handle].links %} {% if l.active %}active{% endif %}{% endfor %}{% if link.active %}active{% endif %}{% endfor %}">{{ link.title }}</a>
+          <div class="dropdown animated fadeIn {% if count.size > column_threshold %}dropdown-wide{% endif %}">
+            <div class="dropdown_links clearfix">
+              <ul>
+                {% assign count = 0 %}
+                {% assign split = false %}
+                {% for link in linklists[link.handle].links %}
+                {% capture count %}{{ count }}*{% endcapture %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {% if linklists[link.handle] != empty %}
+                {% for link in linklists[link.handle].links %}
+                {% capture count %}{{ count }}*{% endcapture %}
+                <li>
+                  <a class="sub-link" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if count.size > column_threshold and split == false %}
+                {% assign split = true %}
+              </ul>
+              <ul>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="searchbar">
+      <form  class="search" action="/search">
+        <div class="form-group search-input">
+          <button><i class="fa fa-search" aria-hidden="true"></i></button>
+          <input class="form-control" type="text" placeholder="Search" name="q" value="{{ search.terms | escape }}">
+        </div>
+      </form>
+      <div class="close-searchbar"><i class="fa fa-times" aria-hidden="true"></i></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .desktop {display: block !important;}
+  .mobile {display: none !important;}
+  .container.main.content.main-wrapper {padding: 110px 0 0 0 !important;}
+  #shopify-section-blog-template-author {padding-top:0!important;}
+  .blog-title-wrapper {display:flex !important;align-items:center;margin:32px 0 32px 10px;}
+  .blog-title-wrapper p {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #222222;
+    margin-bottom:0;
+  }
+  .blog-title-wrapper p.blog-title {
+    font-family: Stellar-bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    letter-spacing: normal;
+    display:flex;
+  }
+  .nav ul.blog-cat-menu {padding-top:0;}
+  .nav ul.blog-cat-menu li a.sub-menu {padding: 8px 4px;} 
+
+  .nav ul.blog-cat-menu a {
+    font-family: Gotham-bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: normal;
+    color: #222222;
+  }
+  .blog-title-wrapper .nav {
+    text-align:center;
+  }
+  .blog-title-wrapper .nav ul.blog-cat-menu li{  
+    padding: 0px 20px;
+  }
+  .blog-title-wrapper .nav ul.blog-cat-menu li:hover a.sub-menu {
+    color: #222222;
+  }
+  .blog-title-wrapper .icon-search.right {
+    font-size: 23px;
+  }
+
+  .menu ul a, .menu li:hover>ul a, .header .nav ul.menu ul li a {
+    padding: 8px 0 8px 15px;
+    background: none;
+    text-align: left;
+    color: #f9dbd0;
+    line-height: 16px;
+  }  
+
+  .blog-title-wrapper .nav ul.menu ul {
+    background-color: #000;
+  }  
+
+  .blog-title-wrapper .nav ul.menu ul li a {
+    text-align: left;
+    padding: 10px 4px;
+    font-family: Gotham-book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    text-transform:none;
+  }
+
+  p.blog-title {
+    font-family: Stellar-Bold;
+    font-style: normal;    
+    font-size: 40px;
+    line-height: 48px;
+    text-align: center;
+    font-weight: normal;
+    margin:0;
+  }
+  .nav ul.blog-cat-menu {padding-top:0;}
+  .nav ul.blog-cat-menu li a.sub-menu {padding: 8px 4px;} 
+
+  .nav ul.blog-cat-menu a {
+    font-family: Gotham-bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: normal;
+    color: #222222;
+    z-index: 0 !important;
+  }
+  .blog-title-wrapper .nav {
+    text-align:center;
+  }
+  .blog-title-wrapper .nav ul.blog-cat-menu li{  
+    padding: 0px 20px;
+  }
+  .blog-title-wrapper .nav ul.blog-cat-menu li:hover a.sub-menu {
+    color: #222222;
+  }
+  .blog-title-wrapper .icon-search.right {
+    font-size: 23px !important;
+  }
+  .menu ul a, .menu li:hover>ul a, .header .nav ul.menu ul li a {
+    padding: 8px 0 8px 15px;
+    background: none;
+    text-align: left;
+    color: #f9dbd0;
+    line-height: 16px;
+  }  
+
+  .blog-title-wrapper .nav ul.menu ul {
+    background-color: #000;
+  }  
+
+  .blog-title-wrapper .nav ul.menu ul li a {
+    text-align: left;
+    padding: 10px 4px;
+    font-family: Gotham-book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    text-transform:none;
+  }
+
+  .mobile-categories {
+    margin: 20px 10px;
+    padding-top:20px;
+    list-style: none !important;
+  }
+  .mobile-category {
+    border: 1px solid #000000;    
+  }
+  .mobile-category button {
+    font-family: Gotham-bold;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height:48px;
+    padding:0 20px;
+    background:#fff;
+  }
+  .mobile-category button.categories {
+    width: calc(100% - 48px);
+    text-align:left;
+    position:relative;
+  }
+  .mobile-category button.categories:after {
+    content: '';
+    background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' fill='none' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 12L16 20L24 12' stroke='%23222222' stroke-width='2'/%3E%3C/svg%3E");
+    position:absolute;
+    right:8px;
+    top:8px;
+    background-size: 32px 32px;
+    height: 32px;
+    width: 32px;
+  }
+  .mobile-category button.search {
+    width:48px;
+    border-left:solid 1px #000000;
+    float:right;
+    background:#fff;
+    border-radius:0;
+    background:#fff;
+    padding:0;
+    font-size: 23px !important;
+  }
+  .mobile-category button.search.icon-search {
+    margin-right:0;    
+  }
+  .mobile-category button.search.icon-search:before {
+    width:23px;
+  }
+  .mobile-categories .menu.blog-cat-menu {
+    background: #F7F7F7;
+
+    list-style: none;
+    padding:10px 20px;
+    margin-left:0;
+  }
+  .mobile-categories .menu.blog-cat-menu a {
+    font-family: Gotham-bold;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 40px;
+    color: #222222;
+    text-transform:uppercase;
+  }
+  .mobile-categories .menu.blog-cat-menu ul {
+    margin: 4px 0 5px 0px;
+    list-style: none;
+  }
+  .mobile-categories .menu.blog-cat-menu ul li {
+    padding-left: 26px;
+    margin:0;
+    position:relative;
+  }
+  .mobile-categories .menu.blog-cat-menu ul li:before {
+    content:"";
+    width:16px;
+    border-left:solid 1px #555;
+    position:absolute;
+    top:0%;
+    left:0;
+    height:100%;
+  }
+  .mobile-categories .menu.blog-cat-menu ul li:last-child:before {
+    height:50%;
+  }
+  .mobile-categories .menu.blog-cat-menu ul li a {
+    text-transform:none;
+  }
+  .mobile-categories .menu.blog-cat-menu ul li a:before {
+    content:"";
+    width:16px;
+    border-bottom:solid 1px #555;
+    position:absolute;
+    top:50%;
+    left:0;
+  }
+  .mobile-categories .menu.blog-cat-menu ul a {
+    padding-left:0;
+    font-family:Gotham-book !important;
+    font-weight: normal !important;
+    text-transform: capitalize !important;
+  }
+</style>
+
+
+<div class="blog-header mobile" style="display:none !important;">
+  <p class="blog-title">
+    <a href="/blogs/news">
+      <svg width="187" height="40" viewBox="0 0 187 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 6.40094V33.0009H5.282V6.40094H0Z" fill="black"/>
+        <path d="M9.46734 6.40094V33.0009H14.7113V18.9789L21.7033 33.0009H26.3393V6.40094H21.0953V20.4609L14.1413 6.40094H9.46734Z" fill="black"/>
+        <path d="M38.043 6.40094V11.7589H42.945V33.0009H48.227V11.7589H53.129V6.40094H38.043Z" fill="black"/>
+        <path d="M56.5591 6.40094V33.0009H61.8411V23.6909H66.7051V33.0009H71.9871V6.40094H66.7051V18.3709H61.8411V6.40094H56.5591Z" fill="black"/>
+        <path d="M76.1529 6.40094V33.0009H89.7189V27.6429H81.4349V22.6649H88.1609V17.3069H81.4349V11.7589H89.4909V6.40094H76.1529Z" fill="black"/>
+        <path d="M110.898 19.0169V23.1969H113.634V24.1849C113.634 26.6169 112.342 27.8329 110.594 27.8329C107.402 27.8329 107.022 24.6029 107.022 19.7009C107.022 14.7989 107.402 11.5689 110.594 11.5689C112.076 11.5689 113.368 12.1389 113.368 13.8489V15.2549H118.574V13.8489C118.574 8.49094 114.888 6.21094 110.594 6.21094C102.766 6.21094 101.778 12.3289 101.778 19.7009C101.778 27.0729 102.766 33.1909 110.594 33.1909C114.698 33.1909 118.916 31.2149 118.916 24.1849V19.0169H110.898Z" fill="black"/>
+        <path d="M122.345 6.40094V33.0009H135.455V27.5289H127.589V6.40094H122.345Z" fill="black"/>
+        <path d="M137.829 19.7009C137.829 27.1109 138.779 33.1909 146.645 33.1909C154.549 33.1909 155.613 27.1109 155.613 19.7009C155.613 12.2909 154.549 6.21094 146.645 6.21094C138.779 6.21094 137.829 12.2909 137.829 19.7009ZM143.073 19.7009C143.073 14.7989 143.415 11.5689 146.645 11.5689C149.951 11.5689 150.331 14.7989 150.331 19.7009C150.331 24.6409 149.951 27.8329 146.645 27.8329C143.415 27.8329 143.073 24.6409 143.073 19.7009Z" fill="black"/>
+        <path d="M166.541 21.0689L163.425 6.40094H158.105L163.957 33.0009H169.125L172.241 18.4469L175.395 33.0009H180.601L186.453 6.40094H181.171L177.979 20.9549L174.825 6.40094H169.695L166.541 21.0689Z" fill="black"/>
+      </svg>
+    </a>
+  </p>
+</div>
+<div class="mobile-categories mobile">  
+  <div class="mobile-category">
+    <button class="categories">CATEGORIES</button>
+    <div class="search-btn">
+      <a href="/search" id="search-toggle" class="icon-search right"><img src="{{ 'searchblack.png' | asset_url }}" class="search-black"> Search</a>
+    </div>
+  </div>
+  <ul class="menu blog-cat-menu" style="display:none;">
+    {% for link in linklists['blog-menu'].links %}
+    {% if linklists[link.handle] == empty %}
+    <li><a href="{{ link.url }}" class="top-link {% if link.active %}active{% endif %}">{{ link.title }}</a></li>
+    {% else %}
+    {% assign count = 0 %}
+    {% for link in linklists[link.handle].links %}
+    {% capture count %}{{ count }}*{% endcapture %}
+    {% if linklists[link.handle] != empty %}
+    {% for link in linklists[link.handle].links %}
+    {% capture count %}{{ count }}*{% endcapture %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+    {% assign column_threshold = section.settings.dropdown_column_links %}
+    <li>
+      <a href="{{ link.url }}" class="sub-menu {% if link.active %}active{% endif %} {% for link in linklists[link.handle].links %}{% for l in linklists[link.handle].links %} {% if l.active %}active{% endif %}{% endfor %}{% if link.active %}active{% endif %}{% endfor %}">{{ link.title }}</a>
+      <div class="">
+        <div class="clearfix">
+          <ul>
+            {% assign count = 0 %}
+            {% assign split = false %}
+            {% for link in linklists[link.handle].links %}
+            {% capture count %}{{ count }}*{% endcapture %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% if linklists[link.handle] != empty %}
+            {% for link in linklists[link.handle].links %}
+            {% capture count %}{{ count }}*{% endcapture %}
+            <li>
+              <a class="sub-link" href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+            {% endfor %}
+            {% endif %}
+
+            {% if count.size > column_threshold and split == false %}
+            {% assign split = true %}
+          </ul>
+          <ul>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </li>
+    {% endif %}
+    {% endfor %}  
+  </ul>
+  <div class="searchbar">
+    <form  class="search" action="/search">
+      <div class="form-group search-input">
+        <button><i class="fa fa-search" aria-hidden="true"></i></button>
+        <input class="form-control" type="text" placeholder="Search" name="q" value="{{ search.terms | escape }}">
+      </div>
+    </form>
+    <div class="close-searchbar"><i class="fa fa-times" aria-hidden="true"></i></div>
+  </div>
+</div>
+
+{%- assign author = '' -%}
+{%- assign author_name = '' -%}
+{%- assign blog = blogs['news'] -%}
+{%- assign articles_count = 0 -%}
+{%- assign social = '' -%}
+{%- for article in blog.articles -%}
+{%- if article.author contains page_title -%} 
+{%- assign author = article.user -%}
+{%- assign author_name = article.author -%}
+{%- assign articles_count = articles_count | plus:1 -%}
+{%- unless article.user.homepage == blank and social != '' -%}
+{%- assign social = author.homepage | split: "," -%}
+{%- endunless -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if articles_count == 0 -%} 
+<div class="sixteen columns no-author">
+  No articles found!
+</div>
+{%- else -%}
+<!-- Articles -->
+{%- assign shown = 0 -%}
+{%- assign row_count = 2 -%}
+{%- assign col_count = 1 -%}
+{%- assign swap = 1-%}
+{%- assign load_count = 12 -%}
+{%- assign show_count = 12  -%}
+{%- assign article_count = shown -%}
+<!-- Author Bio -->
+<div class="container clearfix">
+  <div class="sixteen columns author_bio">
+    <div class="section clearfix">
+      <div class="gravatar one column alpha center" data-email="{{ author.email }}">
+        {% if author.image %}
+        <img src="{{ author.image | img_url: '250x250' }}" alt="{{ author_name }}" />
+        {%else%}
+        <img src="//1.gravatar.com/avatar/{{ author.email | md5 }}?s=80&r=G" alt="{{ author_name }}" />
+        {%endif%}
+      </div>
+      <div class="five columns omega author">
+        <h6><span class="mobile">Written By</span> {{ author_name }}</h6>
+        {% unless social == blank  %}
+        {% unless social[0] == 'https://www.facebook.com/' %}
+        <a href="{{ social[0] }}" class="author-social" target="_blank"><img src="{{ 'blog-facebook.png' | file_url }}" alt="facebook" /></a>
+        {% endunless %}
+        {% unless social[1] == 'https://www.twitter.com/' %}
+        <a href="{{ social[1] }}" class="author-social" target="_blank"><img src="{{ 'blog-twitter.png' | file_url }}" alt="twitter" /></a>
+        {% endunless %}
+        {% unless social[2] == 'https://www.instagram.com/' %}
+        <a href="{{ social[2] }}" class="author-social" target="_blank"><img src="{{ 'blog-instagram.png' | file_url }}" alt="instagram" /></a>
+        {% endunless %}
+        {% endunless %}
+      </div>
+      <div class="comment-body ten columns">
+        {{ author.bio }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Author Bio -->
+
+{%- comment-%}
+{%- for article in blog.articles -%}
+{%- if article.author contains author_name -%} 
+{%- assign mod2 = row_count | modulo: 2 -%}
+{%- if mod2 == 0 -%}
+{%- include 'blog-template-4' -%}
+{%- else -%}
+{%- include 'blog-template-5'-%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+
+{%- if shown < articles_count -%}
+<div class="container clearfix top32">
+  <div class="sixteen columns margin-0 clearfix align_center">
+    <button type="input" name="load_more" class="action_button load_more" data-load="{{load_count}}" data-shown="{{shown}}" data-count="{{articles_count}}"><span class="text">Show More</span></button>
+  </div>
+</div>
+{%- endif -%}
+{%- endcomment-%}
+
+{%- comment-%}----------------- BLOG ARTICLE--------------------------{%- endcomment-%}
+<style>
+  .author_bio {
+    background: #F4F4F4;
+  }
+  .author_bio .section {    
+    margin: 0;
+    display:flex;
+    padding:42px 31px 42px 53px;
+    background: #FDEAE4;
+    align-items: center;
+  }
+  .author_bio .gravatar {margin-right:22px; width:105px !important;}
+  .author_bio .gravatar img {width:100px; height:100px;border-radius:100px;margin-bottom:0;vertical-align:middle;}
+  .author_bio h6 {    
+    font-weight: normal;    
+    color: #222222;  
+    text-transform:Capitalize;
+    letter-spacing: normal;
+    margin: 0 0 26px 0;
+    font-family: FreightDispProBold-Regular;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 32px;
+  }
+  .author-social img {vertical-align: text-top;margin-bottom: 0;padding-right:20px;}
+  .author_bio .comment-body {
+    font-family: Georgia;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: #222222;  
+    text-transform:none;
+  }
+
+  .margin-0 {margin: 0 !important;}
+  .l-margin-0 {margin-left:0 !important;}
+  .r-margin-0 {margin-right:0 !important;}
+  .top32 {margin-top:32px !important;}
+  .border {border:solid 1px #000000 !important;}
+  .image-wrapper {overflow:hidden;}
+  .blog-template-section .container.clearfix {padding:0;}
+  .blog-template-section .container .sixteen.columns {max-width:1180px;width:100%;}
+  .blog-template-section .blog-home-category-wrapper {}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category {height:auto;margin-bottom:38px;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category li {margin-top:33px;display:inline-block;position:relative;margin-bottom:0;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .column {margin-left: 18px;margin-right: 18px;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .column.alpha {margin-left:0;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .column.omega {margin-right:0;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .one-third.column { width: calc(33% - 21px);}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category li .image-wrapper img {height:248px;display:flex;object-fit:cover;transition: all .5s ease;-webkit-transition: all .5s ease;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper {margin:32px;}
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper .category {
+    font-family: Gotham-book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #555555;
+    display: inline-block;
+    letter-spacing: normal;
+    padding:0 12px 0 0;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper .displaydate {
+    font-family: Gotham-book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #C4C4C4;
+    padding: 0 32px 0 0;
+    display: inline-block;
+    letter-spacing: normal;
+  }
+  .blog-template-section .divider {
+    width: 16px;
+    height: 2px;
+    line-height: 16px;
+    background: #F9DBD0;
+    padding: 0;
+    margin:0 12px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper .sub_title {
+    padding: 16px 32px 0 0;
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 40px;
+    color: #222222;
+    text-transform: capitalize;
+    letter-spacing: normal;
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper  .excerpt {
+    margin-bottom:0;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper  .excerpt p {
+    font-family: Gotham-book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+    color: #777777;
+    letter-spacing: normal;
+    padding: 16px 32px 0 0;
+    margin:0;
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper a.read_more span {
+    font-family: Gotham-bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: normal;
+    color: #222222;
+    border-bottom: solid 2px #F9DBD0;
+    text-align: left;    
+  }
+  .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper p.read_more {
+    margin:16px 0 0 0;
+  }
+
+  /*Sticky*/
+  #shopify-section-blog-template-author.sticky {padding-top: 110px !important;}
+  #shopify-section-blog-template-author.sticky .blog-title-wrapper {float: none;}
+  #shopify-section-blog-template-author.sticky #slide-blog {
+    z-index: 99;
+    top: 111px;
+    background: #fff;
+    position: fixed;
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+  }  
+
+  @media only screen and (max-width: 960px) {
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .one-third.column { width: calc(33% - 22px);}
+  }
+  @media only screen and (max-width: 767px) {
+    .desktop {display: none !important;}
+    .mobile {display: block !important;}
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .one-third.column { width: calc(33% - 23px);}
+    .blog-template-section .blog-home-category-wrapper .blog-home-category li .image-wrapper img {height:226px;object-fit:cover;}
+    .container {   width: 95%;}
+    .omega {text-align:left !important;}    
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper {    margin: 24px;}
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .title_wrapper .displaydate {padding-top:0;}
+    .container.main.content.main-wrapper {padding: 0 !important;}
+
+    #shopify-section-blog-template-author.sticky {padding-top: 0px !important;}
+    #shopify-section-blog-template-author.sticky .blog-header.mobile {display: none !important;}
+    #shopify-section-blog-template-author.sticky .sixteen.columns.blog-slider-wrapper {padding-top:52px;}
+    #shopify-section-blog-template-author.sticky .mobile-categories {
+      position: fixed;
+      top: auto;
+      left:0;
+      width: 100%;
+      z-index: 99;
+      margin: 0;
+      padding: 0;
+    }
+
+
+  }
+  @media only screen and (max-width: 500px) {  
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .one-third.column { width: 100%; }
+    .blog-template-section .blog-home-category-wrapper .blog-home-category .column {margin-left:0;margin-right:0;}
+    .blog-template-section .blog-home-category-wrapper .blog-home-category li .image-wrapper img {height:226px;object-fit:cover;}
+    .blog-template-section .blog-home-category-wrapper .blog-home-category li {margin-top:21px;}
+    .author_bio .section { flex-direction:column; padding:32px;    }
+    .comment-body.ten.columns {width: 100%;text-align: center;margin-top: 32.5px;}
+    .five.columns.omega.author {margin-top:16px;}
+    .omega.author {text-align:center !important;}
+  }
+
+  @media only screen and (min-width: 768px) {
+    .blog-home-category li:hover img {
+      transform: scale(1.2);
+    }
+    /*    .blog-home-category li:hover .slide,
+    .blog-home-category li:hover .sub_title,
+    .blog-home-category li:hover .title-wrapper,
+    .blog-home-category li:hover .author {
+    background-color: #F9DBD0;
+    color: #000000;
+  }*/
+    .blog-home-category li:hover .sub_title {text-decoration:underline;}
+  }
+
+</style>
+
+<div class="container clearfix">
+  <div class="r-margin-0 clearfix blog-home-category-wrapper sixteen columns">
+    <ul class="blog-home-category margin-0 ">
+
+      {%- for article in blog.articles -%}
+      {%- if article.author contains author_name -%} 
+      {%- assign count = count | plus:1 -%}
+      {%- assign r = count | modulo:3 -%}
+      {%- if r == 0 -%}
+      {%- assign class = "omega" -%}
+      {%- elsif r == 1 -%}
+      {%- assign class = "alpha" -%}
+      {%- else -%}
+      {%- assign class = "" -%}
+      {%- endif -%}
+      {%- assign excerpt = "" -%}
+      {%- if article.excerpt.size > 0  -%}
+      {%- assign excerpt = "<p>" | append: article.excerpt | append: "</p>" -%}        	
+      {%- endif -%}
+      {%- assign cat = "" -%}
+      {%- for tag in article.tags -%}
+      {%- if tag contains 'cat_' -%}
+      {%- assign cat = tag | replace: "cat_", "" | capitalize -%}
+      {%- assign cat_url = tag | replace: "cat_", "" -%}
+      {%- unless cat_url == 'anti-aging' and cat_url contains "-" -%}
+      {%- assign cat_url = cat_url | replace: "-", " " -%}
+      {%- endunless -%}
+      {%- endif -%}
+      {%- endfor -%}
+      <li {{ blockAttributes }} data-block-id="{{article.id}}" class="one-third column {{class}}">
+        <div id="cat-{{ article.id }}" class="margin-0 slide border" data-id="{{ shown }}">
+          {%- if article.image != nil -%}
+          <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+          </div>
+          {%- endif -%}
+          <div class="title_wrapper">
+            <div>
+              {%- if cat != '' -%}  
+              <a href="/blogs/news/tagged/{{cat_url}}"class="category">{{ cat }}</a>
+              <span class="divider"></span>
+              {%- endif  -%}    
+              <span class="displaydate">{{ article.published_at | date: "%m/%d/%Y" }}</span></div>
+            <h5 class="sub_title slide_title"><a href="{{ article.url }}">{{ article.title | downcase }}</a></h5>
+            <div class="excerpt">{{ excerpt }}</div>
+            <p class="read_more"><a class="read_more" href="{{ article.url }}"><span>Read More</span></a></p>
+          </div>
+        </div>
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>	
+</div>
+{%- comment-%}----------------- /BLOG ARTICLE--------------------------{%- endcomment-%}
+
+
+{%- endif -%}
+<!-- End Articles -->
+{% comment%}
+<!-- Footer Newsletter -->
+<div class="container clearfix footer-newsletter">
+  <div class="sixteen columns clearfix">
+    <div class="eleven columns clearfix">
+      <div class="description">
+        <p>Want more from Averr Aglow?<br>Sign up to receive texts and get an instant discount, VIP sales alerts, new product launches &amp; much more!</p>
+      </div>
+    </div>
+    <div class="five columns clearfix newsletter-wrapper">
+      {% include 'newsletter' %}
+      <div class="disclaimer">
+        <p>By signing up, you agree to receive recurring automated marketing emails from Averr Aglow at the email address used when signing up. Consent is not a condition of any purchase.&nbsp;&nbsp;<a href="/pages/terms-of-service">View Terms of Service</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Footer Newsletter -->
+{% endcomment%}
+<style>
+
+
+
+
+</style>
+
+
+
+{% schema %}
+{
+"name": "Blog - Authors",
+"class": "blog-template-section",
+"settings": [
+]
+}
+{% endschema %}
+
+<script>
+  (function() {
+    var nTimer = setInterval(function() {
+      if (window.jQuery) {
+        var jQuery = window.jQuery;
+        jQuery(".categories").on("click",function(e) {
+          e.preventDefault();
+          jQuery(".blog-cat-menu").toggle("slow");
+        });
+        clearInterval(nTimer);
+      }
+    }, 200);
+  })();
+
+
+</script>
+

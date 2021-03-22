@@ -1,0 +1,180 @@
+<!-- Category -->
+<div class="container clearfix">
+  <div class="sixteen columns margin-0 clearfix category-title-wrapper">
+    <div class="blog-category-title margin-0">
+      <div class="seven columns margin-0">
+      <a class="view_home" href="/blogs/news">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.6654 8H3.33203" stroke="#555555" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.9987 12.6654L3.33203 7.9987L7.9987 3.33203" stroke="#555555" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>In The Glow Blog</span>
+      </a>
+      <h2>{{category}}</h2>
+      </div>
+      <div class="nine columns margin-0 description">
+        {% capture description %}{{category | downcase | replace: " ", "_"}}{% endcapture %}
+        {{ settings[description] }}
+      </div>
+    </div>
+  </div>
+</div>
+{%- paginate blog.articles by 8 -%}
+{%- assign count = 0 -%}
+{%- for article in blog.articles -%}      
+  {%- assign count = count | plus:1 -%}
+  {%- assign excerpt = "" -%}
+  {%- if article.excerpt.size > 0  -%}
+	  {%- assign excerpt = "<p>" | append: article.excerpt | append: "</p>" -%}
+  {%- endif -%}
+  {%- assign cat = "" -%}
+  {%- for tag in article.tags -%}
+  	{%- if tag contains 'cat_' -%}
+  		{%- assign cat = tag | replace: "cat_", "" | capitalize -%}
+        {%- unless cat == 'Anti-aging' and cat contains "-" -%}
+	        {%- assign cat = cat | replace: "-", " " -%}
+        {%- endunless -%}
+        {%- assign cat_url = tag | replace: "cat_", "" -%}
+  	{%- endif -%}
+  {%- endfor -%}
+  {%- if count == 1 -%}
+  	<div class="container clearfix">
+      <div class="sixteen columns margin-0 clearfix">
+        <div class="eleven columns border large-article template-3 swap l-margin-0" data-id="{{ count }}">
+          <a href="{{ article.url }}" title="{{ article.title | escape }}">
+            <div>
+              {%- if article.image != nil -%}
+              <div class="image-wrapper">
+                <img src="{{ article.image | img_url: '100x' }}"
+                     alt="{{ article.title | escape }}"
+                     data-src="{{ article.image | img_url: '1200x' }}"
+                     class="lazyload lazyload--fade-in"
+                     data-sizes="auto"
+                     data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                                  {{ article.image | img_url: '1600x' }} 1600w,
+                                  {{ article.image | img_url: '1200x' }} 1200w,
+                                  {{ article.image | img_url: '1000x' }} 1000w,
+                                  {{ article.image | img_url: '1000x' }} 900w,
+                                  {{ article.image | img_url: '800x' }} 800w,
+                                  {{ article.image | img_url: '600x' }} 600w,
+                                  {{ article.image | img_url: '400x' }} 400w"
+                     />
+              </div>
+              {%- endif -%}
+              <div class="nine columns title-wrapper border">
+                <div>
+                  {%- if cat != '' -%}  
+                  <a href="/blogs/news/tagged/{{cat_url}}"class="category">{{ cat }}</a><span class="divider"></span>
+                  {%- endif -%}
+                  <span class="displaydate">{{ article.published_at | date: "%m/%d/%Y" }}</span>
+                </div>
+              	<h5 class="sub_title"><a href="{{ article.url }}">{{ article.title | downcase }}</a></h5>
+                <div><span class="excerpt">{{ excerpt }}</span></div>
+                <a class="read_more" href="{{ article.url }}"><span>Read More</span></a>
+              </div>
+            </div>
+          </a>
+        </div>
+  {%- elsif count == 2 -%}
+        <div class="five columns margin-0 border template-3 swap slide" data-id="{{ count }}">
+          <a href="{{ article.url }}" title="{{ article.title | escape }}">
+            <div>
+              {%- if article.image != nil -%}
+              <div class="image-wrapper">
+                <img src="{{ article.image | img_url: '100x' }}"
+                     alt="{{ article.title | escape }}"
+                     data-src="{{ article.image | img_url: '1200x' }}"
+                     class="lazyload lazyload--fade-in"
+                     data-sizes="auto"
+                     data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                                  {{ article.image | img_url: '1600x' }} 1600w,
+                                  {{ article.image | img_url: '1200x' }} 1200w,
+                                  {{ article.image | img_url: '1000x' }} 1000w,
+                                  {{ article.image | img_url: '1000x' }} 900w,
+                                  {{ article.image | img_url: '800x' }} 800w,
+                                  {{ article.image | img_url: '600x' }} 600w,
+                                  {{ article.image | img_url: '400x' }} 400w"
+                     />
+              </div>
+              {%- endif -%}
+              <div class="title_wrapper">
+                <div>
+                  {%- if cat != '' -%}  
+                  <a href="/blogs/news/tagged/{{cat_url}}"class="category">{{ cat }}</a><span class="divider"></span>
+                  {%- endif -%}
+                  <span class="displaydate">{{ article.published_at | date: "%m/%d/%Y" }}</span>
+                </div>
+                <h5 class="sub_title slide_title"><a href="{{ article.url }}">{{ article.title | downcase }}</a></h5>
+                <div><span class="excerpt">{{ excerpt }}</span></div>
+                <a class="read_more" href="{{ article.url }}"><span>Read More</span></a>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+	</div>
+    {%- elsif count > 2 -%}
+    {%- if count == 3 or count == 6 -%}
+    <div class="container clearfix top38">
+      <div class="sixteen columns margin-0 clearfix blog-home-category-wrapper">
+        <ul class="blog-home-category margin-0">
+	{%- endif -%}
+          <li data-block-id="{{article.id}}">
+              <div id="cat-{{ article.id }}" class="five columns margin-0 slide border" data-id="{{ count }}">
+                {%- if article.image != nil -%}
+                <div class="image-wrapper">
+                  <img  src="{{ article.image | img_url: '100x' }}"
+                       alt="{{ article.title | escape }}"
+                       data-src="{{ article.image | img_url: '1200x' }}"
+                       class="lazyload lazyload--fade-in"
+                       data-sizes="auto"
+                       data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                                    {{ article.image | img_url: '1600x' }} 1600w,
+                                    {{ article.image | img_url: '1200x' }} 1200w,
+                                    {{ article.image | img_url: '1000x' }} 1000w,
+                                    {{ article.image | img_url: '1000x' }} 900w,
+                                    {{ article.image | img_url: '800x' }} 800w,
+                                    {{ article.image | img_url: '600x' }} 600w,
+                                    {{ article.image | img_url: '400x' }} 400w"
+                       />
+                </div>
+                {%- endif -%}
+                <div class="title_wrapper">
+                  <div>
+                    {%- if cat != '' -%}  
+                    <a href="/blogs/news/tagged/{{cat_url}}"class="category">{{ cat }}</a><span class="divider"></span>
+                    {%- endif -%}
+                    <span class="displaydate">{{ article.published_at | date: "%m/%d/%Y" }}</span>
+                  </div>
+                  <h5 class="sub_title slide_title"><a href="{{ article.url }}">{{ article.title | downcase }}</a></h5>
+                  <div><span class="excerpt">{{ excerpt }}</span></div>
+                  <a class="read_more" href="{{ article.url }}"><span>Read More</span></a>
+                </div>
+              </div>
+            </li>
+    {%- if count == 5 or count == 8 -%}
+        </ul>
+      </div>
+    </div>
+  {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if count > 2 -%}
+{%- unless count == 5 or count == 8 -%}
+		</ul>
+	  </div>
+	</div>
+{%- endunless -%}
+{%- elsif count < 2 -%}
+      </div>
+	</div>
+    <style>.eleven.columns.template-3.swap .title-wrapper {bottom:-80px !important;}</style>
+{%- endif -%}
+<div class="container clearfix">
+  <div class="sixteen columns margin-0 clearfix align-center pagination">
+	{{ paginate | default_pagination }}
+  </div>
+</div>
+
+{%- endpaginate -%}
+<!-- End Category -->

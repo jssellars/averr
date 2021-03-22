@@ -1,0 +1,19 @@
+{%- assign product = all_products[section.settings.triple_product] -%}
+{%- assign collection_handles = product.collections | map: 'handle' -%}
+{% if product.empty? %}
+{%- assign section_onboarding = true -%}
+{% else %}
+{%- assign section_onboarding = false -%}
+{% endif %}
+<div class="running-prod-img">
+  {% include 'prod-images' %}
+</div>
+<div class="running-prod-text">
+  <a class="cp-name" href="{{ product.url }}">{{ product.title }}</a>
+  <div class="prcs">
+    <p>{{ product.price | money }}</p>
+    <p>{{product.compare_at_price | money}}</p>
+  </div>
+    {% include 'cart-form' %}
+</div>
+<style>.flex-control-thumbs {display: none;}</style>

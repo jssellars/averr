@@ -1,0 +1,140 @@
+<div class="content">
+  <section class="product-pros-wrap">
+    <div class="pp product-pros-banner lazyload">
+      <div class="pp-banner-text">
+        <p class="small-title">{{section.settings.subtitle}}</p>
+        <h2 class="main-title">{{section.settings.title}}</h2>
+      </div>
+    </div>
+    <div class="pp product-pros">
+      <div class="main-pros-wrap">
+        <ul class="main-pros">
+          {% for block in section.blocks %}
+          <li>
+            <div class="main-pros-image"><img src="{{ block.settings.icon | img_url: ''}}"></div>
+            <p>{{block.settings.itext}}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="nbf-ingredients">
+        <div class="nbf-top"> {% if section.settings.natural != blank %}<p>{{section.settings.natural}}</p>{% endif %}</div>
+        <ul class="Ingredients">
+          <li>
+            <img src="{{ section.settings.icona | img_url: ''}}">
+            <div>{{section.settings.texta}}</div>
+          </li>
+          <li>
+            <img src="{{ section.settings.iconb | img_url: ''}}">
+            <div>{{section.settings.textb}}</div>
+          </li>
+          <li>
+            <img src="{{ section.settings.iconc | img_url: ''}}">
+            <div>{{section.settings.textc}}</div>
+          </li>
+          <li>
+            <img src="{{ section.settings.icond | img_url: ''}}">
+            <div>{{section.settings.textd}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+"name": "Product Features",
+"max_blocks": 5,
+"settings": [
+{
+"type": "image_picker",
+"id": "banner",
+"label": "Background Image"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Subtitle"
+},
+{
+"type": "html",
+"id": "title",
+"label": "Title"
+},
+{
+"type":"header",
+"content":"Bottom Area"
+},
+{
+"type": "html",
+"id": "natural",
+"label": "Description"
+},
+{
+"type": "image_picker",
+"id": "icona",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "texta",
+"label": "Text"
+},
+{
+"type": "image_picker",
+"id": "iconb",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "textb",
+"label": "Text"
+},
+{
+"type": "image_picker",
+"id": "iconc",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "textc",
+"label": "Text"
+},
+{
+"type": "image_picker",
+"id": "icond",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "textd",
+"label": "Text"
+}
+
+],
+"blocks": [
+{
+"type": "featured_row",
+"name": "Top Area",
+"settings": [
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Image"
+},
+{
+"type": "html",
+"id": "itext",
+"label": "Text"
+}
+]
+}
+],
+"presets": [{
+"name": "Product Features",
+"category": "Image" }]
+}
+{% endschema %}
+
+<style>.product-pros-wrap .product-pros-banner{background: url({{section.settings.banner | img_url: ' '}})no-repeat top center; background-size: cover; height: 1173px; display: flex; justify-content: center; align-items: center; text-align: center;}</style>

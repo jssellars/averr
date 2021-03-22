@@ -1,0 +1,73 @@
+{% if section.settings.show_html %}
+    <!-- Featured On -->
+    {% include 'feature-on2' %}  
+    <!-- End Featured On -->
+    {% endif %}  
+
+
+            <!-- Customer Reviews -->
+  <div class="customer-reviews">
+    {% if settings.enable_shopify_review_comments and settings.review_position == "bottom" %}
+    <div id="stamped-main-widget" 
+         data-widget-style="standard2"
+         data-product-id="{{ product.id }}" 
+         data-name="{{ product.title | escape }}" 
+         data-url="{{ shop.url }}{{ product.url }}" 
+         data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+         data-description="{{ product.description | escape }}" 
+         data-product-sku="{{product.handle}}"
+         data-product-type="{{product.type}}"> 
+      {{ product.metafields.stamped.reviews }} 
+    </div>  
+    {% endif %}
+  </div>
+  <!-- End Customer Reviews -->
+
+  {% schema %}
+  {
+    "name": "Feature And Reviews",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_html",
+            "label": "Show/Hide Section",
+            "default":true
+        }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+/*-- Featured On --*/
+.featured-on-wrapper {
+    border: 1px solid #e7e4eb;
+    margin: 30px 0 80px 0;
+  }
+  .featured-on {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .featured-on-item {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 25px 0;
+  }
+  .featured-on-item .feature-on-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .featured-on-item h3 {
+    font-family: Gotham-Book, sans-serif;
+    font-size: 20px;
+    text-transform: none;
+    font-weight: lighter;
+    letter-spacing: 0;
+  }
+  /*-- End Featured On --*/
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

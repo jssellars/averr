@@ -1,0 +1,43 @@
+{% if product.available %}
+{% assign variant = product.selected_or_first_available_variant %}
+<form class="product-form" action="/cart/add" data-productid="{{product.id}}"  method="post"> 
+{% if product.options.size >= 1 %}
+      <div class="select">
+        <select id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}" name="id" class="multi_select">
+          {% for v in product.variants %}
+            <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% elsif product.options.size == 1 and product.variants.size > 1 or product.options.size == 1 and product.options[0] != "Title" %}
+
+    {% else %}
+      <input type="hidden" name="id" value="{{ variant.id }}" />
+    {% endif %}
+
+  <div class="add-to-cart">
+    {% if product.available %}
+    <div class="product-form-submit-wrap">
+      {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}{% endcapture %}
+    <button type="submit" onclick="dataLayer.push({'event': 'addToCart','productPrice': '{{ variant.price | money_without_currency }}','productID': '{{ variant.id }}','productCategory': 'SkinCare'});" name="add" class="cp-btn action_button add_to_cart" data-label={{ add_to_cart_label | json }}><span class="text">{{ add_to_cart_label }}</span></button>
+      <div class="add-to-cart-loader"></div>
+    </div>
+    {% capture cart_link %}
+    <a href="/cart">{{ 'products.product.cart_link' | t }}</a>
+    {% endcapture %}
+    {% capture continue_link %}
+    <a href="/collections/all">{{ 'products.product.continue_link' | t }}</a>
+    {% endcapture %}
+    {% capture checkout_link %}
+    <a href="/checkout">{{ 'products.product.checkout_link' | t }}</a>
+    {% endcapture %}
+    {% capture product_item %}
+    <span class='added-product-name'></span>
+    {% endcapture %}
+    <p class="product-add-error-message"></p>
+    {% else %}
+    <input type="button" class="disabled" disabled="disabled" value="{{ 'products.product.sold_out' | t }}" />
+    {% endif %}
+  </div>
+</form>
+{% endif %}

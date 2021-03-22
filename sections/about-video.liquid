@@ -1,0 +1,93 @@
+<div class="about-page__video">
+    <div class="about-page__video-wrap">
+        {% if section.settings.pre_title %}
+            <div class="about-page__video-pre-title">
+                {{ section.settings.pre_title }}
+            </div>
+        {% endif %}
+
+        {% if section.settings.title %}
+            <div class="about-page__video-title">
+                {{ section.settings.title }}
+            </div>
+        {% endif %}
+
+        <div class="about-page__video-box">
+            <div class="about-page__video-box-content">
+
+                <div class="about-page__video-iframe"></div>
+                <div class="about-page__video-box-wrap">
+                    <div class="about-page__video-box-img">
+                        <img src="{{ section.settings.video_image| img_url: '2048x' }}">
+                    </div>
+                    {% if section.settings.button_text %}
+                        <div class="about-page__video-button">
+                            <span style="color: {{ section.settings.button_color }}; background: {{ section.settings.button_bg }}">{{ section.settings.button_text }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $('.about-page__video-box-content').on('click', function(){
+        $(this).find('.about-page__video-iframe').html(`<iframe id="player-video" width="100%" height="100%" src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?autohide=1&rel=0&autoplay=1&playsinline=1&iv_load_policy=3&modestbranding=1&controls=0&showinfo=0&disablekb=1&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+        $('.about-page__video-box-wrap').hide();
+    });
+</script>
+{% schema %}
+    {
+        "name":             "About Video",
+        "class":            "section-about-video",
+        "settings": [
+            {
+                "type":     "text",
+                "id":       "pre_title",
+                "label":    "Pre title"
+            },
+            {
+                "type":     "text",
+                "id":       "title",
+                "label":    "Title"
+            },
+            {
+                "id":       "video_url",
+                "type":     "video_url",
+                "label":    "Video URL",
+                "accept":   ["youtube", "vimeo"],
+                "default":  "https://www.youtube.com/watch?v=M_Z5zLQMjUg"
+            },
+            {
+                "type":     "image_picker",
+                "id":       "video_image",
+                "label":    "Video image"
+            },
+            {
+                "type":     "text",
+                "id":       "button_text",
+                "label":    "Button text"
+            },
+            {
+                "type":     "color",
+                "id":       "button_bg",
+                "label":    "Button background",
+                "default":  "#f9dbd0"
+            },
+            {
+                "type":     "color",
+                "id":       "button_color",
+                "label":    "Button text color",
+                "default":  "#000"
+            }
+        ],
+        "presets":[
+            {
+                "name":     "About Video",
+                "category": "About Page"
+            }
+        ]
+    }
+{% endschema %}

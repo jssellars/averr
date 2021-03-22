@@ -1,0 +1,7 @@
+{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+
+<div class="flexslider product_gallery product-{{ product.id }}-gallery {% if product-images == blank %}product_slider{% endif %}">
+  <ul class="slides">
+    <img class="lazyload" data-src="{{product.featured_image | product_img_url: ''}}">
+  </ul>
+</div>

@@ -1,0 +1,59 @@
+<div class="forth">
+        <div class="container cont_2">
+            <div class="forth-wrap">
+				{% for block in section.blocks %}
+                <div class="steps-item">
+                    <div class="steps-item-image">
+                        <img src="{{ block.settings.benefitImage | img_url: '2500x' }}" alt="benefit image">
+                    </div>
+                    <div class="steps-item-title">
+                        <h4>{{ block.settings.benefitHeadline }}</h4>
+                    </div>
+                    <div class="steps-item-text">
+                        <p>{{ block.settings.benefitText }}</p>
+                    </div>
+                </div>
+              	{% endfor %}
+            </div>
+        </div>
+    </div>
+{% schema %}
+  {
+    "name": "Benefits Block",
+	"max_blocks": 3,
+    "settings": [
+		
+	],
+	"blocks":[
+		{
+		  "type": "select",
+          "name": "Benefit item",
+          "settings": [
+            {
+              "id": "benefitImage",
+			  "type": "image_picker",
+			  "label": "Choose benefit image"
+            },
+			{
+			  "id": "benefitHeadline",
+			  "type": "text",
+			  "default": "Default text",
+			  "label": "Type benefit headline"
+			},
+			{
+			  "id": "benefitText",
+			  "type": "textarea",
+			  "label": "Write benefit description",
+			  "default": "Default text"
+			}
+          ]
+        }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

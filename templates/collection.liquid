@@ -1,0 +1,30 @@
+
+<!-- spurit_po-added -->
+{% include 'spurit_po-collection-snippet' %}
+<!-- /spurit_po-added -->
+{% comment %}
+  The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+{% endcomment %}
+
+
+
+{%- case collection.handle -%}
+  {%- when 'acne-collection' -%}
+	{% section 'acne-collection-template' %}
+  {%- when 'anti-aging' -%}
+	{% section 'antiaging-collection-template' %}
+  {%- when 'kits-bundle-collection' -%}
+	{% section 'kitsandbundles-collection-template' %}
+  {% else %}
+	{% section 'collection-template' %}
+
+{% endcase %}
+
+
+<script>
+  $(document).ready(function () {
+
+    //$('.global-wrapper').attr('style', 'margin-top: 95px !important;');
+    
+  });
+</script>

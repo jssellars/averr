@@ -1,0 +1,404 @@
+{% if shop.customer_accounts_enabled %}
+  {% if customer  %}
+    <div data-lion-account=""></div>
+<style>
+  @media screen and (min-width: 1024px){
+    .global-wrapper{
+    	padding-top: 107px;
+    }
+    .footer{
+    	margin-top: 0 !important;
+    }
+  }
+</style>
+  {% else %}
+              <div class="content_position">
+            <div class="content">
+                <div class="bg_white_block">
+                    <div class="text_block">
+                        <h1>Rewards Program</h1>
+                        <p>We care about you and want to give you a gift, but first you have to sign-up for our Rewards Program and start earning points. Every time you make a purchase or engage with the brand, you'll earn points that you can redeem for travel and full-size products.</p>
+                    </div>
+                    <div class="vouchers_block">
+                        <div class="voucher">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-starred_ticket_filled.svg?11441">
+                            <h1>$5 Voucher</h1>
+                            <h3>125 points</h3>
+                        </div>
+                        <div class="voucher">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-starred_ticket_filled.svg?11441">
+                            <h1>$10 Voucher</h1>
+                            <h3>250 points</h3>
+                        </div>
+                        <div class="voucher">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-starred_ticket_filled.svg?11441">
+                            <h1>$15 Voucher</h1>
+                            <h3>375 points</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg_peach_block">
+                    <div class="peach_text_block">
+                        <h1>Earn points when you complete activities</h1>
+                    </div>
+                    <div class="earn_block">
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-bank_card_back_side.svg?11449">
+                            <h1>Make a purchase</h1>
+                            <h3>1 point per $1</h3>
+                        </div>
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-user.svg?11449">
+                            <h1>Create an account</h1>
+                            <h3>150 points</h3>
+                        </div>
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-megaphone.svg?11449">
+                            <h1>Refer a friend</h1>
+                            <h3>up to 575 points</h3>
+                        </div>
+
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-instagram_new.svg?11449">
+                            <h1>Follow us on Instagram</h1>
+                            <h3>25 points</h3>
+                        </div>
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-facebook.svg?11449">
+                            <h1>Like us on Facebook</h1>
+                            <h3>25 points</h3>
+                        </div>
+                        <div class="points">
+                            <img src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-note.svg?11449">
+                            <h1>Write a product review</h1>
+                            <h3>100 points</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="sing_up_block">
+                    <h1>Log in or Sign up to Averr Aglow to earn rewards today</h1>
+                    <div class="log_block">
+                        <a class="log" href="/account/login">Log In</a>
+                        <a class="sign" href="/account/register">Sign Up</a>
+                    </div>
+                </div>
+<!--               <div data-lion-account=""></div> -->
+            </div>
+        </div>
+<style>
+  div.content{
+  	padding-top: 100px !important;
+  }
+  </style>
+  {% endif %}
+{% endif %}
+<style>
+	body{
+    margin:0;
+    padding: 0;
+}
+.content_position{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 64px;
+}
+.bg_white_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.text_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 62%;
+}
+.text_block h1{
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.89;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 0;
+   text-transform: none;
+}
+.text_block p{
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    color: #000000;
+    margin-top: 20px;
+  text-transform: none;
+}
+.vouchers_block{
+    margin-top: 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 58%;
+    margin-bottom: 72px;
+}
+.voucher{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.voucher h1{
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.14;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 20px 0 0 0;
+  text-transform: none;
+}
+.voucher h3{
+    font-family: Gotham, sans-serif;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 16px 0 0 0;
+  text-transform: none;
+}
+.bg_peach_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(248, 220, 209, 0.7);
+}
+.peach_text_block h1{
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.89;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 64px 0 0 0;
+  text-transform: none;
+}
+.earn_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 70%;
+    margin-bottom: 80px;
+}
+.points{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33.3%;
+    margin-top: 80px;
+}
+.points h1{
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.14;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 32px 0 0 0;
+  text-transform: none;
+}
+.points h3{
+    font-family: Gotham, sans-serif;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 16px 0 0 0;
+  text-transform: none;
+}
+.sing_up_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 80px;
+}
+.sing_up_block h1{
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.33;
+    letter-spacing: normal;
+    color: #000000;
+    margin: 0;
+  text-transform: none;
+}
+.log_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 32px;
+    width: 100%;
+}
+.log_block a{
+    display: block;
+    width: 174px;
+    padding: 15px;
+    font-family: Montserrat, sans-serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+    background-color: #000000;
+}
+.log_block a:first-child{
+    margin-right: 20px;
+}
+.log_block a:nth-child(2){
+    margin-left: 20px;
+}
+@media screen and (max-width: 1024px){
+    .text_block{
+        width: 75%;
+    }
+    .vouchers_block{
+        width: 72%;
+    }
+    .voucher h1{
+        font-size: 25px;
+    }
+    .voucher h3{
+        font-size: 22px;
+    }
+    .earn_block{
+        width: 90%;
+    }
+    .points h1{
+        font-size: 25px;
+    }
+    .points h3{
+        font-size: 21px;
+    }
+}
+@media screen and (max-width: 768px){
+    .text_block{
+        width: 90%;
+    }
+    .vouchers_block{
+        width: 85%;
+    }
+    .peach_text_block h1{
+        font-size: 30px;
+    }
+    .earn_block{
+        width: 90%;
+    }
+    .points h1{
+        font-size: 25px;
+    }
+    .points h3{
+        font-size: 21px;
+    }
+    .points{
+        width: 45%;
+    }
+}
+@media screen and (max-width: 600px){
+    .text_block h1{
+        font-size: 28px;
+    }
+    .vouchers_block{
+        flex-direction: column;
+        margin-top: 32px;
+        margin-bottom: 0;
+        
+    }
+    .voucher{
+        margin-bottom: 40px;
+    }
+    .peach_text_block h1 {
+        font-size: 28px;
+    }
+    .peach_text_block{
+        width: 95%;
+    }
+    .sing_up_block{
+        width: 95%;
+    }
+}
+@media screen and (max-width: 460px){
+    .peach_text_block h1{
+        line-height: 1.14;
+        font-size: 28px;
+    }
+    .points {
+        width: 100%;
+    }
+    .points h1{
+        font-size: 28px;
+        margin-top: 20px;
+    }
+    .points h3 {
+        margin-top: 8px;
+        font-size: 24px;
+    }
+    .sing_up_block{
+        margin: 40px;
+    }
+    .log_block{
+        flex-direction: column;
+    }
+    .log_block a:first-child {
+        margin-right: 0;
+        width: 100%;
+        padding: 15px 0;
+        margin-bottom: 8px;
+    }
+    .log_block a:nth-child(2) {
+        margin-left: 0;
+        width: 100%;
+        padding: 15px 0;
+    }
+}
+</style>

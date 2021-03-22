@@ -1,0 +1,322 @@
+<div class="accordion_wrapper">
+  <div class="accordion_header_position">
+    <div class="text_block">
+      <h1>{{ section.settings.faq_title }}</h1>
+    </div>
+  </div>  
+  <div class="accordion_block_position">
+    <div class="accordion_block">
+      <div class="first_accord">
+      {% for block in section.blocks limit: 9 %}
+        <div class="accordion js-accordion">
+          <div class="accordion__item js-accordion-item">
+            <div class="accordion-header js-accordion-header q">{{ block.settings.faq_question }}</div> 
+            <div class="accordion-body js-accordion-body">
+              <div class="accordion-body__contents a">
+                {{ block.settings.faq_answer }}
+              </div>
+            </div>
+          </div><!-- end of accordion body -->
+        </div><!-- end of accordion item -->
+      {% endfor %}
+      </div>
+      <div class="second_accord">
+      {% for block in section.blocks limit: 9 offset: 9 %}
+        <div class="accordion js-accordion">
+          <div class="accordion__item js-accordion-item">
+            <div class="accordion-header js-accordion-header q">{{ block.settings.faq_question }}</div> 
+            <div class="accordion-body js-accordion-body">
+              <div class="accordion-body__contents a">
+                {{ block.settings.faq_answer }}
+              </div>
+            </div>
+          </div><!-- end of accordion body -->
+        </div><!-- end of accordion item -->
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Rewards - FAQ",
+	"max_blocks": 30,
+    "settings": [
+      {
+        "type": "text",
+        "id": "faq_title",
+        "label": "Title",
+		"default": "Frequently Asked Questions"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "faq_block",
+        "name": "FAQ Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "faq_question",
+            "label": "Question"
+          },
+          {
+            "type": "html",
+            "id": "faq_answer",
+            "label": "Answer"
+          }
+        ]
+      }
+	]
+  }
+{% endschema %}
+
+<style>
+  .accordion_wrapper {
+	background: #FBFBFB;
+	width: 100vw;
+    max-width: 100vw;
+    margin: 100px auto 80px;
+  }
+  
+  .accordion_header_position{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 80px 0 60px;
+  }
+  .accordion_header{
+    display: flex;
+    justify-content: flex-start;
+    width: 80%;
+  }
+  .accordion_header h1{
+    font-family: Gotham-Book;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
+    color: #444444;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .accordion_block_position{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width:100%;
+  } 
+  .accordion_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1200px;
+    padding-bottom:80px;
+  }
+  .first_accord{
+    width: 45%;
+  }
+  .second_accord{
+    width: 45%;
+  }
+  .accordion {
+    font-size: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+
+  .accordion-header,
+  .accordion-body {
+    background: #FBFBFB;
+  }
+
+  .accordion-header {
+    border-top: 1.5px solid #efefef;
+    padding: 1.5em 1.5em 1.5em 0;
+    cursor: pointer;
+    transition: all .3s;
+    font-family: Gotham-Bold;
+	font-size: 18px;
+	line-height: 24px;
+    letter-spacing: normal;
+    color: #000000;
+  }
+
+  .accordion-header:hover {
+    position: relative;
+    z-index: 5;
+  }
+
+  .accordion-body {
+    color: #3f3c3c;
+    display: none;
+  }
+
+  .accordion-body__contents {
+    padding: 0 1em 2em 1em;
+    font-family: Gotham;
+    font-size: 16px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #555555;
+  }
+
+  .accordion__item.active:last-child .accordion-header {
+    border-radius: none;
+  }
+
+  .accordion:first-child > .accordion__item > .accordion-header {
+    border-bottom: 1px solid transparent;
+  }
+
+  .accordion__item > .accordion-header:after {
+    content: "\f3d0";
+    font-weight: 100;
+    font-family: IonIcons;
+    font-size: 1.2em;
+    float: right;
+    position: relative;
+    top: -2px;
+    transition: .3s all;
+    transform: rotate(0deg); 
+  }
+
+  .accordion__item.active > .accordion-header:after {
+    transform: rotate(-180deg);
+  }
+
+  .accordion__item.active .accordion-header {
+
+  }
+
+  .accordion__item .accordion__item .accordion-header {
+    color: black;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .accordion {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 768px){
+    .accordion_block{
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 90%;
+    }
+    .first_accord, .second_accord {
+      width: 100%;
+    }
+    .accordion-header{
+      font-size: 20px;
+    }
+    .accordion_block_position{
+      margin-bottom:0;
+    }
+    .accordion_wrapper {
+      width: 100vw;
+      max-width: 100vw;
+      margin: 65px auto 60px;
+    }    
+    .accordion-header {
+      padding: 20px 25px 20px 0;
+      position: relative;
+    }    
+    .accordion__item > .accordion-header:after {
+      float: none;
+      position: absolute;
+      top: 35%;
+      right: 5px;
+    }    
+    .accordion_block {padding-bottom:0;}
+    .accordion_header_position {
+      padding: 60px 0 40px;
+    }    
+    
+  }
+  
+  @media screen and (max-width: 500px){
+    .accordion_header_position{
+      margin: 28px 0;
+    }
+    .accordion_header h1{
+      font-size: 40px;
+    }
+    .accordion_block{
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 90%;
+    }
+    .first_accord, .second_accord {
+      width: 100%;
+    }
+    .accordion-header{
+      font-size: 16px;
+    }
+    .accordion_block_position{
+      margin-bottom:0;
+    }
+  }
+  
+</style>
+
+<script>
+  var accordion = (function(){
+
+    var $accordion = $('.js-accordion');
+    var $accordion_header = $accordion.find('.js-accordion-header');
+    var $accordion_item = $('.js-accordion-item');
+
+    // default settings 
+    var settings = {
+      // animation speed
+      speed: 400,
+
+      // close all other accordion items if true
+      oneOpen: false
+    };
+
+    return {
+      // pass configurable object literal
+      init: function($settings) {
+        $accordion_header.on('click', function() {
+          accordion.toggle($(this));
+        });
+
+        $.extend(settings, $settings); 
+
+        // ensure only one accordion is active if oneOpen is true
+        if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
+          $('.js-accordion-item.active:not(:first)').removeClass('active');
+        }
+
+        // reveal the active accordion bodies
+        $('.js-accordion-item.active').find('> .js-accordion-body').show();
+      },
+      toggle: function($this) {
+
+        if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
+          $this.closest('.js-accordion')
+          .find('> .js-accordion-item') 
+          .removeClass('active')
+          .find('.js-accordion-body')
+          .slideUp()
+        }
+
+        // show/hide the clicked accordion item
+        $this.closest('.js-accordion-item').toggleClass('active');
+        $this.next().stop().slideToggle(settings.speed);
+      }
+    }
+  })();
+
+  $(document).ready(function(){
+    accordion.init({ speed: 300, oneOpen: true });
+  });
+</script> 

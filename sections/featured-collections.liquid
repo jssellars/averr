@@ -1,0 +1,84 @@
+<div class="content">
+  <section class="main-products">
+    <div class="container">
+      <div class="inner">
+        <h2 class="dc-text">{{section.settings.focus}}</h2>
+        <h2 class="mb-text">{{section.settings.focused}}</h2>
+        <div class="row mp-wrap">
+          {% for block in section.blocks %}
+          <div class="col-md-4">
+            <div class="single">
+              <div class="prod-image">
+                <img class="lazyload" src="{{block.settings.image | img_url: ''}}">
+                <p class="prod-name"><a href="{{ block.settings.box_url }}">{{ block.settings.box_title }}</a></p>
+              </div>
+              <div class="prod-overlay">
+                <h4 class="p-name" itemprop="name">
+                  <a href="{{ block.settings.box_url }}">{{ block.settings.box_title }}</a>
+                </h4>
+                <a href="{{ block.settings.box_url }}" class="overlay-btn">shop now</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <a href="{{section.settings.button}}" class="primary-btn">All products {{ 'new-arrow-right.png' | asset_url | img_tag }} </a>
+      </div>
+    </div>
+  </section>
+</div>
+<style>.flex-control-thumbs {display: none;} .main-products .prod-image img {height: auto;}</style>
+{% schema %}
+{
+"name": "Featured Collections",
+"class": "featured-collections-section",
+"max_blocks": 3,
+"settings": [
+{
+"type": "html",
+"id": "focus",
+"label": "Heading (Desktop)",
+"default":"LOOKING FOR SOMETHING?"
+},
+{
+"type": "html",
+"id": "focused",
+"label": "Heading (Mobile)",
+"default":"LOOKING FOR SOMETHING?"
+},
+{
+"type": "url",
+"id": "button",
+"label": "Button"
+}
+],
+"blocks": [
+{
+"type": "featured_collection",
+"name": "Featured Collections",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Hero Image"
+},
+{
+"type": "text",
+"id": "box_title",
+"label": "Collection Title",
+"default": "Collection Title"
+},
+{
+"type": "url",
+"id": "box_url",
+"label": "Collection URL"
+}
+]
+}
+],
+"presets": [{
+"name": "Top Collections",
+"category": "Collection"
+}]
+}
+{% endschema %}

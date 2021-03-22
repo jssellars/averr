@@ -1,0 +1,68 @@
+<div class="bg_white_block">
+  <div class="text_block">
+    <h1>{{ section.settings.title }}</h1>
+    {{ section.settings.description }}
+    <div class="log_block">
+      <a class="log" href="/account/login">{{ section.settings.login_button }}</a>
+      <a class="sign" href="/account/register">{{ section.settings.signup_button }}</a>
+    </div>
+    
+  </div>
+</div>
+<div class="login-image-block">
+      {% if section.settings.image != nil %}
+    	<img alt="{{ section.settings.image }}"
+                 src="{{ section.settings.image | img_url: '100x' }}"
+                 data-src="{{ section.settings.image | img_url: '2048x' }}"
+                 class=""
+                 sizes="100vw"
+                 srcset="  {{ section.settings.image | img_url: '2048x' }} 2048w,
+                         {{ section.settings.image | img_url: '1600x' }} 1600w,
+                         {{ section.settings.image | img_url: '1200x' }} 1200w,
+                         {{ section.settings.image | img_url: '1000x' }} 1000w,
+                         {{ section.settings.image | img_url: '800x' }} 800w,
+                         {{ section.settings.image | img_url: '600x' }} 600w,
+                         {{ section.settings.image | img_url: '400x' }} 400w"
+                 
+                 
+                 />
+      {% endif %}
+    </div>
+
+{% schema %}
+  {
+    "name": "Rewards - Login Block",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Log in or Sign up to Averr Aglow to earn rewards today"
+      },
+      {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+	  "default": "<p>We care about you and want to give you a gift, but first you have to sign-up for our Rewards Program and start earning points. Every time you make a purchase or engage with the brand, you'll earn points that you can redeem for travel and full-size products.</p>"
+      },
+      {
+        "type": "text",
+        "id": "login_button",
+        "label": "Log in Button Title",
+        "default": "Log In"
+      },
+      {
+        "type": "text",
+        "id": "signup_button",
+        "label": "Sign up Button Title",
+        "default": "Sign Up"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "1600 x 1000px recommended"
+      }
+    ]
+  }
+{% endschema %}

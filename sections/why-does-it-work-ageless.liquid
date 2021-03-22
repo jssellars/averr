@@ -1,0 +1,135 @@
+<div class="work-section">
+    <div class="container">
+        <div class="work-inner">
+            <div class="work-info">
+                <h2>{{ section.settings.wiTitle }}</h2>
+                {{ section.settings.wiText }}
+                <ul>
+                    {% for block in section.blocks %}
+                        {% case block.type %}
+                            {% when 'wiIcons' %}
+
+                            <li>
+                                <div class="wi-icon">
+                                    <img src="{{ block.settings.wiImg | img_url: 'master' }}" alt="" />
+                                </div>
+                                <span>{{ block.settings.wiIconText }}</span>
+                            </li>
+
+                        {% endcase %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="work-list">
+                <ul class="wl-tick">
+                    {% for block in section.blocks %}
+                        {% case block.type %}
+                            {% when 'workListTick' %}
+                            <li>{{ block.settings.wlTickText }}</li>
+                        {% endcase %}
+                    {% endfor %}
+                </ul>
+                <ul class="wl-cross">
+                    {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'workListCross' %}
+                        <li>{{ block.settings.wlCrossText }}</li>
+                    {% endcase %}
+                {% endfor %}
+                </ul>
+            </div>
+
+            <div class="work-info wi-mobile">
+                <ul>
+                    {% for block in section.blocks %}
+                        {% case block.type %}
+                            {% when 'wiIcons' %}
+
+                            <li>
+                                <div class="wi-icon">
+                                    <img src="{{ block.settings.wiImg | img_url: 'master' }}" alt="" />
+                                </div>
+                                <span>{{ block.settings.wiIconText }}</span>
+                            </li>
+
+                        {% endcase %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+  </div>
+
+
+{% schema %}
+{
+  "name": "Work Section Content",
+  "settings": [
+    {
+        "id": "wiTitle",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+    },
+    {
+        "id": "wiText",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Default <em>richtext</em> <a href=\"https://example.com/\">content</a></p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "wiIcons",
+      "name": "Work Info Icons list",
+      "settings": [
+        { 
+            "id": "wiImg",
+            "type": "image_picker",
+            "label": "simple Icon"
+        }, 
+        {
+            "id": "wiIconText",
+            "type": "text",
+            "label": "Text",
+            "default": "Text"
+        }
+      ]
+    },
+    {
+        "type": "workListTick",
+        "name": "Work List Tick",
+        "settings": [
+            {
+                "id": "wlTickText",
+                "type": "text",
+                "label": "Text",
+                "default": "Text"
+            }
+        ]
+    },
+    {
+        "type": "workListCross",
+        "name": "Work List Cross",
+        "settings": [
+            {
+                "id": "wlCrossText",
+                "type": "text",
+                "label": "Text",
+                "default": "Text"
+            }
+        ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

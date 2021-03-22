@@ -1,0 +1,107 @@
+<div class="cream-products-content {{ section.settings.productContentDirection }}">
+    <div class="container">
+        <div class="cp-inner">
+            <div class="cp-col-6">
+                <div class="cp-info">
+                    <h2>{{ section.settings.cpTitle }}</h2>
+                    {{ section.settings.cpText }}
+                    <div class="cp-accordian">
+                        <ul>
+                            {% for block in section.blocks %}
+                                {% case block.type %}
+                                    {% when 'accordian' %}
+                                    <li>
+                                        <button>{{ block.settings.accordianTitle }}</button>
+                                        <div class="panel">{{ block.settings.accordianText }}</div>
+                                    </li>
+                                {% endcase %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="cp-col-6">
+                <div class="cp-img test">
+                    <img src="{{ section.settings.cpImg | img_url: '544x544' }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+{% schema %}
+{
+  "name": "Why You'll Love It",
+  "settings": [
+    {
+        "type": "select",
+        "id": "productContentDirection",
+        "options": [
+            { "value": "text-then-img", "label": "Text Then Image"},
+            { "value": "img-then-text", "label": "Image Then Text"}
+        ],
+        "label": "Content Direction"
+    },
+    {
+        "id": "cpTitle",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+    },
+    {
+        "id": "cpText",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Default <em>richtext</em> <a href=\"https://example.com/\">content</a></p>"
+    },
+    { 
+        "id": "cpImg",
+        "type": "image_picker",
+        "label": "simple image"
+    } 
+  ],
+  "blocks": [
+    {
+      "type": "accordian",
+      "name": "Product Information",
+      "settings": [
+        {
+        "id": "accordianTitle",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+        },
+        {
+        "id": "accordianText",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Default <em>richtext</em> <a href=\"https://example.com/\">content</a></p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+
+$('body').on('click', '.cp-accordian ul li button', function() {
+    $(".cp-accordian ul li button").removeClass("active");
+    $(".cp-accordian ul li .panel").hide();
+    $(this).addClass("active");
+    $(this).siblings(".panel").show();
+});
+
+$('body').on('click', '.cp-accordian ul li button.active', function() {
+    $(this).removeClass("active");
+    $(this).siblings(".panel").hide();
+});
+
+{% endjavascript %}
+

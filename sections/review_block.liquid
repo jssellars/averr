@@ -1,0 +1,17 @@
+<div class="fifth">
+  {% if settings.enable_shopify_review_comments and settings.review_position == "bottom" %}
+        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+  {% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Reviews Block",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

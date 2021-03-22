@@ -1,0 +1,157 @@
+<div class="sixth">
+ <div class="container">
+            <div class="sixth-title">
+                <h2>{{ section.settings.cont_headline}}</h2>
+            </div>
+            <div class="sixth-wrap">
+				{% for block in section.blocks %}
+              	{% if block.settings.image_side == 'left' %}
+                <div class="sixth-item">
+                    <div class="sixth-item-left">
+                        <div class="sixth-item-image">
+                            <img src="{{ block.settings.cont_prod_image | img_url: '2500x' }}" alt="product image">
+                        </div>
+                    </div>
+
+                    <div class="sixth-item-right">
+                        <div class="sixth-item-content">
+                            <div class="sixth-item-content-step">
+                                <img style="max-width: 50px" src="{{ block.settings.cont_number_image | img_url: '2500x' }}" alt="number">
+                            </div>
+                            <div class="sixth-item-content-logo">
+                                <img style="max-width: 150px" src="{{ block.settings.cont_logo_image | img_url: '2500x' }}" alt="logo">
+                            </div>
+                            <div class="sixth-item-content-title">
+                                <h3>{{ block.settings.cont_prod_headline }}</h3>
+                            </div>
+                            <div class="sixth-item-content-text">
+                                <p>
+                                    {{ block.settings.cont_prod_description }}
+                                </p>
+                                <h1 class="ingred_btn" onclick="openIngrid('{{ block.settings.ingridList }}');">full ingredients list</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              	{% elsif block.settings.image_side == 'right' %}
+              <div class="sixth-item-reverse">
+                    <div class="sixth-item-right">
+                        <div class="sixth-item-content">
+                            <div class="sixth-item-content-step">
+                                <img style="max-width: 50px" src="{{ block.settings.cont_number_image | img_url: '2500x' }}" alt="number">
+                            </div>
+                            <div class="sixth-item-content-logo">
+                                <img style="max-width: 150px" src="{{ block.settings.cont_logo_image | img_url: '2500x' }}" alt="logo">
+                            </div>
+                            <div class="sixth-item-content-title">
+                                <h3>{{ block.settings.cont_prod_headline }}</h3>
+                            </div>
+                            <div class="sixth-item-content-text">
+                                <p>
+                                    {{ block.settings.cont_prod_description }}
+                                </p>
+                                <h1 class="ingred_btn" onclick="openIngrid('{{ block.settings.ingridList }}');">full ingredients list</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sixth-item-left image_right">
+                        <div class="sixth-item-image">
+                            <img src="{{ block.settings.cont_prod_image | img_url: '2500x' }}" alt="">
+                        </div>
+                    </div>
+                </div>
+              	{% endif %}
+               {% endfor %}
+            </div>
+   </div>
+ </div>
+ <div class="pop_up_bg">
+      <div class="pop_up_block">
+        <div class="close_popup">
+        	<img onclick="closePopUp();" src="https://cdn.shopify.com/s/files/1/1212/4268/files/icons8-delete_sign.svg?11166">
+        </div>
+        <p class="pop_up_text"></p>       
+      </div>
+  </div>
+<script>
+  function closePopUp(){
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "none";
+        }
+  function openIngrid(x){
+          document.getElementsByClassName("pop_up_text")[0].innerHTML = x;    
+          document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+        }
+</script>
+{% schema %}
+  {
+    "name": "Kit Contains Block",
+	"max_blocks": 10,
+    "settings": [
+		{
+			"id": "cont_headline",
+			"type": "text",
+			"default": "Default text",
+			"label": "Type contains headline"
+		}
+	],
+	"blocks": [
+		{
+		  "type": "select",
+          "name": "Product image side",
+   		  "settings": [
+      			{
+                 "type": "radio",
+                 "id":   "image_side",
+                 "label": "Choose image side",
+				 "default":   "left",
+                 "options": [
+                   { "value": "left", "label": "Left" },
+                   { "value": "right", "label": "Right" }
+                 ]
+                },
+				{
+					"type": "image_picker",
+					"id": "cont_prod_image",
+					"label": "Choose contain product image"
+				},
+				{
+					"type": "image_picker",
+					"id": "cont_number_image",
+					"label": "Choose contain number image"
+				},
+				{
+					"type": "image_picker",
+					"id": "cont_logo_image",
+					"label": "Choose logo image"
+				},
+				{
+					"type": "text",
+					"id": "cont_prod_headline",
+					"label": "Write product headline",
+					"default": "Default text"
+				},
+				{
+					"type": "textarea",
+					"id": "cont_prod_description",
+					"label": "Write product description",
+					"default": "Default text"
+				},
+				{
+					"type": "textarea",
+					"id": "ingridList",
+					"label": "Paste ingredients list",
+					"default": "Default text"
+				}
+   			]
+   
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

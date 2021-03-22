@@ -1,0 +1,306 @@
+<div class="quiz-container container" style="padding-top:0">
+  <div class="sixteen columns">
+    <div class="quiz-banner">
+      <section class="desktop">
+      	<img src="{{ section.settings.quiz_desktop_image | img_url : '800x' }}" />
+      </section>
+      <section class="mobile" style="background: url('{{ section.settings.quiz_mobile_image  | img_url : '800x' }}');"></section>
+      <section class="quiz-banner-content">
+        <div class="quiz-banner-title">{{ section.settings.quiz_title }}</div>
+        <div class="quiz-banner-description">{{ section.settings.quiz_description }}</div>
+        <div class="quiz-banner-button">
+          <a href="{{ section.settings.quiz_button_url }}">{{ section.settings.quiz_button }}</a>
+        </div>
+      </section>
+      <div class="quiz-banner-wrapper"></div>
+    </div>	
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Home Quiz",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "quiz_desktop_image",
+        "label": "Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "quiz_mobile_image",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "text",
+        "id": "quiz_title",
+        "label": "Title",
+        "default": "What’s Your Skincare Routine?"
+      },
+      {
+      "type": "richtext",
+      "id": "quiz_description",
+      "label": "Description",
+	  "default": "<p>Choosing skincare doesn’t have to be overwhelming! Take this quiz to discover your personal skincare routine for a healthy, thriving complexion. What are you waiting for?</p>"
+      },
+      {
+        "type": "text",
+        "id": "quiz_button",
+        "label": "Button Title",
+        "default": "START QUIZ"
+      },
+      {
+        "type": "text",
+        "id": "quiz_button_url",
+        "label": "Button URL",
+        "default": "/pages/quiz"
+      }
+	],
+	"presets": [
+      {
+	    "category": "Home Quiz",
+        "name": "Home Quiz"
+      }
+	]
+  }
+{% endschema %}
+
+<style>
+  .quiz-container {
+    padding-bottom:0 !important;
+    margin-top:40px !important;
+  }  
+  .quiz-banner {
+    position:relative;
+    z-index: 0;
+    margin: 0;
+    height: 420px;
+    width: 100%;
+    max-width:1200px;
+    margin:auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background: -o-linear-gradient(left, #F9DBD0 48%, #F9DBD0 45.44%, #F9DBD0 50.38%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(48%, #F9DBD0), color-stop(45.44%, #F9DBD0), color-stop(50.38%, #F9DBD0));
+    background: linear-gradient(90deg, rgba(249, 219, 208, 0) 33.44%, #F9DBD0 45.38%);
+  }
+  .quiz-banner section.desktop {
+    /*background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: left !important;*/
+    /*-webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    z-index:-1;*/
+    display:flex;
+    position:relative;
+    width:45%;
+	background: linear-gradient(90deg, rgba(249, 219, 208, 0) 33.44%, #F9DBD0 100.38%);
+  }
+  
+  .quiz-banner section.desktop img {
+    object-fit: contain;
+    object-position: left;
+    z-index: -1;
+  }
+
+  .quiz-banner section.mobile {
+	display:none;
+  }
+
+  .quiz-banner-content {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 41.5%;
+    flex: 0 0 41.5%;
+    position:relative;
+    padding-left: 10%;
+    padding-top:84px;
+    width: 370px;
+  }
+
+  .quiz-banner-title {
+    font-family: FreightDispProBook-Regular;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 50px;
+    color: #222;
+    margin-bottom: 24px;
+  }
+
+  .quiz-banner-description {
+    font-family: Gotham-Book;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 24px;
+    color: #222;
+    width:75%;
+  }
+
+  .quiz-banner-button {
+    background-color: #000;
+    margin-top: 32px;
+    display: inline-block;
+    border: 1px solid #000;
+    transition: all .3s;
+  }
+  .quiz-banner-button:hover {
+    color: #000;
+    background: transparent;      
+  }
+  .quiz-banner-button a {
+    font-family: Gotham-Bold;
+    color: #fff;
+    font-weight: 200;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    text-transform: uppercase;
+    display: inherit;
+    padding: 16px 40px;
+  }
+  .quiz-banner-button a:hover {
+    color: #000;
+  }
+  .quiz-banner-wrapper {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 41.5%;
+    flex: 0 0 0;
+    position:relative;
+  }
+  
+  @media screen and (max-width: 1199px){  
+
+    .quiz-banner section.desktop {
+      background-size: cover !important;
+      background-position: right !important;          
+    }
+
+    .quiz-banner .quiz-banner-title{
+      font-size: 32px;
+      line-height: 40px;
+      margin-bottom:10px;
+    }
+
+    .quiz-banner .quiz-banner-description {
+      font-size: 14px;
+      line-height: 24px;
+      width:100%;
+    }    
+  }
+
+
+
+  @media screen and (max-width: 767px){  
+
+    .quiz-container {
+      width:90%;
+    }
+
+    .quiz-container .sixteen.columns {
+      width:100% !important;
+    }
+
+    .quiz_headline  h2 {
+      margin: 40px 0;
+    }
+
+    .quiz-banner {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      /*flex-direction: column;*/
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap; 
+      background:0;
+      margin-bottom: 40px;
+      margin-top:0px;
+      height:auto;
+    }
+    .quiz-banner section {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+    .quiz-banner section.desktop {
+      display:none;
+    }
+
+
+    .quiz-banner section.mobile {
+      display: flex;
+      background-size: cover !important;
+      background-repeat: no-repeat !important;
+      background-position: bottom !important;
+      position: relative;
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      min-height: 300px;
+      opacity: 0.7;
+    }
+
+    .quiz-banner .quiz-banner-content {
+      flex:auto;
+      position: relative;
+      width: fit-content;
+      padding:32px;
+      text-align:center;
+      margin-top:-90px;
+      background: linear-gradient(180deg, rgba(249,219,208,0) 5.44%, #f9dbd0 18.38%);
+    }
+
+    .quiz-banner .quiz-banner-title{
+      font-family: FreightDispProBook-Regular;
+      font-weight: 200;
+      font-size: 40px;
+      line-height: 50px;
+      color: #222222;
+      padding-bottom:0px;
+      margin-bottom:20px;
+    }
+
+    .quiz-banner .quiz-banner-description {
+      font-family: Gotham-Book;
+      font-weight: 200;
+      font-size: 14px;
+      line-height: 24px;
+      color: #222222;
+      width:100%;
+    }    
+
+    .quiz-banner .quiz-banner-button {
+      background-color: #000;
+      margin-top: 4px;
+      display: inline-block;
+      max-width:170px;
+      margin:0 auto;
+    }
+    .quiz-banner .quiz-banner-button a {
+      font-family: Gotham-Bold;
+      color: #fff;
+      font-weight: 200;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      text-transform: uppercase;
+      display: inherit;
+      padding: 16px 40px;
+    }
+
+
+
+  }
+
+</style>
+
+{% javascript %}
+{% endjavascript %}

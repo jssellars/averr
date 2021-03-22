@@ -1,0 +1,97 @@
+<section class="everything-wrapper">
+    <div class="everything-section">
+            <div class="everything-content">
+                <span>{{section.settings.pretitle}}</span>
+                <h4>{{section.settings.title}}</h4>
+                <p>{{section.settings.description}}</p>
+            </div>
+            <div class="everything_body">
+                <div class="rowpl owl-carousel">
+                    {% for product in section.blocks %} 
+                    <div class="everything-block">
+                        <div class="everything-block__img">
+                            <img class="lazyload" data-src="{{product.settings.photo | img_url: ''}}" alt="">
+                        </div> 
+                        <div class="everything-block__text">
+                            <label>{{ product.settings.title }}</label>
+                            <p>{{ product.settings.text }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="everything-button">
+                <p class="everything-fact">{{section.settings.fact}}</p>
+                <img class="arrow" data-src="{{section.settings.arrow | img_url: ''}}" alt="">
+            </div>
+    </div>
+</section>
+
+
+{% schema %}
+{
+"name": "About Everything",
+"settings": [
+{ 
+"type":"text",
+"id":"pretitle",
+"label":"Pretitle",
+"default":"you Tried Everything "
+},
+{  
+"type":"html",
+"id":"title",
+"label":"Title",
+"default":"and I Mean Everything Under the Sun"
+},
+{
+"type":"html",
+"id":"description",
+"label":"Description",
+"default":"123"
+},
+{
+"type":"text",
+"id":"fact",
+"label":"In fact",
+"default":"In fact, what didn't you use?"
+},
+{
+"id" : "arrow",
+"type" : "image_picker",
+"label" : "Arrow down"
+}
+],
+"blocks" : [
+{
+"name" : "Product",
+"type" : "product-block",
+"limit": 3,
+"settings" : [
+{
+"id" : "photo",
+"type" : "image_picker",
+"label" : "Photo"
+},
+{
+"id" : "title",
+"type" : "html",
+"label" : "Product Title"
+},
+{
+"type":"html",
+"id":"text",
+"label":"Text",
+"default":"123"
+}
+]
+}
+],
+"presets":[
+{
+"name":"About Everything",
+"category":"About Page"
+}
+]
+}
+{% endschema %}

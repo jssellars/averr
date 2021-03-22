@@ -1,0 +1,51 @@
+<div class="content">
+  <section class="customer-section brands-section">
+    <div class="container">
+  {% if section.settings.title != blank %}
+  <h2 class="brand-title center">
+    {{ section.settings.title | escape }}
+  </h2>
+  {% endif %}
+  <ul class="brand-section owl-carousel owl-theme logo-bar">
+    {% for block in section.blocks %}
+    <li>
+      <img class="lazyload" data-src="{{block.settings.logo | img_url:''}}" alt="">
+    </li>
+    {% endfor %}
+  </ul>
+    </div>
+  </section>
+</div>
+
+
+
+  {% schema %}
+	{
+    "name": "Brands",
+    "max_blocks": 5,
+  	"settings": [
+	  {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Logo"
+      }
+],
+  "blocks": [
+    {
+      "type": "featured_row",
+      "name": "Brands List",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Brands",
+    "category": "Image" }]
+ }
+{% endschema %}

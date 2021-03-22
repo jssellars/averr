@@ -1,0 +1,80 @@
+{%- assign shown = shown | plus:1 -%}
+{%- assign article_count = article_count | plus:1 -%}
+{%- if col_count == 1 -%}
+  <div class="container clearfix">
+    <div class="sixteen columns clearfix">
+      <div class="eleven columns margin-0 large-article border" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div>
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+              <img src="{{ article.image | img_url: '100x' }}"
+                   alt="{{ article.title | escape }}"
+                   data-src="{{ article.image | img_url: '1200x' }}"
+                   class="lazyload lazyload--fade-in"
+                   data-sizes="auto"
+                   data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                                {{ article.image | img_url: '1600x' }} 1600w,
+                                {{ article.image | img_url: '1200x' }} 1200w,
+                                {{ article.image | img_url: '1000x' }} 1000w,
+                                {{ article.image | img_url: '1000x' }} 900w,
+                                {{ article.image | img_url: '800x' }} 800w,
+                                {{ article.image | img_url: '600x' }} 600w,
+                                {{ article.image | img_url: '400x' }} 400w"
+                   />
+          	</div>
+            {%- endif -%}
+            <div class="nine columns title-wrapper border">
+              <h5 class="sub_title">{{ article.title | downcase }}</h5>
+              <div class="author">Written by <strong>{{ article.author }}</strong></div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="four columns sidebar sidebar-block newsletter r-margin-0 align_right">
+          <h4>Subscribe to our</h4>
+          <p>Weekly Skincare Newsletter</p>
+          {% include 'newsletter' %}
+      </div>
+    </div>
+  </div>
+  {%- assign col_count = col_count | plus:2 -%}
+{%- elsif col_count > 2 and col_count < 7 -%}
+  {%- if col_count == 3-%}
+  <div class="container clearfix top38">
+    <div class="sixteen columns clearfix r-margin-0">
+  {%- endif -%}
+      <div class="four columns col4-black border" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div>
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+            <img  src="{{ article.image | img_url: '100x' }}"
+                 alt="{{ article.title | escape }}"
+                 data-src="{{ article.image | img_url: '1200x' }}"
+                 class="lazyload lazyload--fade-in"
+                 data-sizes="auto"
+                 data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                              {{ article.image | img_url: '1600x' }} 1600w,
+                              {{ article.image | img_url: '1200x' }} 1200w,
+                              {{ article.image | img_url: '1000x' }} 1000w,
+                              {{ article.image | img_url: '1000x' }} 900w,
+                              {{ article.image | img_url: '800x' }} 800w,
+                              {{ article.image | img_url: '600x' }} 600w,
+                              {{ article.image | img_url: '400x' }} 400w"
+                 />
+          	</div>
+            {%- endif -%}
+          	<h5 class="sub_title">{{ article.title | downcase }}</h5>
+          </div>
+        </a>
+      </div>
+  {%- if col_count == 6 or article_count == articles_count-%}
+    </div>
+  </div>
+    {%- assign col_count = 1 -%}
+    {%- assign row_count = row_count | plus:1 -%}
+  {%- else -%}
+    {%- assign col_count = col_count | plus:1 -%}
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,38 @@
+<div class="b-product-tabs">
+    <ul class="tabs">
+        <li class="tab active" data-tab="1">Description</li>
+        <li class="tab" data-tab="2">List of products</li>
+        <li class="tab" data-tab="3">Ingredients</li>
+    </ul>
+    <div class="b-tabs-content">
+        <div class="tab-content active"
+             data-tab="1">{{ product.description | strip_html | truncatewords: 80 }}</div>
+        <div class="tab-content"
+             data-tab="2">{{ section.settings.contentTabProductList | truncatewords: 80 }}</div>
+        <div class="tab-content"
+             data-tab="3">{{ section.settings.contentTabIngredients | truncatewords: 80 }}</div>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Product",
+  "class": "product-template-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "uploadImagePinkBack",
+      "label": "Upload image on the pink background"
+    },
+    {
+      "id": "contentTabProductList",
+      "type": "html",
+      "label": "Add content for tab 'List of products'"
+    },
+    {
+      "id": "contentTabIngredients",
+      "type": "html",
+      "label": "Add content for tab 'Ingredients'"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+<!-- Signup -->
+{%- for article in blog.articles -%}
+  {%- if articles_used contains article.handle -%} 
+	  {%- continue -%}
+  {%- endif -%}
+  {%- assign shown = shown | plus:1 -%}
+  {%- assign article_count = article_count | plus:1 -%}
+  {%- assign articles_used = articles_used | append: "," | append: article.handle -%}
+  {%- assign excerpt = "" -%}
+  {%- if article.excerpt.size > 0  -%}
+	  {%- assign excerpt = "<p>" | append: article.excerpt | append: "</p>" -%}
+  {%- endif -%}
+  {%- assign cat = "" -%}
+  {%- for tag in article.tags -%}
+  	{%- if tag contains 'cat_' -%}
+  		{%- assign cat = tag | replace: "cat_", "" | capitalize -%}
+  	{%- endif -%}
+  {%- endfor -%}
+  <div class="container clearfix">
+    <div class="sixteen columns clearfix">
+      <div class="eleven columns margin-0 large-article border" data-id="{{ article_count }}">
+        <a href="{{ article.url }}" title="{{ article.title | escape }}">
+          <div>
+            {%- if article.image != nil -%}
+            <div class="image-wrapper">
+              <img src="{{ article.image | img_url: '100x' }}"
+                   alt="{{ article.title | escape }}"
+                   data-src="{{ article.image | img_url: '1200x' }}"
+                   class="lazyload lazyload--fade-in"
+                   data-sizes="auto"
+                   data-srcset=" {{ article.image | img_url: '2048x' }} 2048w,
+                                {{ article.image | img_url: '1600x' }} 1600w,
+                                {{ article.image | img_url: '1200x' }} 1200w,
+                                {{ article.image | img_url: '1000x' }} 1000w,
+                                {{ article.image | img_url: '1000x' }} 900w,
+                                {{ article.image | img_url: '800x' }} 800w,
+                                {{ article.image | img_url: '600x' }} 600w,
+                                {{ article.image | img_url: '400x' }} 400w"
+                   />
+            </div>
+            {%- endif -%}
+            <div class="nine columns title-wrapper border">
+              <div><span class="category">{{ cat }}</span><span class="divider"></span><span class="displaydate">{{ article.published_at | date: "%m/%d/%Y" }}</span></div>
+              <h5 class="sub_title">{{ article.title | downcase }}</h5>
+              <div><span class="excerpt">{{ excerpt }}</span></div>
+              <a class="read_more" href="{{ article.url }}"><span>Read More</span></a>
+              <div class="author" style="display:none;">Written by <strong>{{ article.author }}</strong></div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="four columns sidebar sidebar-block newsletter r-margin-0 align_right">
+        <h4>Subscribe to our</h4>
+        <p>Weekly Skincare Newsletter</p>
+        {% include 'newsletter' %}
+      </div>
+    </div>
+  </div>
+  {%- break -%}
+{%- endfor -%}
+<!-- End Signup -->

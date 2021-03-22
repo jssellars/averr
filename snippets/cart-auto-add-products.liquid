@@ -1,0 +1,53 @@
+<script>
+
+  (function($) {
+    
+    variant1_id = '32345470468183';
+    variant2_id = '32337156505687';
+    
+    variant1_exists = false;
+    variant2_exists = false;
+
+    var cartItems = {{ checkout.line_items | json }}, cartUpdates = {};
+
+
+    for (var i=0; i<cartItems.length; i++) {
+
+      if ( cartItems[i].id === {{ variant1_id }} ) {
+
+        variant1_exists = true;
+
+      }
+          
+      if ( cartItems[i].id === {{ variant2_id }} ) {
+
+        variant2_exists = true;
+
+      }
+      
+
+    }
+    
+    
+    console.log('variant 1 exists', variant1_exists);
+    console.log('variant 2 exists', variant2_exists);
+    
+    
+    if(variant1_exists == false || variant2_exists == false)
+    {
+      
+      jQuery.post('/cart/update.js', {
+        updates: {
+          794864053: 1,
+          794864233: 1
+        }
+      }).done(function () {
+        window.location.reload();
+      });
+      
+    }
+
+
+  })(jQuery);
+
+</script>

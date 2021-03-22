@@ -1,0 +1,2513 @@
+{% include 'product-template-updated-wrapper' %}
+<main>
+  
+  {% for block in section.blocks %}
+    {% case block.type %}
+
+      {% when 'tab_block' %}
+  		{% if block.settings.show_tabs %}
+          <!-- Tabs -->
+          <div class="container clearfix extended">
+            <div class="sixteen columns clearfix tabs-wrapper">
+              <ul class="tabs desktop">
+                <li><a href="javascript:;" data-href="tab1" class="active">{{ block.settings.tab_title_1 }}</a></li>
+                <li><a href="javascript:;" data-href="tab2" class="">{{ block.settings.tab_title_2 }}</a></li>
+                <li><a href="javascript:;" data-href="tab3" class="">{{ block.settings.tab_title_3 }}</a></li>
+              </ul>
+              <ul class="tabs-content desktop">
+                <li id="tab1" class="active"><div>{{ block.settings.tab_content_1 }}</div></li>
+                <li id="tab2" class=""><div>{{ block.settings.tab_content_2 }}</div></li>
+                <li id="tab3" class=""><div>{{ block.settings.tab_content_3 }}</div></li>
+              </ul>
+
+              <div class="accordion_block mobile">
+                <div class="first_accord">
+                  {% for i in (1..3) %}
+                   	{% capture title %}tab_title_{{ i }}{% endcapture %}
+                   	{% capture content %}tab_content_{{ i }}{% endcapture %}
+                    <div class="accordion js-accordion">
+                      <div class="accordion__item js-accordion-item">
+                        <div class="accordion-header js-accordion-header">{{ block.settings[title] }}</div> 
+                        <div class="accordion-body js-accordion-body">
+                          <div class="accordion-body__contents">{{ block.settings[content] }}</div>
+                        </div>
+                      </div><!-- end of accordion body -->
+                    </div><!-- end of accordion item -->
+				  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Tabs -->
+		{% endif %}  
+
+      {% when 'benefits_block' %}
+  		{% if block.settings.show_benefits %}
+          <!-- Benefits Block -->
+          <div class="container clearfix benefits-block extended">
+            <div class="sixteen columns clearfix">
+              <h2>{{ block.settings.benefits_section_title}}</h2>
+          	  <div class="benefits-block-wrapper">
+                <div class="face-block desktop">
+                  {% for i in (1..4) %}
+                    <div class="benefit-row">
+                      {% capture title %}benefits_title_{{ i }}{% endcapture %}
+                      {% capture content %}benefits_content_{{ i }}{% endcapture %}
+                      <div class="benefit-item">
+                        <h4>{{ block.settings[title] }}</h4>
+                        <p class="line{{i}}"></p>
+                        <p>{{ block.settings[content] }}</p>
+                      </div>
+                      {% capture title %}benefits_title_{{ i|plus:4 }}{% endcapture %}
+                      {% capture content %}benefits_content_{{ i|plus:4 }}{% endcapture %}
+                      <div class="benefit-item">
+                        <h4>{{ block.settings[title] }}</h4>
+                        <p class="line{{i|plus:4}}"></p>
+                        <p>{{ block.settings[content] }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                  {% assign desktop_image = block.settings.benefits_desktop_image  %}
+                  {{ desktop_image | img_url : '1400x' | img_tag }}
+                </div>              
+              </div>              
+              <div class="face-block mobile">
+                <div class="accordion_block">
+                  <div class="first_accord">
+                  {% for i in (1..8) %}
+                   	{% capture title %}benefits_title_{{ i }}{% endcapture %}
+                   	{% capture content %}benefits_content_{{ i }}{% endcapture %}
+                    <div class="accordion js-accordion">
+                      <div class="accordion__item js-accordion-item">
+                        <div class="accordion-header js-accordion-header">{{ block.settings[title] }}</div> 
+                        <div class="accordion-body js-accordion-body">
+                          <div class="accordion-body__contents">{{ block.settings[content] }}</div>
+                        </div>
+                      </div><!-- end of accordion body -->
+                    </div><!-- end of accordion item -->
+				  {% endfor %}
+                  </div>
+                  {% assign mobile_image = block.settings.benefits_mobile_image  %}
+                  <div class="face-image"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Benefits Block -->
+		{% endif %}  
+
+      {% when 'success_block' %}
+  		{% if block.settings.show_success %}
+          <!-- Success Block -->
+          <div class="container clearfix how-to-use">
+            <div class="sixteen columns clearfix">
+              <h2>{{ block.settings.success_section_title }}</h2>
+              {% for i in (1..4) %}
+                {% capture image %}success_image_{{ i }}{% endcapture %}
+                {% capture mimage %}success_image_{{ i }}_mobile{% endcapture %}
+                {% capture title %}success_title_{{ i }}{% endcapture %}
+                {% capture content %}success_content_{{ i }}{% endcapture %}
+                <div class="four columns clearfix desktop">
+                  {{ block.settings[image] | img_url : '320x' | img_tag }}
+                  <span class="step">Step {{ i }}</span>
+                  <span class="title">{{ block.settings[title] }}</span>
+                  <span class="description">{{ block.settings[content] }}</span>
+                </div>
+                <div class="four columns clearfix mobile">
+                  {{ block.settings[mimage] | img_url : '800x' | img_tag }}
+                  <span class="step">Step {{ i }}</span>
+                  <span class="title">{{ block.settings[title] }}</span>
+                  <span class="description">{{ block.settings[content] }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="container clearfix research-title">
+            <div class="sixteen columns clearfix">
+              <h2>Real People. Real Results</h2>
+            </div>
+          </div>
+          <div class="container clearfix research extended">
+            <div class="sixteen columns clearfix">
+              {% assign limage = block.settings.success_desktop_image  %}
+              {% assign rimage = block.settings.success_desktop_image_right  %}
+              <div class="research-image desktop eight columns">{{ limage | img_url : '800x' | img_tag }}</div>
+              <div class="research-image desktop eight columns">{{ rimage | img_url : '800x' | img_tag }}</div>
+              {% assign timage = block.settings.success_mobile_image  %}
+              {% assign bimage = block.settings.success_mobile_image_bottom  %}
+              <div class="research-image mobile eight columns">{{ timage | img_url : '800x' | img_tag }}</div>
+              <div class="research-image mobile eight columns">{{ bimage | img_url : '800x' | img_tag }}</div>
+            </div>
+          </div>
+          <!-- End Success Block -->
+
+		{% endif %}  
+
+      {% when 'how_to_use_block' %}
+  		{% if block.settings.show_how_to_use %}
+          <!-- How To Use Block -->
+          <div class="container clearfix how-use-title">
+          	<div class="sixteen columns clearfix">
+            	<h2 class="how_to_use">{{ block.settings.how_to_use_section_title }}</h2>
+          	</div>
+          </div>
+          <div class="container clearfix how-use">
+          	<div class="sixteen columns clearfix">
+              <div class="video">
+                {% assign image = block.settings.how_to_use_video_image  %}
+                <video id='media-video' controls poster="{{ image | img_url : '600x'}}">
+                  <source src="{{ block.settings.how_to_use_video_url }}" type='video/mp4'>
+                </video>
+                <div id='media-controls'>
+                  <div id='play-pause-button' class='play' onclick='togglePlayPause();'></div>
+                </div>
+              </div>
+              <div class="text">
+                <h3>{{ block.settings.how_to_use_content }}</h3>
+                <div class="sub-line"></div>
+              </div>
+              <div class="image">
+                {% assign image = block.settings.how_to_use_image  %}
+                <img src="{{ image | img_url: '600x' }}" alt="" />
+              </div>
+            </div>
+          </div>
+          <!-- End How To Use Block -->
+		{% endif %}  
+  
+      {% when 'how_it_works_block' %}
+  		{% if block.settings.show_how_it_works %}
+          <!-- How It Works -->
+          <div class="container clearfix  how-it-works">
+            <div class="sixteen columns clearfix">
+              <h2>{{ block.settings.how_it_works_section_title }}</h2>
+              {% for i in (1..7) %}
+                {% capture image %}how_it_works_image_{{ i }}{% endcapture %}
+                {% capture title %}how_it_works_title_{{ i }}{% endcapture %}
+                <div class="two columns clearfix{% if i == 1 %} offset-by-one{% endif %}">
+                  <span class="right-arrow{% if i == 7 %} last{% endif %}"><img src="{{ block.settings[image] | img_url: '600x' }}" alt="" /></span>
+                  <span class="step{% if i == 7 %} last{% endif %}">{{ block.settings[title] }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- End How It Works -->
+		{% endif %}  
+    
+      {% when 'ingredients_block' %}
+  		{% if block.settings.show_ingredients %}
+          <!-- Ingredients -->
+          <div class="container clearfix  ingredients" id="all_ingreds">
+            <div class="sixteen columns clearfix">
+              <h2>{{ block.settings.ingredients_section_title }}</h2>
+              <ul class="ingredients-slider owl-carousel margin-0">
+              {% for i in (1..12) %}
+                {% capture image %}ingredients_image_{{ i }}{% endcapture %}
+                {% capture title %}ingredients_title_{{ i }}{% endcapture %}
+                {% capture content %}ingredients_content_{{ i }}{% endcapture %}
+                <li>
+                  <div class="five columns slide ">
+                  	<a href="#" class="single-ingredient">
+                      {{ block.settings[image] | img_url : '600x' | img_tag }}
+                      <span class="title">{{ block.settings[title] }}</span>
+                      <span class="description">{{ block.settings[content] }}</span>
+                  	</a>
+                  </div>
+                </li>
+              {% endfor %}
+              </ul>
+              <div class="owl-controls">
+                <div class="owl-nav">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Ingredients -->
+		{% endif %}  
+  
+      {% when 'product_features_block' %}
+  		{% if block.settings.show_product_features %}
+          <!-- Product Features -->
+          <div class="container clearfix product-features">
+            <div class="sixteen columns clearfix">
+              {% for i in (1..4) %}
+                {% capture image %}product_feature_image_{{ i }}{% endcapture %}
+                <div class="two columns clearfix">{{ block.settings[image] | img_url: '600x' | img_tag }}</div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- End Product Features -->
+		{% endif %}  
+  
+      {% when 'before_after_block' %}
+  		{% if block.settings.show_before_after %}
+          <!-- Before / After -->
+          <div class="container clearfix before-after extended">
+            <div class="sixteen columns clearfix">
+              <h2>{{ block.settings.before_after_section_title }}</h2>
+              <div class="before-after-wrapper">
+                {% for i in (1..3) %}
+                  {% capture image %}before_after_image_{{ i }}{% endcapture %}
+                  {% capture description %}before_image_{{ i }}_description{% endcapture %}
+                  <div class="four columns clearfix">
+                    {{ block.settings[image] | img_url: '600x' | img_tag }}
+                    <span class="before">Before</span>
+                    <span class="after">After</span>
+                    <p class="description">{{ block.settings[description] }}</p>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <!-- End Before / After -->
+		{% endif %}  
+  
+      {% when 'featured_on_block' %}
+  		{% if block.settings.show_featured_on %}
+          <!-- Featured On -->
+          {% include 'featured-on' %}  
+          <!-- End Featured On -->
+		  {% endif %}  
+  
+  
+      {% when 'html_block' %}
+  		{% if block.settings.show_html %}
+          <div class="container clearfix  ingredients">
+            <div class="sixteen columns clearfix">
+              {{ block.settings.html_content }}
+            </div>
+          </div>
+		{% endif %}  
+
+    {% endcase %}
+  {% endfor %}
+  
+  <!-- Customer Reviews -->
+  <div class="customer-reviews">
+    {% if settings.enable_shopify_review_comments and settings.review_position == "bottom" %}
+    <div id="stamped-main-widget" 
+         data-widget-style="standard2"
+         data-product-id="{{ product.id }}" 
+         data-name="{{ product.title | escape }}" 
+         data-url="{{ shop.url }}{{ product.url }}" 
+         data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+         data-description="{{ product.description | escape }}" 
+         data-product-sku="{{product.handle}}"
+         data-product-type="{{product.type}}"> 
+      {{ product.metafields.stamped.reviews }} 
+    </div>  
+    {% endif %}
+  </div>
+  <!-- End Customer Reviews -->
+  
+</main>
+
+{% include 'product-template-updated-wrapper' %}
+{% comment%}
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when 'newsletter_block' %}
+      {% if block.settings.show_newsletter %}
+        <!-- Footer Newsletter -->
+        <div class="container clearfix footer-newsletter">
+          <div class="sixteen columns clearfix">
+            <div class="eleven columns clearfix">
+              <div class="description">{{ block.settings.newsletter_content }}</div>
+            </div>
+            <div class="five columns clearfix newsletter-wrapper">
+              {% include 'newsletter' %}
+              <div class="disclaimer">{{ block.settings.newsletter_disclaimer }}</div>
+            </div>
+          </div>
+        </div>
+        <!-- End Footer Newsletter -->
+      {% endif %}  
+  {% endcase %}
+{% endfor %}
+{% endcomment%}
+
+{% schema %}
+{
+  "name": "Product Template Updated",
+  "class": "product-template-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "product_breadcrumb",
+      "label": "Show breadcrumb links updated"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_tags",
+      "label": "Show tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_type",
+      "label": "Show type"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_vendor",
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_sku",
+      "label": "Show SKU"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_social_buttons",
+      "label": "Show social media share icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collections",
+      "label": "Show collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_related_products",
+      "label": "Show related products ([?](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/115006909487-Related-Products))",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Related products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "radio",
+      "id": "product_description_position",
+      "label": "Description position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Above 'add to cart'"
+        },
+        {
+          "value": "bottom",
+          "label": "Below 'add to cart'"
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "product_images_position",
+      "label": "Images position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "set_product_height",
+      "label": "Set height of product images"
+    },
+    {
+      "type": "range",
+      "id": "product_height",
+      "label": "Product image height",
+      "min": 200,
+      "max": 800,
+      "step": 10,
+      "default": 500,
+      "unit": "px"        
+    },    
+    {
+      "type": "header",
+      "content": "Content Blocks"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab_block",
+      "name": "Tabs",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_tabs",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "tab_section_title",
+          "label": "Section Title"
+        },
+        {
+          "type": "text",
+          "id": "tab_title_1",
+          "label": "Title",
+          "default": "What it is"
+        },
+        {
+          "type": "html",
+          "id": "tab_content_1",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_title_2",
+          "label": "Title",
+          "default": "What to expect"
+        },
+        {
+          "type": "html",
+          "id": "tab_content_2",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "tab_title_3",
+          "label": "Title",
+          "default": "Ingredients"
+        },
+        {
+          "type": "html",
+          "id": "tab_content_3",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "benefits_block",
+      "name": "Benefits",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_benefits",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "benefits_section_title",
+          "label": "Section Title",
+          "default": "Benefits"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_desktop_image",
+          "label": "Desktop Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefits_mobile_image",
+          "label": "Mobile Image"
+        },
+    	{
+          "type": "text",
+          "id": "benefits_title_1",
+          "label": "Title",
+          "default": "Exfoliate"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_1",
+          "label": "Content",
+          "default": "<p>Gentle exfoliation removes dead skin cells to prevent them from clogging pores.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_2",
+          "label": "Title",
+          "default": "Detoxify"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_2",
+          "label": "Content",
+          "default": "<p>Powerful natural ingredients attract toxins in the skin and help to pull out the impurities.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_3",
+          "label": "Title",
+          "default": "Replenish"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_3",
+          "label": "Content",
+          "default": "<p>Vitamins and minerals soak into the skin to help restore vital nutrients that promote health and encourage new skin cell growth.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_4",
+          "label": "Title",
+          "default": "Heals"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_4",
+          "label": "Content",
+          "default": "<p>Naturally antimicrobial botanicals heal the skin of existing breakouts, inflammation and irritation.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_5",
+          "label": "Title",
+          "default": "Correct"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_5",
+          "label": "Content",
+          "default": "<p>Ingredients rich in vitamin A and C help correct the appearance of dark spots and marks for a glowing complexion.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_6",
+          "label": "Title",
+          "default": "Balance"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_6",
+          "label": "Content",
+          "default": "<p>Essential oils of the highest quality help promote balanced oil production, so your skin isn’t oily or dry.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_7",
+          "label": "Title",
+          "default": "Smooth"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_7",
+          "label": "Content",
+          "default": "<p>Omegas 3, 6, & 9 help reduce inflammation to smooth out skin surface and create an even complexion.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits_title_8",
+          "label": "Title",
+          "default": "Clarify"
+        },
+        {
+          "type": "richtext",
+          "id": "benefits_content_8",
+          "label": "Content",
+		  "default": "<p>Minerals in our natural-based ingredients help soothe irritated skin and diminish redness.</p>"
+        }
+      ]
+    },
+    {
+      "type": "success_block",
+      "name": "Success Steps",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_success",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "success_section_title",
+          "label": "Section Title",
+          "default": "Steps to Success"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_desktop_image",
+          "label": "Desktop Left Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_desktop_image_right",
+          "label": "Desktop Right Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_mobile_image",
+          "label": "Mobile Top Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_mobile_image_bottom",
+          "label": "Mobile Bottom Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_1",
+          "label": "Step 1 Desktop Image",
+		  "info": "320 x 320px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_1_mobile",
+          "label": "Step 1 Mobile Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "text",
+          "id": "success_title_1",
+          "label": "Title",
+          "default": "Mist"
+        },
+        {
+          "type": "richtext",
+          "id": "success_content_1",
+          "label": "Content",
+          "default": "<p>Shake the #1 Clarifying Hydration Dew before misting your face with 8-10 sprays.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_2",
+          "label": "Step 2 Desktop Image",
+		  "info": "320 x 320px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_2_mobile",
+          "label": "Step 2 Mobile Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "text",
+          "id": "success_title_2",
+          "label": "Title",
+          "default": "Buff + Cleanse"
+        },
+        {
+          "type": "richtext",
+          "id": "success_content_2",
+          "label": "Content",
+          "default": "<p>Shake #2 Radiant Cleansing Nectar until colors are combined. Saturate a cotton pad with 3-4 circles of Nectar. Using firm pressure buff onto your face and neck. Repeat with the opposite side of cotton pad. No rinse needed!</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_3",
+          "label": "Step 3 Desktop Image",
+		  "info": "320 x 320px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_3_mobile",
+          "label": "Step 3 Mobile Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "text",
+          "id": "success_title_3",
+          "label": "Title",
+          "default": "Repair (nighttime)"
+        },
+        {
+          "type": "richtext",
+          "id": "success_content_3",
+          "label": "Content",
+          "default": "<p>Tap the bottom of #3 Clear Skin Elixir in the palm of your hand to settle the bubbles. Press 1-2 pumps of the Elixir into your hand and massage across your face. Let dry for 10 minutes before bed and wear overnight.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_4",
+          "label": "Step 1 Desktop Image",
+		  "info": "320 x 320px recommended"
+        },
+        {
+          "type": "image_picker",
+          "id": "success_image_4_mobile",
+          "label": "Step 4 Mobile Image",
+		  "info": "800 x 800px recommended"
+        },
+        {
+          "type": "text",
+          "id": "success_title_4",
+          "label": "Title",
+          "default": "Moisturize (daytime)"
+        },
+        {
+          "type": "richtext",
+          "id": "success_content_4",
+          "label": "Content",
+          "default": "<p>Following #2, spritz your face with 3-4 sprays of #1 Dew. Using the spatula, scoop out ¼ pea-sized amount of #4 Flawless Nourishment Cream. Warm it between your fingertips and dab it in four dots across your face. Gently massage into your skin.</p>"
+        }
+      ]
+    },
+    {
+      "type": "how_to_use_block",
+      "name": "How To Use",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_how_to_use",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "how_to_use_section_title",
+          "label": "Section Title",
+          "default": "Here's How to Use Your Clear Skin Kit"
+        },
+        {
+          "type": "text",
+          "id": "how_to_use_video_url",
+          "label": "Video URL",
+		  "default": "https://sugatan.io/videos/Clear_Skin_Kit.mp4"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_to_use_video_image",
+          "label": "Video Poster Image"
+        },
+        {
+          "type": "richtext",
+          "id": "how_to_use_content",
+          "label": "Content",
+		  "default": "<p>Heals breakouts,<br>blackheads, and blemishes,<br>even if nothing else has<br>worked before</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_to_use_image",
+          "label": "Bottom Image"
+        }
+      ]
+    },
+    {
+      "type": "how_it_works_block",
+      "name": "How It Works",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_how_it_works",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "how_it_works_section_title",
+          "label": "Section Title",
+          "default": "How it works"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_1",
+          "label": "Title",
+          "default": "Congested skin"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_2",
+          "label": "Title",
+          "default": "Hydration"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_3",
+          "label": "Title",
+          "default": "Exfoliation"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_4",
+          "label": "Title",
+          "default": "Permeation"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_5",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_5",
+          "label": "Title",
+          "default": "Balancing"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_6",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_6",
+          "label": "Title",
+          "default": "Extracts"
+        },
+        {
+          "type": "image_picker",
+          "id": "how_it_works_image_7",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "how_it_works_title_7",
+          "label": "Title",
+          "default": "Soothe & Smooth"
+        }
+      ]
+    },
+    {
+      "type": "ingredients_block",
+      "name": "Ingredients",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_ingredients",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "ingredients_section_title",
+          "label": "Section Title",
+          "default": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_1",
+          "label": "Title",
+          "default": "Rich in Antioxidants"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_1",
+          "label": "Content",
+          "default": "<p>This helps reduce redness &amp; blotchiness, inflammation, and balances oily/dry skin while soothing.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_2",
+          "label": "Title",
+          "default": "Rich in Minerals &amp; Vitamin C"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_2",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_3",
+          "label": "Title",
+          "default": "Helps Balance Skin Oiliness"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_3",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_4",
+          "label": "Title",
+          "default": "Rich in Antioxidants"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_4",
+          "label": "Content",
+          "default": "<p>This helps reduce redness &amp; blotchiness, inflammation, and balances oily/dry skin while soothing.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_5",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_5",
+          "label": "Title",
+          "default": "Rich in Minerals &amp; Vitamin C"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_5",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_6",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_6",
+          "label": "Title",
+          "default": "Helps Balance Skin Oiliness"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_6",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_7",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_7",
+          "label": "Title",
+          "default": "Rich in Antioxidants"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_7",
+          "label": "Content",
+          "default": "<p>This helps reduce redness &amp; blotchiness, inflammation, and balances oily/dry skin while soothing.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_8",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_8",
+          "label": "Title",
+          "default": "Rich in Minerals &amp; Vitamin C"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_8",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_9",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_9",
+          "label": "Title",
+          "default": "Helps Balance Skin Oiliness"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_9",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_10",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_10",
+          "label": "Title",
+          "default": "Rich in Antioxidants"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_10",
+          "label": "Content",
+          "default": "<p>This helps reduce redness &amp; blotchiness, inflammation, and balances oily/dry skin while soothing.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_11",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_11",
+          "label": "Title",
+          "default": "Rich in Minerals &amp; Vitamin C"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_11",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "ingredients_image_12",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "ingredients_title_12",
+          "label": "Title",
+          "default": "Helps Balance Skin Oiliness"
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients_content_12",
+          "label": "Content",
+          "default": "<p>Soothing to inflammation, cucumbers are hydrating while balancing skin. Helps shed dead skin to prevent clogged pores while reducing aging.</p>"
+        }
+      ]
+    },
+    {
+      "type": "product_features_block",
+      "name": "Product Features",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_product_features",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "product_features_section_title",
+          "label": "Section Title",
+          "default": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_feature_image_1",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_feature_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_feature_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_feature_image_4",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "before_after_block",
+      "name": "Before / Afters",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_before_after",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "before_after_section_title",
+          "label": "Section Title",
+          "default": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_after_image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "before_image_1_description",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_after_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "before_image_2_description",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_after_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "before_image_3_description",
+          "label": "Description"
+        }
+     ]
+    },
+    {
+      "type": "featured_on_block",
+      "name": "Featured On",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_featured_on",
+          "label": "Show/Hide Section",
+          "default":true
+        }
+      ]
+    },
+    {
+      "type": "newsletter_block",
+      "name": "Newsletter",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "label": "Show/Hide Section",
+          "default":true
+        },
+        {
+          "type": "richtext",
+          "id": "newsletter_content",
+          "label": "Content",
+          "default": "<p>Want more from Averr Aglow?<br/>Sign up to receive texts and get an instant discount, VIP sales alerts, new product launches & much more!</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "newsletter_disclaimer",
+          "label": "Disclaimer",
+          "default": "<p>By signing up via text, you agree to receive recurring automated marketing text messages from Averr Aglow at the cell number used when signing up. Consent is not a condition of any purchase. Msg &amp; data rates may apply. <a href=\"/pages/terms-of-service\">View Terms</a> &amp; <a href=\"/pages/privacy-policy\">Privacy</a>.</p>"
+        }
+      ]
+    },
+    {
+      "type": "html_block",
+      "name": "Dynamic Html Content",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_html",
+          "label": "Show/Hide Section",
+          "default":true
+        },        
+        {
+          "type": "text",
+          "id": "html_section_title",
+          "label": "Section Title",
+          "default": "Title"
+        },
+        {
+          "type": "html",
+          "id": "html_content",
+          "label": "Content",
+          "default": "<p>Place your content here</p>"
+        }
+      ]
+    }
+
+  ]
+}
+{% endschema %}
+
+
+<style>
+  body{
+    overflow-x: hidden;
+  }
+  main {margin-top:30px;}
+  .llpoints {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+  }
+  
+  .accordion_block_position{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width:100%;
+    margin-bottom: 80px;
+  } 
+  .accordion_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background:transparent;
+  }
+  .first_accord{
+    width: 100%;
+    padding: 0 10px;
+  }
+  .second_accord{
+    width: 45%;
+  }
+  .accordion {
+    font-size: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
+
+  .accordion-header,
+  .accordion-body {
+    background: transparent;
+  }
+
+  .accordion-header {
+    border-top: 1px solid #C4C4C4;
+    padding: 1.5em 1.5em 1.5em 0;
+    cursor: pointer;
+    transition: all .3s;
+    font-family: Gotham-Bold;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #000000;
+  }
+  .accordion-header:hover {
+    position: relative;
+    z-index: 5;
+  }
+
+  .accordion-body {
+    color: #3f3c3c;
+    display: none;
+  }
+
+  .accordion-body__contents {
+    padding: 0 16px 24px;
+    font-family: Gotham-Book;
+    font-size: 16px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #555555;
+  }
+
+  .accordion__item.active:last-child .accordion-header {
+    border-radius: none;
+  }
+
+  .accordion:first-child > .accordion__item > .accordion-header {
+    border-bottom:none;
+  }
+
+  .accordion__item > .accordion-header:after {
+    content: "\f3d0";
+    font-weight: 100;
+    font-family: IonIcons;
+    font-size: 1.2em;
+    float: right;
+    position: relative;
+    top: -2px;
+    transition: .3s all;
+    transform: rotate(0deg); 
+  }
+
+  .accordion__item.active > .accordion-header:after {
+    transform: rotate(-180deg);
+  }
+
+  .accordion__item.active .accordion-header {
+
+  }
+
+  .accordion__item .accordion__item .accordion-header {
+    color: black;
+  }
+  
+
+  @media screen and (max-width: 1000px) {
+    body {
+      padding: 1em;
+    }
+
+  }
+  {% if section.settings.set_product_height %}
+  	.product_slider .slides img { max-height: {{ section.settings.product_height }}px; }
+  {% endif %}
+  
+  
+/* DB 4/2020 */  
+  /*#preview-bar-iframe {display:none !important;}*/
+  .desktop {display: block !important;}
+  .mobile {display: none !important;}
+  .extended {max-width:100vw;}
+  html * {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;    
+  }
+
+  /*-- Tabs --*/
+  .tabs-wrapper {background: #FBFBFB;padding:60px 0px 80px 0px;max-width: 100vw;}
+  ul.tabs {border: none;text-align:center;max-width:1220px;margin:0 auto!important;}
+  ul.tabs li {float:none;display:inline-block;position:relative;}
+  ul.tabs li a {
+    border: none;
+    background-color: transparent;
+    font-family: Gotham-Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;    
+  }  
+  ul.tabs li a.active {
+    border: none;
+    background-color: transparent;
+    top: 0;
+    position: relative;
+  }
+
+  ul.tabs li a:after{
+    content: '';
+    position: absolute;
+    width: 0; 
+    height: 2px;
+    display: block;
+    margin-top: 5px;
+    right: 0;
+    background: #000;
+    transition: width .5s ease;
+    -webkit-transition: width .5s ease;
+  }
+
+  ul.tabs li a.active:after{
+    width: 100%;
+    left: 0;
+    background: #000;
+  }  
+  .tabs-content {max-width:1220px;margin:0 auto!important;padding-top:55px;}
+  .tabs-content li {
+    display:none;
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 16px;
+    line-height: 32px;
+    color: #555555;
+    margin-bottom:0;
+  }
+  .tabs-content li.active {display:block;}
+  /*-- End Tabs --*/
+  
+  /*-- Benefits Block --*/
+  .benefits-block-wrapper {background: rgba(248, 220, 209, 0.7);max-width:100%}
+  .benefits-block h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:40px auto;
+    display:none;
+    letter-spacing: normal;
+  }
+  .face-block {
+    height: auto;  
+    width:auto;
+    padding:80px;
+    max-width:1440px;
+    margin:0 auto;
+  }
+  .face-block img  {
+	position: absolute;
+    bottom: 0%;
+    display: block;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: auto;
+  }
+  .benefit-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position:relative;
+  }  
+  .benefit-row .benefit-item {
+    display:flex;
+    flex-direction:column;
+    flex-basis: 260px;
+    border: 0;
+	padding: 1rem 0;
+  }  
+  .benefit-row .benefit-item:first-child {
+    text-align: left;
+  }  
+  .benefit-row .benefit-item:last-child {
+    text-align: left;
+  }  
+  .benefit-row .benefit-item h4 {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 100%;
+    line-height: 22px;
+    color: #000000;
+    margin-bottom:16px;
+    letter-spacing: normal;
+  }  
+  .line1 {
+	border-top: 1px solid #444444;
+    border-right: 1px solid #000;
+    height: 95px;
+    width: 300px;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(45deg);
+    position: absolute;
+    left: 50px;
+    top: 48px;
+  }
+  .line2 {
+	border-top: 1px solid #444444;
+    border-right: 1px solid #000;
+	height: 50px;
+    width: 300px;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(60deg);
+    position: absolute;
+    left: 45px;
+    top: 48px;
+  }
+  .line3 {
+	border-top: 1px solid #444444;
+    border-right: 1px solid #000;
+    height: 30px;
+    width: 285px;
+    -moz-transform: skew(70deg);
+    -webkit-transform: skew(70deg);
+    transform: skew(70deg);
+    position: absolute;
+    left: 42px;
+    top: 48px;
+  }
+  .line4 {
+	border-bottom: 1px solid #444444;
+    border-right: 1px solid #000;
+    height: 50px;
+    width: 300px;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(-53deg);
+    position: absolute;
+    left: 35px;
+    top: -2px;
+  }
+  .line5 {
+	border-top: 1px solid #444444;
+    border-left: 1px solid #000;
+	height: 130px;
+    width: 300px;
+    -moz-transform: skew(-55deg);
+    -webkit-transform: skew(-55deg);
+    transform: skew(-55deg);
+    position: absolute;
+    right: 95px;
+    top: 48px;
+  }
+  .line6 {
+	border-top: 1px solid #444444;
+    border-left: 1px solid #000;
+	height: 60px;
+    width: 300px;
+    -moz-transform: skew(-55deg);
+    -webkit-transform: skew(-55deg);
+    transform: skew(-70deg);
+    position: absolute;
+    right: 85px;
+    top: 48px;
+  }
+  .line7 {
+	border-bottom: 1px solid #444444;
+    border-left: 1px solid #000;
+	height: 45px;
+    width: 300px;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(75deg);
+    position: absolute;
+    right: 90px;
+    top: 0px;
+  }
+  .line8 {
+	border-bottom: 1px solid #444444;
+    border-left: 1px solid #000;
+	height: 25px;
+    width: 290px;
+    -moz-transform: skew(45deg);
+    -webkit-transform: skew(45deg);
+    transform: skew(70deg);
+    position: absolute;
+    right: 37px;
+    top: 20px;
+  }
+  .benefit-row .benefit-item p {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 14px;
+    line-height: 24px;
+    color: #555555;
+  }  
+    
+    /*-- End benefits Block --*/
+  
+  /*-- How To Use --*/
+  .how-to-use {
+    display: block;
+    height: auto;  
+    margin-bottom:20px;
+  }
+  .how-to-use .four.columns {width: 21%;}
+  
+  .how-to-use img {width:100%;height:auto;object-fit:cover;}  
+  .how-to-use span.step {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 16px;
+    line-height: 19px;
+    color: #555555;    
+	text-transform: uppercase;
+	margin-top: 32px;
+    display: block;
+  }
+  .how-to-use h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:80px auto 60px auto;
+    display:block;
+    letter-spacing: normal;
+  }
+  .how-to-use span.title {
+    font-family: Gotham-Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;    
+	margin-top: 16px;
+    display: block;
+  }
+  .how-to-use span.description {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 14px;
+    line-height: 24px;
+    color: #555555;
+	margin-top: 16px;
+    display:block;
+  }
+  .how-to-use .four.columns {
+  	margin:0 32px 0 0;
+  }
+  .how-to-use .four.columns:last-child {
+  	margin-right:0;
+  }
+  /*-- End How To Use --*/
+  
+  /*-- Research --*/
+  .research-title h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:40px auto 0;
+    letter-spacing: normal;
+  }
+  
+  .research {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: auto;  
+    max-width:100%;
+    margin:80px auto 80px auto !important;
+    background: rgba(248, 220, 209, 0.7);
+  }
+  .research .sixteen {display: flex;justify-content: center; flex-wrap: wrap;}
+  .research-image {max-width:800px;margin:0;padding:0;}
+  .research-image img {width:100%;height:auto;vertical-align:bottom;}  
+  /*-- End Research --*/
+  
+  .third-top-title h2 {
+  	margin-top:0;
+  }  
+  .third-bottom-title {
+    width: 38%;
+  }
+  .third-bottom-title h3 p {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 40px;
+    line-height: 50px;
+    color: #000000;
+  }
+  .third-bottom-image {
+      width: 55%;
+      position: relative;
+  }  
+  .third-bottom-image img {
+	position: absolute;
+    right: 0;
+    width: 99%;
+    top: -58px;
+  }  
+  
+  /*-- How It Works --*/
+  .how-it-works {
+    display: block;
+    height: auto;  
+    text-align:center;
+  }
+  .how-it-works h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:191px auto 60px auto;
+    display:block;
+    letter-spacing: normal;
+  }
+  .how-it-works img {width:100%;height:auto;object-fit:cover;}  
+  .how-it-works span.right-arrow {display:block;position:relative;}
+  .how-it-works span.right-arrow::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    right: -14px;  
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid black;      
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }  
+  .how-it-works span.step {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #222222;
+  }
+  .how-it-works span.right-arrow.last::after {border:none;}
+  /*-- End How It Works --*/
+  
+  /*-- Ingredients --*/
+  .ingredients {
+    display: block;
+    height: auto;  
+    margin:80px auto 0px auto !important;
+    text-align:center;
+    border: none;
+  }
+  .ingredients-slider {height:auto;}
+  .ingredients-slider li {display:inline-block;position:relative;}
+  .ingredients h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:0 auto 60px auto;
+    display:block;
+    letter-spacing: normal;
+  }
+  .ingredients h2 span {display:inline-block !important;padding-right:10px;}
+  
+  .ingredients span.title {
+    font-family: Gotham-Bold;
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
+    color: #222222;
+    font-weight:bold;
+    display:block;
+  }
+  .ingredients span.description p {
+    font-family: Gotham-Book;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    color: #555555;
+    display:block;
+    font-weight: lighter;
+  }
+  .owl-item {position:relative;}
+  .ingredients-slider img {
+    height: 320px !important;
+  }
+  .ingredients-slider .title {
+    padding:32px;
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 32px;
+    line-height: 40px;
+    color: #222222;  
+    text-transform:capitalize;
+  }
+  .owl-prev, .owl-next, .owl-prev:hover, .owl-next:hover {
+    width: 16px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+	background-color: transparent;
+    display: block !important;
+    outline:none;
+    z-index:99;
+  }
+  .owl-prev { left: -20px; }
+  .owl-next { right: -50px; }
+  /*-- End Ingredients --*/
+  
+  /*-- Product Features --*/
+  .product-features {text-align:center;margin-bottom:80px !important;}
+  .product-features .two.columns {float:none;}
+
+  /*-- End Product Features --*/
+  
+  /*-- Before / After --*/
+  .before-after  {
+    display: block;
+    height: auto;  
+    margin:80px auto 60px auto !important;
+    text-align:center;
+    background: #FBFBFB;
+  }
+  .before-after-wrapper {
+	max-width: 1440px;
+    margin: 0 auto;
+    position: relative;
+    display: inline-block;
+  }
+  .before-after h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:80px auto 60px auto !important;
+    display:block;
+    letter-spacing: normal;
+  }
+  .before-after img {width:100%;height:auto;object-fit:cover;}  
+  .before-after .before, .before-after .after {
+	display: inline-block;
+    width: 50%;
+    float: left;
+    font-family: Gotham-Bold;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    text-transform: uppercase;
+    text-align:left;
+    position:relative;
+  }
+  
+  .before-after .after  {
+    padding-left: 5px;
+    width: 48%;
+  }
+  .before-after .after::before {
+	content: '';
+    position: absolute;
+    top: -9px;
+    left: 0px;
+    font-size: 40px;
+    font-weight: lighter;
+    border: 0.5px solid #000;
+    height: 30px;
+  }
+  .before-after .four.columns {
+  	margin:0 32px 54px 0;
+  }
+  .before-after .four.columns:last-child {
+  	margin-right:0;
+  }
+  
+  .before-after .description { 
+    font-family: Gotham-Book;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 100;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.56;
+    letter-spacing: normal;
+    color: #555555;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  /*-- End Before / After --*/
+  
+  /*-- Featured On --*/
+  .featured-on-wrapper {
+    border: 1px solid #e7e4eb;
+    margin: 30px 0 80px 0;
+  }
+  .featured-on {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .featured-on-item {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0 25px 0;
+  }
+  .featured-on-item .feature-on-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .featured-on-item h3 {
+    font-family: Gotham-Book, sans-serif;
+    font-size: 20px;
+    text-transform: none;
+    font-weight: lighter;
+    letter-spacing: 0;
+  }
+  /*-- End Featured On --*/
+  
+  /*-- Customer Reviews --*/
+  .customer-reviews{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  /*-- End Customer Reviews --*/
+  
+  /*-- Bottom Newsletter --*/
+  .footer {margin-top: 0;}
+  .footer-newsletter {
+    width:100%;
+    display:flex;
+  	background: linear-gradient(164.7deg, rgba(248, 220, 209, 0.7) 0%, rgba(248, 220, 209, 0) 100%);
+    padding:70px 0 !important;
+    margin-top:80px !important;
+  }
+  .footer-newsletter .sixteen.columns {width:100%;max-width:100%;}
+  .footer-newsletter div.description p {    
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 40px;
+    line-height: 50px;
+    color: #222222;
+    display:block;
+	width: 80%;
+    margin: 0 auto;
+  }
+  
+  .footer-newsletter .eleven.columns {
+    width:60vw;
+  }
+  .footer-newsletter .newsletter-wrapper {
+    display:flex;
+    height:100%;
+    flex-direction:column;
+    width:30vw;
+  }
+  .footer-newsletter div.disclaimer {
+    font-family: Gotham-Book;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 10px;
+    line-height: 16px;
+    color: #555555;
+    display:block;
+    width:100%;
+    padding-top:10px;
+  }
+  .footer-newsletter .newsletter {
+    display: block;
+    width:100%;
+  }
+  .footer-newsletter .newsletter * {
+  	width:100% !important;
+    max-width:100% !important;
+  }
+  .footer-newsletter input {
+    margin-left:0 !important;
+  }
+  .footer-newsletter .action_button.sign_up {
+    background: #000000;
+    color: #ffffff;
+  }
+  .footer-newsletter .action_button.sign_up:hover {
+    color: #000000;
+  }
+  /*-- End Newsletter --*/
+  
+  .footer {margin-top:0;}
+  
+  /*.container {max-width: 100vw;}
+  .global-wrapper .container {width: 100%;}*/
+  .container.footer-newsletter {max-width: 100%;}
+  
+  .how-use {background:url({{'how-use-bg.png' | file_url}}) repeat-x;background-size:100% 110%;display:flex;max-width:100%;}
+  .how-use .sixteen.columns {display:flex;flex-wrap: wrap;max-width:80%;margin:0 auto;}
+  .how-use video {width:100% !important;}
+  .how-use .video {flex-basis: 100%;margin:0 0 30px 0;}
+  .how-use .video img {width:100%;}
+  .how-use .text{flex-basis: 45%;}
+  .how-use .text h3 {
+    padding: 0;
+    font-family: FreightDispProBook-Regular, serif;
+    font-weight: 100;
+    color: #000;
+    text-transform: none;
+    font-size: 42px;
+    line-height: 50px;
+    letter-spacing: 0;
+    max-width: 90%;
+  }
+  .how-use .text h3 p   {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 40px;
+    line-height: 50px;
+    color: #000000;
+  }
+  .how-use .sub-line {
+	width: 64px;
+    height: 2px;
+    background: #000;
+    position: absolute;
+    bottom: 4.7%;
+  }
+  .how-use .image{flex-basis: 55%;}
+  .how-use .image img {max-width:100%;width:100%;}
+  .how-use-title h2 {
+    font-family: FreightDispProBook-Regular;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 44px;
+    line-height: 55px;
+    text-align: center;
+    color: #000000;
+    text-transform: none;
+    margin:0px auto 60px auto;
+    display:block;
+    letter-spacing: normal;
+  }
+  .play {top:25%;}
+  .how-it-works h2 {margin-top:100px;}
+  
+  @media (max-width: 1200px) {
+  	.main-wrapper .sixteen.columns {width:100%;}
+    .how-use .text h3 p {font-size: 32px; line-height: 44px ;}
+    .benefits-block .desktop {display:none !important;}
+    .benefits-block .mobile {display:block !important;}
+    .benefits-block{background: rgba(248, 220, 209, 0.7);display:block;}
+    .benefits-block h2 {
+      font-family: FreightDispProBook-Regular;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 40px;
+      line-height: 50px;
+      text-align: center;
+      color: #000000;   
+      display:block;
+    }
+    .face-block {margin-bottom:0px;padding:0;}
+    .face-block .accordion_block{
+      display: block;
+      width: 100%;
+      background:transparent;
+    }
+    .face-block .first_accord {width: 95%;margin: 0 auto;}
+    .face-block .accordion-header.js-accordion-header {
+	  background: transparent;
+    }
+    .face-block .accordion-body__contents {
+      background:transparent;
+    }
+    .face-block .accordion-header {
+      border-top: 1px solid #ECCEC4;
+      border-bottom: none;
+  	}
+    .face-image {
+      background-repeat:no-repeat !important;
+      display:block;
+	  background-size: contain !important;
+      width: 100%;
+      height: 80vh;
+      background-position: bottom center !important;   
+      background: url('{{ desktop_image | img_url : '1400x' }}');
+    }
+    
+  }  
+  @media (max-width: 1000px) {
+    .how-use .text h3 p {font-size: 26px; line-height: 38px ;}
+  }  
+  
+  @media only screen and (min-width: 981px) and (max-width: 1200px) {
+    #footer-bottom .bottom-right-part {-webkit-box-flex: 1;-ms-flex: 1 1 100%;flex:1 1 100%;}    
+  }
+  
+  @media only screen and (min-width: 800px) and (max-width: 1400px) {
+    .owl-next {right: 5px;}
+    .container .five.columns {width: 355px !important;}
+    div.product_section {margin:0 auto;}
+    .how-to-use .sixteen.columns, .how-it-works .sixteen.columns {display: flex;flex-wrap: wrap;}
+    .how-to-use .sixteen.columns h2, .how-it-works .sixteen.columns h2 {flex-basis: 100%;justify-content: center;}
+    .how-to-use .four.columns:first-of-type {margin-left: auto !important;}
+    .how-to-use .four.columns:last-child {margin-right: auto !important;}
+    .how-it-works .two.columns:first-of-type {margin-left: auto !important;}
+    .how-it-works .two.columns:last-child {margin-right: auto !important;}
+    .how-it-works h2 {margin-top:100px;}
+    .third-bottom {margin-top: 240px !important;}
+    .third-bottom-wrap {padding-top:222px;align-items: center;}
+    .third-bottom-title h3 {padding:40px 0;}
+    .third-bottom-title h3 p {font-size:30px;}
+    .third-bottom-image {width:60%;}
+    .footer-newsletter .eleven.columns {width: 60% !important;display: block;}
+    .footer-newsletter .five.columns {width: 30% !important;display: block;}
+
+  }
+  
+  @media (max-width: 800px) {
+    .desktop {display: none !important;}
+  	.mobile {display: block !important;}
+    .product_expresion {padding:0 10px;}
+    #header,.promo_banner {width:100vw;}
+    
+    .tabs-wrapper {background: #FBFBFB;padding:0;max-width:100%;}
+
+    .featured-on {
+      flex-wrap: wrap;
+    }
+    .featured-on-item {
+      width: 45%;
+      margin: 35px 0 35px 0;
+    }
+    .featured-on-title {
+      width: 100% !important;
+    }
+    .face-block {margin-bottom:0px;padding:0;}
+    .face-block .accordion_block{
+      display: block;
+      width: 100%;
+      background:transparent;
+    }
+    .face-block .first_accord {width: 95%;}
+    .face-block .accordion-header.js-accordion-header {
+	  background: transparent;
+    }
+    .face-block .accordion-body__contents {
+      background:transparent;
+    }
+    .face-block .accordion-header {
+      border-top: 1px solid #ECCEC4;
+      border-bottom: none;
+  	}
+    .face-image {
+      background-repeat:no-repeat !important;
+      display:block;
+	  background-size: contain !important;
+      width: 100%;
+      height: 45vh;
+      background-position: bottom center !important;    
+      background: url('{{ mobile_image | img_url : '600x' }}');
+
+    }
+    .afterpay-paragraph {
+		width: 60%;
+    	margin: 0 auto;      
+    }
+    .sub_btn_text {font-size:100%;}
+    .how-to-use h2 {
+      font-size:40px;
+      line-height:50px;
+      margin:32px 16px 24px;
+    }
+    
+    .how-to-use .description {margin-bottom: 32px;}
+    .research {margin:10px auto 32px auto !important;}
+    .sixteen.columns {width:100%;margin-top:0 !important;}
+    .how-it-works .two.columns, .four.columns {
+      padding: 0 20px !important;
+      width: 90% !important;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom:24px;
+    }
+    .how-it-works {margin-top:0;}
+    .how-it-works span.right-arrow::after {content: '';}
+    .how-it-works span.step {padding-bottom:20px;margin-top:16px;}
+    .how-it-works span.step::after {
+      content: '';
+	  position: relative;
+      bottom: -36px;
+      right:50%;
+	  width: 0; 
+  	  height: 0; 
+  	  border-left: 5px solid transparent;
+  	  border-right: 5px solid transparent;
+   	  border-top: 5px solid black;      
+    }
+    .how-it-works span.step.last::after {border:none;}
+    .how-it-works span.right-arrow::after {border:none;}
+    .how-it-works h2 {
+      font-size:40px;
+      line-height:50px;
+      margin:32px 16px 32px;
+    }
+    .how-use .sixteen.columns {max-width:100% !important;}
+    .how-use video {width:100% !important;}
+    .how-use .text, .how-use .image {display:none;}
+    .how-use-title h2{padding:0 16px;font-size:40px;line-height:50px;margin:0 auto 10px;}
+    .owl-prev {left: -10px;}
+    .owl-next {right:5px;}
+    .five.columns {width:95% !important;}
+    .product-features .two.columns {width: 22% !important;text-align:center;padding-left: 0px !important;}
+    .ingredients, .product-features {margin:0 auto !important;}
+    .ingredients .sixteen.columns {max-height: 700px !important;}
+    .before-after .four.columns {display:block;}
+    .before-after {margin:0px auto !important;}
+    .before-after h2 {margin:32px auto !important;}
+    .before-after .four.columns {margin: 0 32px 32px 0;}
+    .featured-on-wrapper {border: none;margin: 0 auto;}    
+    .yahoo img {width:85%}
+    .footer-newsletter {padding:40px 20px !important;width:90% !important;}
+    .footer-newsletter div, .footer-newsletter span {width:98% !important;}
+    .footer-newsletter .newsletter, .footer-newsletter .disclaimer {margin:0 auto;}
+    .footer-newsletter .offset-by-three {padding-left:0 !important;}
+    .footer-newsletter div.description p {font-size:24px;line-height:30px;width:100%;margin-bottom:24px;}
+    .footer-newsletter .newsletter {width:100% !important;}
+
+    .ingredients h2 {
+      font-size:40px;
+      line-height:50px;
+      margin:0px 16px 16px;
+    }
+  
+    .promo_banner p {width:98% !important;}
+    .ingredients .sixteen.columns, .ingredients .ingredients-slider {width: 95% !important;margin-bottom:0;}
+    .first_accord {width: 100% !important;padding:0;}
+    .accordion-header {padding:24px 16px;}
+    .tabs-wrapper .accordion:first-child .accordion-header {
+      border-top: 0;
+    }
+    .how-to-use .four.columns {margin:0 !important; width:90% !important;}
+    /*.how-it-works .sixteen.columns {margin-top: 25% !important}*/
+    .research .sixteen {display: flex;justify-content: space-between;}
+    .research-image.mobile {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-basis: 100%;
+      align-items: center;
+    }
+
+
+  }    
+    
+  @media (max-width: 500px) {
+    .featured-on-item {
+      margin: 25px 0 25px 0;
+    }
+  }
+  
+  @media only screen and (max-width: 959px) and (min-width: 768px)
+  .container .offset-by-five {
+      padding-left: 30px !important;
+  }  
+/* End DB 4/2020 */  
+  
+</style>
+
+<script>
+  $(document).ready(function(){
+	$(".afterpay-text1").text('4 installments of ');
+    $('ul.tabs a').on('click', function(e){
+		var href = $(this).data('href');
+      	$('ul.tabs a').removeClass('active');
+      	$('.tabs-content li').removeClass('active');
+      	$(this).addClass('active');
+      	$('#'+href).addClass('active');
+    });
+    $('.ingredients-slider').owlCarousel({
+      center: false,
+      items: 3,
+      slideBy: 3,
+      loop: false,
+      margin: 34,
+      nav: true,
+      navText: [
+        '{{"left-arrow.png" | file_url | img_tag}}',
+        '{{"right-arrow.png" | file_url | img_tag}}'
+      ],
+      navContainer: '.owl-nav',
+      responsive: {
+        300: {
+          items: 1,
+          slideBy: 1
+        },
+        768: {
+          items: 2,
+          slideBy: 2
+        },
+        1400: {
+          items: 3,
+          slideBy: 3
+        }
+      }
+    });
+
+  });
+</script>
+
+<script>
+  function closePopUp(){
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "none";
+  }
+  function openIngrid1(){
+    document.getElementsByClassName("pop_up_text")[0].innerHTML = "Deionized Water, Rosa Damascena (Rose) Flower Distillate, Calendula Officinalis Flower Extract, Cucumis Sativus (Cucumber) Fruit Extract, Serenoa Repens (Saw Palmetto) Fruit Extract, Chamomilla Recutita (Matricaria) Flower Extract, Sodium Levulinate, Sodium Anisate, Melia Azadirachta Flower Extract, Corallina Officinalis Extract, Coccinia Indica Fruit Extract, Melia Azadirachta Leaf Extract, Solanum Melongena (Eggplant) Fruit Extract, Aloe Barbadensis Flower Extract, Ocimum Sanctum Leaf Extract, Curcuma Longa (Turmeric) Root Extract.";    
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+  }
+  function openIngrid2(){
+    document.getElementsByClassName("pop_up_text")[0].innerHTML = "Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Deionized Water, Hamamelis Virginiana (Witch Hazel) Water, Matricaria Recutita Flower (Chamomile) Water, Crataegus Monogyna (Hawthorn) Fruit Extract, Helichrysum Italicum Distillate, Pyrus Malus (Apple) Seed Oil, Colloidal Silver, Alcohol, Leptospermum Scoparium (Manuka) Oil, Tocopherol Acetate (Vitamin E), Eclipta Prostrata Extract, Melia Azadirachta Leaf Extract, Moringa Oleifera Seed Oil.";    
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+  }
+  function openIngrid3(){
+    document.getElementsByClassName("pop_up_text")[0].innerHTML = "Zinc Oxide (non-nano), Deionized Water, Hamamelis Virginiana (Witch Hazel) Water, French Pink Clay, Matricaria Recutita Flower (Chamomile) Water, Coral, Crataegus Monogyna (Hawthorn) Fruit Extract, Simmondsia Chinensis (Jojoba) Seed Oil, Vitis Vinifera (Grape) Seed Oil, Citrus Grandis (Grapefruit) Peel Oil, Citrus Aurantium Bergamia (Bergamot) Fruit Oil, Rubus Idaeus (Raspberry) Seed Oil, Alcohol, Sodium Levulinate, Sodium Anisate, Glycerin, Melaleuca Alternifolia (Tea Tree) Leaf Oil, Tocopherol Acetate (Vitamin E), Oryza Sativa (Rice) Starch, Leptospermum Scoparium (Manuka) Oil.";    
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+  }
+  function openIngrid4(){
+    document.getElementsByClassName("pop_up_text")[0].innerHTML = "Butyrospermum Parkii (Shea) Butter, Simmondsia Chinensis (Jojoba) Seed Oil, Rosa Canina (Rose Hips) Fruit Oil, Vitis Vinifera (Grape) Seed Oil, Theobroma Grandiflorum (Cupuacu) Butter, Cucurbita Pepo (Pumpkin) Seed Oil, Persea Gratissima (Avocado) Oil, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Astrocaryum Tucuma Seed Butter, Rubus Idaeus (Raspberry) Seed Oil, Camellia Oleifera (Camellia) Seed Oil, Citrus Grandis (Grapefruit) Peel Oil, Tocopherol Acetate (Vitamin E), Oryza Sativa (Rice) Starch, Rosmarinus Officinalis (Rosemary) Leaf Extract, Citrus Aurantium Bergamia (Bergamot) Fruit Oil, Eclipta Prostrata Extract, Melia Azadirachta Leaf Extract, Moringa Oleifera Seed Oil.";    
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+  }
+  function openIngrid5(){
+    document.getElementsByClassName("pop_up_text")[0].innerHTML = "Deionized Water, Melissa Officinalis Extract, Rosmarinus Officinalis (Rosemary) Leaf Extract, Symphytum Officinale (Comfrey) Leaf Extract, Centaurea Cyanus (Cornflower) Flower Extract, Coffea Arabica (Coffee) Seed Extract, Citrus Aurantium (Orange) Distillate, Hamamelis Virginiana (Witch Hazel) Water, Terminalia Ferdinandiana Extract Fruit, Pseudoalteromonas Ferment Extract (Derived from Arctic Mud), Glycerin, Sodium Levulinate, Sodium Anisate, Citrus Aurantium Distillate, Sea Salt, Black Clay, Citrus Sinensis (Orange) Peel Extract.";    
+    document.getElementsByClassName("pop_up_bg")[0].style.display = "flex";
+  }
+
+  var accordion = (function(){
+    var $accordion = $('.js-accordion');
+    var $accordion_header = $accordion.find('.js-accordion-header');
+    var $accordion_item = $('.js-accordion-item');
+
+    // default settings 
+    var settings = {
+      // animation speed
+      speed: 400,
+
+      // close all other accordion items if true
+      oneOpen: false
+    };
+
+    return {
+      // pass configurable object literal
+      init: function($settings) {
+        $accordion_header.on('click', function() {
+          accordion.toggle($(this));
+        });
+
+        $.extend(settings, $settings); 
+
+        // ensure only one accordion is active if oneOpen is true
+        if(settings.oneOpen && $('.js-accordion-item.active').length > 1) {
+          $('.js-accordion-item.active:not(:first)').removeClass('active');
+        }
+
+        // reveal the active accordion bodies
+        $('.js-accordion-item.active').find('> .js-accordion-body').show();
+      },
+      toggle: function($this) {
+
+        if(settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
+          $this.closest('.js-accordion')
+                 .find('> .js-accordion-item') 
+                 .removeClass('active')
+                 .find('.js-accordion-body')
+                 .slideUp()
+        }
+
+        // show/hide the clicked accordion item
+        $this.closest('.js-accordion-item').toggleClass('active');
+        $this.next().stop().slideToggle(settings.speed);
+      }
+    }
+  })();
+
+  $(document).ready(function(){
+    accordion.init({ speed: 300, oneOpen: true });
+  });
+</script>
+<script>
+  // собираем все якоря; устанавливаем время анимации и количество кадров
+  const anchors = [].slice.call(document.querySelectorAll('a[href*="#"]')),
+        animationTime = 800,
+        framesCount = 20;
+
+  anchors.forEach(function(item) {
+    // каждому якорю присваиваем обработчик события
+    item.addEventListener('click', function(e) {
+      // убираем стандартное поведение
+      e.preventDefault();
+
+      // для каждого якоря берем соответствующий ему элемент и определяем его координату Y
+      let coordY = document.querySelector(item.getAttribute('href')).getBoundingClientRect().top;
+
+      // запускаем интервал, в котором
+      let scroller = setInterval(function() {
+        // считаем на сколько скроллить за 1 такт
+        let scrollBy = coordY / framesCount;
+
+        // если к-во пикселей для скролла за 1 такт больше расстояния до элемента
+        // и дно страницы не достигнуто
+        if(scrollBy > window.pageYOffset - coordY && window.innerHeight + window.pageYOffset < document.body.offsetHeight) {
+          // то скроллим на к-во пикселей, которое соответствует одному такту
+          window.scrollBy(0, scrollBy);
+        } else {
+          // иначе добираемся до элемента и выходим из интервала
+          window.scrollTo(0, coordY);
+          clearInterval(scroller);
+        }
+      // время интервала равняется частному от времени анимации и к-ва кадров
+      }, animationTime / framesCount);
+    });
+  });
+</script>  
+<script>
+  document.addEventListener("DOMContentLoaded", function() { initialiseMediaPlayer(); }, false);
+  var mediaPlayer;
+  function initialiseMediaPlayer() {
+    mediaPlayer = document.getElementById('media-video');
+    mediaPlayer.controls = false;
+  }
+  function togglePlayPause() {
+    var btn = document.getElementById('play-pause-button');
+    if (mediaPlayer.paused || mediaPlayer.ended) {
+      btn.title = 'pause';
+      btn.className = 'pause';
+      mediaPlayer.play();
+    }
+    else {
+      btn.title = 'play';
+      btn.className = 'play';
+      mediaPlayer.pause();
+    }
+  }
+</script>
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+

@@ -1,0 +1,84 @@
+<div class="top_block_position"> 
+{% for block in section.blocks %}
+{% if block.settings.advert_text_block == 'only_text' %}
+
+  <div class="general_text_block top_block">
+    <p class="general_text">{{ block.settings.advert_text }}</p>
+  </div>
+ 
+{% elsif block.settings.advert_text_block == 'text_with_image' %}
+<div class="general_text_block">
+  <p class="general_text"><img class="content_img_left" src="{{ block.settings.advert_image | img_url: '2500x' }}">{{ block.settings.advert_text }}</p>
+</div>
+{% elsif block.settings.advert_text_block == 'advertor_headline' %}
+<div class="headline_block">
+	<h1 class="headline">{{ block.settings.advert_headline }}</h1>
+</div>
+{% elsif block.settings.advert_text_block == 'advertor_devider' %}
+<div class="devider">
+	<h1>{{ block.settings.advert_devider }}</h1>
+</div>
+{% endif %}
+{% endfor %}
+</div> 
+{% schema %}
+  {
+    "name": "Advertorials Block",
+	"max_blocks": 40,
+    "settings": [
+	],
+	"blocks": [
+		{
+		  "type": "select",
+          "name": "Advertorials Blocks",
+   		  "settings": [
+      			{
+                 "type": "radio",
+                 "id":   "advert_text_block",
+                 "label": "Choose image side",
+				 "default":   "only_text",
+                 "options": [
+                   { "value": "only_text", "label": "Only text" },
+                   { "value": "text_with_image", "label": "Text with image" },
+				   { "value": "advertor_headline", "label": "Advertorials heading" },
+				   { "value": "advertor_devider", "label": "Advertorials devider" }
+                 ]
+                },
+				{
+					"type": "image_picker",
+					"id": "advert_image",
+					"label": "Choose block image"
+				},
+				{
+					"type": "textarea",
+					"id": "advert_text",
+					"label": "Paste block text",
+					"default": "Default text"
+				},
+				{
+					"type": "text",
+					"id": "advert_headline",
+					"label": "Write advertorials headline",
+					"default": "Default text"
+				},
+				{
+					"type": "text",
+					"id": "advert_devider",
+					"label": "Write advertorials devider text",
+					"default": "Default text"
+				}
+   			]
+   
+		}
+	]
+  }
+{% endschema %}
+
+<style>
+.top_block{
+	width: 70% !important;
+}
+</style>
+
+{% javascript %}
+{% endjavascript %}

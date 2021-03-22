@@ -1,0 +1,112 @@
+<section class="highlights product-pros-wrap highlights-about">
+    <span>{{section.settings.pretitle}}</span>
+    <h4>{{ section.settings.title }}</h4>
+    <div class="prod-highlight-content-wrapper">
+        <img src="{{ section.settings.leftimage | img_url: '544x544' }}" alt="">
+      <div class="middle-content-wrapper">
+        <span>{{section.settings.middletext}}</span>
+        <p>—</p>
+        <a href="{{section.settings.middleno1url}}">
+            <h6>{{section.settings.middleno1}}</h6>
+        </a>
+    
+        <p>—</p>
+        <a href="{{section.settings.middleno2url}}">
+            <h6>{{section.settings.middleno2}}</h6>
+        </a>
+        
+        <p>—</p>
+        <a href="{{section.settings.middleno3url}}">
+            <h6>{{section.settings.middleno3}}</h6>
+        </a>
+        
+        <p>—</p>
+        <a href="{{section.settings.middleno4url}}">
+            <h6>{{section.settings.middleno4}}</h6>
+        </a>
+        
+      </div>
+      <img src="{{ section.settings.rightimage | img_url: '544x544' }}" alt="">
+    </div>
+  </section>
+  
+  {% schema %}
+    {
+    "name": "Product Highlight",
+    "settings": [
+      {
+        "type":"text",
+        "id":"pretitle",
+        "label":"Pretitle",
+        "default":"Get The Skincare That Works Now!"
+      },
+      {
+          "type": "html",
+          "id": "title",
+          "label": "Title"
+      },
+      {
+          "type": "image_picker",
+          "id": "leftimage",
+          "label": "Left Side Image"
+      },
+      {
+          "type": "image_picker",
+          "id": "rightimage",
+          "label": "Right Side Image"
+      },
+      {
+          "type": "html",
+          "id": "middletext",
+          "label": "Middle Text"
+      },
+      {
+          "type": "text",
+          "id": "middleno1",
+          "label": "No. 1"
+      },
+      {
+          "type": "url",
+          "id": "middleno1url",
+          "label": "No. 1 Url"
+      },
+      {
+          "type": "text",
+          "id": "middleno2",
+          "label": "No. 2"
+      },
+      {
+          "type": "url",
+          "id": "middleno2url",
+          "label": "No. 2 Url"
+      },
+      {
+          "type": "text",
+          "id": "middleno3",
+          "label": "No. 3"
+      },
+      {
+          "type": "url",
+          "id": "middleno3url",
+          "label": "No. 3 Url"
+      },
+      {
+          "type": "text",
+          "id": "middleno4",
+          "label": "No. 4"
+      },
+      {
+          "type": "url",
+          "id": "middleno4url",
+          "label": "No. 4 Url"
+      }
+      
+    ]
+  }
+  {% endschema %}
+  
+  {% stylesheet %}
+  {% endstylesheet %}
+  
+  {% javascript %}
+  {% endjavascript %}

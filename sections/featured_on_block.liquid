@@ -1,0 +1,48 @@
+<div class="second">
+        <div class="container">
+            <div class="second-partners">
+                <div class="partner-item partner-item-f">
+                    <h3>{{ section.settings.featured-text}}</h3>
+                </div>
+				{% for block in section.blocks %}
+                <div class="partner-item">
+                	<img style="max-width: 130px" src="{{ block.settings.featuredImage | img_url: 'large' }}" alt="featured image">
+                </div>
+				{% endfor %}
+            </div>
+        </div>
+</div>
+{% schema %}
+  {
+    "name": "Featured On Block",
+	"max_blocks": 4,
+    "settings": [
+		{
+			"id": "featured-text",
+			"type": "text",
+			"label": "Featured text",
+			"default": "Default text"
+		}
+	],
+    "blocks": [
+        {
+		  "type": "select",
+          "name": "Featured Image",
+          "settings": [
+            {
+              "id": "featuredImage",
+			  "type": "image_picker",
+			  "label": "Choose featured image"
+            }
+          ]
+        }
+      ]
+    
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,129 @@
+<!-- top info bar - title/description/button  -->
+
+<div class="top-info-bar-btn grid-container">
+    <div class="info-bar-wrap">
+        <div class="info-bar-text-wrap">
+            <div class="title">{{ section.settings.top_info_bar_btn }}</div>
+            <div class="description" >{{ section.settings.info_bar_description }}</div>
+        </div>
+        <div class="info-btn-wrap">
+            <a href={{ section.settings.info_bar_btn_link }} type="button">{{ section.settings.info_bar_btn_title }}</a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+  
+{
+  "name": "Top info bar button",
+  "settings": [
+    {
+      "id": "top_info_bar_btn",
+      "type": "text",
+      "label": "Heading",
+      "default": "MR Protein Coffee Gives Back To Fight Corona"
+    },
+    {
+	  "id": "info_bar_description",
+      "type": "text",
+      "label": "Description",
+      "default": "For every purchase made, €5 will be donated towards the fight against COVID-19"
+    },
+    {
+      "id": "info_bar_btn_link",
+      "type": "url",
+      "label": "Button link",
+      "default": "/" 
+    },
+    {
+      "id": "info_bar_btn_title",
+      "type": "text",
+      "label": "Button Title",
+      "default": "Learn More"
+    }
+  ]
+}
+
+{% endschema %}
+
+<style>
+
+ #shopify-section-static-top-info-bar-btn {
+	border-bottom: 1px solid #eee;
+  }
+
+  .info-bar-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+
+  .info-bar-wrap .info-bar-text-wrap {
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 70%;
+            flex: 1 1 70%; 
+	text-align: center;
+    padding: 15px 0;
+  }
+
+  .info-bar-wrap .info-btn-wrap { 
+    -webkit-box-flex: 1; 
+        -ms-flex: 1 1 30%; 
+            flex: 1 1 30%;
+  }
+
+  .info-bar-wrap .info-bar-text-wrap .title {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .info-bar-wrap .info-btn-wrap a {
+	display: inline-block;
+    padding: 15px 10px; 
+	margin: 15px 5px;
+	text-transform: uppercase;
+	font-weight: bold;
+    background-color: #f0f0f0;
+    color: #444;
+	border: 1px solid #f0f0f0; 
+    border-radius:2px;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out; 
+  }
+
+  .info-bar-wrap .info-btn-wrap a:hover {
+    background-color: #f5f5f5; 
+    border: 1px solid #ccc; 
+  }
+
+@media screen and (max-width:980px) {
+
+  .info-bar-wrap .info-btn-wrap {
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;    
+  }
+
+  .info-bar-wrap .info-bar-text-wrap .title {
+    font-size: 80%;
+    line-heigh: 1.2;
+  }
+  .info-bar-wrap .info-bar-text-wrap .description {
+    font-size: 70%;
+    line-heigh: 1.2; 
+  }
+
+  .info-bar-wrap .info-btn-wrap a {
+    font-size: 70%;
+  }
+}
+</style>
+

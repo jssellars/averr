@@ -1,0 +1,182 @@
+<div class="founder_block">
+	<div class="founder_position">
+    	<div class="founder_images mobile_image">
+       		<img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/1212/4268/files/Camille_Photo_02.png?v=1580898495">
+        </div>    
+        <div class="founder_info_block">
+          <h1>Traditional Routes to Clear Skin Weren’t Working</h1>
+          <h2>So I Made My Own Skincare Solution</h2>
+          <p>Hi, I'm Camille.<br/><br/>
+            I battled with breakouts for 16 years and tried everything to cure them. Healthy diets, creams, and medical prescriptions to no avail. Nothing helped me, so I decided to create skincare that would.<br/><br/>
+            With natural-based products, I found an answer to my problematic skin, and I want to share it with you.<br/><br/>
+            Four years since the beginning, Averr Aglow has helped over 73,524 women achieve healthy skin and it can also help you!
+          </p>
+          <img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/1212/4268/files/Signature_PNG.png?v=1580898494">
+        </div>
+        <div class="founder_images">
+        	<img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/1212/4268/files/Camille_Photo_01.jpg?v=1584480752">
+        	<img class="desktop_image lazyload" data-src="https://cdn.shopify.com/s/files/1/1212/4268/files/Camille_Photo_02.png?v=1580898495">
+        </div>
+	</div>
+</div>
+{% schema %}
+  {
+    "name": "Camis' Story",
+    "settings": [],
+	"presets": [
+      {
+	    "category": "Home content",
+        "name": "Camis' Story"
+      }
+	]
+  }
+{% endschema %}
+
+<style>
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.founder_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    background: linear-gradient(10deg, rgba(248, 220, 209, 0.7) 0%, rgba(248, 220, 209, 0.7) 77.5%, #fff 70%);
+    background-size: 100% 92%;
+    background-repeat: no-repeat;
+	margin-bottom: 0 !important;
+	margin-top: 5% ;
+}
+.founder_position{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+.founder_info_block{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45%;
+}
+.founder_info_block h1{
+    font-family: FreightDispProBook-Regular;
+    font-size: 40px;
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #222;
+    margin: 0 auto;
+	text-transform: none;
+    text-align:center;
+}
+.founder_info_block h2{
+    font-family: FreightDispProBook-Regular;
+    font-size: 26px;
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin: 0 auto 24px;
+    color: #222;
+	text-transform:none !important; 
+    text-align:center;
+}
+  
+.founder_info_block p{
+    font-family: Gotham-Book;
+    font-size: 14px;
+    font-weight: 100;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #222222;
+    margin: 20px 0 40px 0;
+}
+.founder_info_block img{
+    max-width: 170px;
+    height: auto;
+}
+.founder_images{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 48%;
+}
+.founder_images img{
+    max-width: 100%;
+    height: auto;
+}
+.founder_images img:last-child{
+    margin-top: 44px;
+}
+.mobile_image{
+    display: none;
+}
+@media screen and (max-width: 1024px){
+    .founder_position{
+        width: 90%;
+    }
+    .founder_info_block{
+        width: 50%;
+    }
+    .founder_images{
+        width: 47%;
+    }
+}
+@media screen and (max-width: 768px){
+    .founder_position{
+        flex-direction: column-reverse;
+    }
+    .desktop_image{
+        display: none;
+    }
+    .founder_images{
+        width: 100%;
+    }
+    .founder_info_block{
+        width: 80%;
+        margin: 35px 0;
+    }
+    .mobile_image{
+        display: flex;
+    }
+	.founder_info_block h2{
+      margin: 0 auto;
+    }  
+}
+@media screen and (max-width: 450px){
+  .product_form {
+    width:100%;
+  }
+  .founder_headline {
+    width:95%;
+  }
+  .founder_info_block h1{
+    font-size: 26px;
+  }
+  .founder_info_block h2{
+    font-size: 20px;
+  }
+  .founder_item{
+    width: 100%;
+  }
+  .founder_info_block{
+    width: 90%;
+  }
+  .founder_images{
+    width: 100%;
+  }
+}
+</style>
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,59 @@
+<div class="parallax">
+  <img class="hero_img lazyload" 
+       data-src="{{ section.settings.home_hero_image | img_url: '300x' }}"
+       srcset="
+        {% if image.width > 640 %}{{ image.src | img_url: '640x' }} 640w{% endif %}
+        {% if image.width > 720 %},{{ image.src | img_url: '720x' }} 720w{% endif %}
+        {% if image.width > 900 %},{{ image.src | img_url: '900x' }} 900w{% endif %} 
+        " 
+       sizes="(min-width: 960px) 450px, (min-width: 720px) 50vw, 100vw" />
+  
+</div>
+<style>
+	.parallax {
+    	/* The image used */
+        background-image: url('{{ section.settings.home_hero_image | img_url: '2500x'}}');
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: 0% 40px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        height:92vh;
+        height: calc(100vw / 2.7);
+    }
+    .hero_img{
+    	max-width: 100%;
+        opacity: 0;
+    }
+  	@media screen and (max-width: 470px){
+        .parallax{
+        	background-attachment: scroll;
+            background-position: 0% 0px;
+            height: calc(100vw / 2.3);
+        }
+    }
+</style>
+{% schema %}
+  {
+    "name": "Home Hero Image",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "home_hero_image",
+			"label": "Choose hero image"
+		}
+	],
+	"presets": [
+		{
+			"name": "Hero Image Block",
+			"category": "Home Blocks"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

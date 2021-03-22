@@ -1,0 +1,130 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
+
+<div class="homepage_content clearfix">
+
+  <div class="container">
+    <div class="sixteen columns">
+      <div class="section-header text-center">
+        <h1 class="how-to-page-title"> {{ section.settings.video-box }} </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container video-block-container">
+      <div class="sixteen columns">
+
+          {% for block in section.blocks %} 
+        
+          <div class="one-third column alpha thumbnail">
+            
+            <div class="video-block">
+            
+              <div class="third-top-video">
+
+              {% if block.settings.video_link %}
+              
+              <div class="videowrapper">
+               
+                {% if block.settings.video_preview_image %}
+                <img class="lazyload" data-src = "{{ block.settings.video_preview_image }}" width = "368" height = "195">
+                {% else %}
+                <img class="lazyload" data-src = "https://img.youtube.com/vi/{{ block.settings.video_link }}/maxresdefault.jpg" width = "368" height = "207">
+                {% endif %}
+                
+              </div>
+
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+
+              </div>
+
+              <div class="how-to-video-title-wrapper">
+                <h4 class="how-to-video-title"> {{ block.settings.video_title }} </h4>
+              </div>
+
+              <div class="how-to-video-btn-wrapper">   
+                <a href="https://www.youtube.com/watch?v={{ block.settings.video_link }}" class="how-to-video-btn">{{ block.settings.linktext }}</a>
+              </div>
+              
+            </div>
+            
+          </div>
+
+          {% endfor %} 
+
+      </div>
+  </div>  
+  
+</div>
+
+{% schema %}
+{
+  "name": "Video Blocks",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "id": "video-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Video",
+      "settings": [
+        {
+          "id": "video_link",
+          "type": "text",
+          "label": "Enter YouTube embedded ID",
+          "default": "_9VUPq3SxOc"
+        },
+		{
+		  "id": "video_preview_image",
+		  "type": "image_picker",
+		  "label": "Choose video preview image"
+		},
+        {
+          "id": "video_title",
+          "type": "text",
+          "label": "Video title",
+          "default": "Video title"
+        },
+        {
+          "id": "linktext",
+          "type": "text",
+          "label": "Button text",
+          "default": "Watch video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+//   attach link to video block
+  jQuery(function($){
+
+    $('.video-block').each(function() {
+      var link = $(this).find('a').attr("href");
+      $(this).magnificPopup({
+        items: {
+          src: link
+        },
+        disableOn: 700,
+        type: 'iframe',
+        mainClass: 'mfp-fade',
+        removalDelay: 160,
+        preloader: false,
+        fixedContentPos: true
+      })
+    })
+  })
+    
+</script>
+

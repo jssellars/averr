@@ -1,0 +1,88 @@
+<div class="success-steps">
+  <div class="container">
+    <div class="steps-title">
+      <h2>{{ section.settings.ssTitle }}</h2>
+      {{ section.settings.ssText }}
+    </div>
+    <div class="steps-blogs">
+      {% for block in section.blocks %}
+      {% case block.type %}
+      {% when 'SuccessStepsBlog' %}
+      <div class="col-3">
+        <div class="sb-content">
+          <div class="sb-img">
+            <img src="{{ block.settings.sbImg | img_url: 'master' }}" alt="" />
+            <div class="sb-img-info">
+              <span>{{ block.settings.sbImgText }}</span>
+              <h5>{{ block.settings.sbImgTitle }}</h5>
+            </div>
+          </div>
+          {{ block.settings.sbText }}
+        </div>
+      </div>
+      {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Success Steps Section",
+  "settings": [
+    {
+        "id": "ssTitle",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+    },
+    {
+        "id": "ssText",
+        "type": "richtext",
+        "label": "Text",
+        "default": "<p>Default <em>richtext</em> <a href=\"https://example.com/\">content</a></p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "SuccessStepsBlog",
+      "name": "Success Steps Blog",
+      "settings": [
+        { 
+            "id": "sbImg",
+            "type": "image_picker",
+            "label": "simple image"
+        },
+        {
+            "id": "sbImgText",
+            "type": "text",
+            "label": "text",
+            "default": "text"
+        },
+        {
+            "id": "sbImgTitle",
+            "type": "text",
+            "label": "Heading",
+            "default": "Title"
+        },
+        {
+            "id": "sbText",
+            "type": "richtext",
+            "label": "Text",
+            "default": "<p>Default <em>richtext</em> <a href=\"https://example.com/\">content</a></p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

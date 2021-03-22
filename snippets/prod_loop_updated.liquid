@@ -1,0 +1,60 @@
+{% assign product_found = false %}
+{% assign skip = false %}
+{% assign collection_group = products | map: 'id' %}
+{% assign collection_group_thumb = collection_group | append : 'thumb' %}
+{% assign collection_group_mobile = collection_group | append : 'mobile' %}
+
+{% capture new_row %}
+    <br class="clear product_clear"/>
+{% endcapture %}
+<!-- Remove this if after updated all products-->
+{% if product.title == 'Clear Skin Elixir' or product.title == 'Developing Clear Skin Kit'  %}
+  <div class="products loop-related-products">
+    <div class="title-item">Related Items</div>
+    <div id="slider" itemtype="http://schema.org/ItemList" class="products inner-loop-related-products">
+      {% for product in products limit: limit %}
+        {% if product.id == skip_product.id or skip == true %}
+          {% assign product_found = true %}
+        {% else %}
+          {% if forloop.rindex0 == 0 and product_found == false and forloop.length != products.count and template != 'search' %}
+            {% assign skip = true %}
+          {% else %}
+            {% include 'prod_thimbnail_updated_new', sidebar: sidebar %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% else %}
+  <div itemtype="http://schema.org/ItemList" class="products loop-related-products">
+    {% for product in products limit: limit %}
+      {% if product.id == skip_product.id or skip == true %}
+        {% assign product_found = true %}
+      {% else %}
+        {% if forloop.rindex0 == 0 and product_found == false and forloop.length != products.count and template != 'search' %}
+          {% assign skip = true %}
+        {% else %}
+          {% include 'prod_thimbnail_updated_new', sidebar: sidebar %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+<style>
+  .modal .product_form .inline_purchase {
+   display: inline-block; 
+    width: auto;
+  }
+  .modal button.action_button.add_to_cart {
+    font-size: 15px !important;
+    width: 228px;
+    padding: 10px 0 !important;
+    background: #f9dbd0;
+    color: #000000;
+    height: auto !important;
+  }
+</style>
+       
+       

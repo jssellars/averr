@@ -1,0 +1,72 @@
+<div class="content">
+  <section>
+    <div class="running-products-section running-products-desktop">
+      <div class="running-products-header">
+        <h4>{{section.settings.head}}</h4>
+      </div>
+      <div class="running-products">
+        <div class="row">
+          <div class="col-md-3 rp-single">
+            {% include 'product-snippet' %}
+          </div>
+          <div class="col-md-6 rp-single">
+            {% include 'product-include' %}
+          </div>
+          <div class="col-md-3 rp-single">
+            {% include 'product-loancher' %}
+          </div>
+        </div>
+      </div>
+      <div class="prod-btn">
+        <a href="{{section.settings.link}}" class="primary-btn">shop all {{ 'new-arrow-right.png' | asset_url | img_tag }}</a>
+      </div>
+    </div>
+  </section>
+</div>
+<style>.flex-control-thumbs {display: none;}</style>
+
+{% schema %}
+{
+"name": "Skincare Products",
+"class": "featured-products-section",
+"settings": [
+{
+"type": "text",
+"id": "head",
+"label": "Heading",
+"default":"MOST LOVED BY CUSTOMERS"
+},
+{
+"type": "url",
+"id": "button",
+"label": "Button"
+},
+{
+"type": "product",
+"id": "single_product",
+"label": "Add Product"
+},
+{
+"type": "product",
+"id": "double_product",
+"label": "Add Product"
+},
+{
+"type": "product",
+"id": "mingle_product",
+"label": "Add Product"
+},
+{
+"type": "url",
+"id": "link",
+"label": "Shop Button"
+}
+],
+"presets": [{
+"name": "Skincare Products",
+"category": "Product",
+"settings": {
+}
+}]
+}
+{% endschema %}
